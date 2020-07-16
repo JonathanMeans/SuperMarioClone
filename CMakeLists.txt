@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.14)
+project(SuperMarioBros)
+
+set(CMAKE_CXX_STANDARD 17)
+
+include(FetchContent)
+set(SFML_VERSION "2.5.1")
+FetchContent_Declare(
+        sfml
+        GIT_REPOSITORY "https://github.com/SFML/SFML.git"
+        GIT_TAG "${SFML_VERSION}"
+)
+
+FetchContent_GetProperties(sfml)
+if (NOT sfml_POPULATED)
+    FetchContent_Populate(sfml)
+    add_subdirectory(${sfml_SOURCE_DIR} ${sfml_BINARY_DIR})
+endif ()
+
+enable_testing()
+
+add_library(MarioLib Math.cpp)
+target_include_directories(MarioLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_compile_options(MarioLib PRIVATE -Wall -Wextra -Werror)
+
+add_executable(SuperMarioBros main.cpp)
+target_link_libraries(SuperMarioBros sfml-window sfml-graphics)
+target_link_libraries(SuperMarioBros PRIVATE ${sfml_INCLUDE_DIR})
+
+add_subdirectory(unittests)
