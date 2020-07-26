@@ -23,7 +23,7 @@ add_library(MarioLib Math.cpp)
 target_include_directories(MarioLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(MarioLib PRIVATE -Wall -Wextra -Werror)
 
-add_executable(SuperMarioBros main.cpp mario.cpp)
+add_executable(SuperMarioBros main.cpp Mario.cpp)
 target_link_libraries(SuperMarioBros sfml-window sfml-graphics)
 target_link_libraries(SuperMarioBros PRIVATE ${sfml_INCLUDE_DIR})
 
