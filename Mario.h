@@ -1,6 +1,8 @@
 #ifndef SUPERMARIOBROS_MARIO_H
 #define SUPERMARIOBROS_MARIO_H
 
+#include "Animation.h"
+
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -25,17 +27,21 @@ private:
 
     sf::Sprite* mActiveSprite{};
 
+    Animation walkingAnimation;
+    Animation jumpingAnimation;
+    Animation standingAnimation;
+
     // Walking animation
-    std::vector<sf::Sprite> mWalkingSprites;
-    size_t mSpriteIndex;
-    size_t mTicksPerFrame;
-    size_t mRemainingTicsThisFrame;
+//    std::vector<sf::Sprite> mWalkingSprites;
+//    size_t mSpriteIndex;
+//    size_t mTicksPerFrame;
+//    size_t mRemainingTicsThisFrame;
 
     // Jumping animation
-    std::vector<sf::Sprite> mJumpingSprites;
-    size_t mJumpingIndex;
-    size_t mJumpingTicksPerFrame;
-    size_t mJumpingRemainingTicsThisFrame;
+//    std::vector<sf::Sprite> mJumpingSprites;
+//    size_t mJumpingIndex;
+//    size_t mJumpingTicksPerFrame;
+//    size_t mJumpingRemainingTicsThisFrame;
 };
 
 #endif  // SUPERMARIOBROS_MARIO_H
