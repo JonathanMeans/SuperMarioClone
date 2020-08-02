@@ -21,9 +21,9 @@ public:
     void stopWalking();
 
     void jump();
+    void grow();
 
 private:
-
     std::shared_ptr<sf::Sprite> mActiveSprite;
     sf::Texture mTexture;
 
@@ -31,6 +31,7 @@ private:
     Animation jumpingAnimation;
     Animation standingAnimation;
 
+    Animation bigWalkingAnimation;
 };
 
 #endif  // SUPERMARIOBROS_MARIO_H

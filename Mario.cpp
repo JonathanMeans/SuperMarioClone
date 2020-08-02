@@ -21,6 +21,8 @@ Mario::Mario()
     walkingAnimation.load(AnimationType::WALKING, mActiveSprite);
     jumpingAnimation.load(AnimationType::JUMPING, mActiveSprite);
     standingAnimation.load(AnimationType::STANDING, mActiveSprite);
+
+    bigWalkingAnimation.load(AnimationType::BIG_WALKING, mActiveSprite);
 }
 
 void Mario::draw(sf::RenderWindow& window)
@@ -46,6 +48,11 @@ size_t Mario::getY() const
 void Mario::walk()
 {
     mActiveSprite = walkingAnimation.processAction();
+}
+
+void Mario::grow()
+{
+    mActiveSprite = bigWalkingAnimation.processAction();
 }
 
 void Mario::stopWalking()

@@ -11,7 +11,8 @@ enum class AnimationType
 {
     WALKING,
     JUMPING,
-    STANDING
+    STANDING,
+    BIG_WALKING
 };
 
 class Animation
@@ -22,7 +23,7 @@ public:
               const std::shared_ptr<sf::Sprite>& activeSprite);
     std::shared_ptr<sf::Sprite> processAction();
 
-    size_t getSpriteIndex() const;
+    [[nodiscard]] size_t getSpriteIndex() const;
 
 private:
     size_t mRemainingTicsThisFrame{};
@@ -33,7 +34,10 @@ private:
     std::vector<sf::IntRect> mActionRectangles;
     std::shared_ptr<sf::Sprite> mActiveSprite;
 
-    void generateRectangles(size_t numRectangles, size_t initialOffset);
+    void generateRectangles(size_t numRectangles,
+                            size_t initialOffset,
+                            size_t yOffset,
+                            size_t rectHeight);
 };
 
 #endif  // SUPERMARIOBROS_ANIMATION_H

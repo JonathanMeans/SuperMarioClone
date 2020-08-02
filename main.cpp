@@ -22,7 +22,11 @@ int main()
                 window.close();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+            sprite.grow();
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
             sprite.jump();
         }

@@ -12,30 +12,39 @@ void Animation::load(AnimationType type,
     mRemainingTicsThisFrame = 2;
     mActiveSprite = activeSprite;
     repeat = true;
+
     if (type == AnimationType::WALKING)
     {
-        generateRectangles(4, 80);
+        generateRectangles(4, 80, 34, 16);
     }
     else if (type == AnimationType::JUMPING)
     {
-        generateRectangles(2, 148);
+        generateRectangles(2, 148, 34, 16);
         repeat = false;
     }
     else if (type == AnimationType::STANDING)
     {
-        generateRectangles(1, 80);
+        generateRectangles(1, 80, 34, 16);
+    }
+    else if (type == AnimationType::BIG_WALKING)
+    {
+        generateRectangles(4, 80, 1, 32);
     }
 }
 
-void Animation::generateRectangles(size_t numRectangles, size_t initialOffset)
+void Animation::generateRectangles(size_t numRectangles,
+                                   size_t initialOffset,
+                                   size_t yOffset,
+                                   size_t rectHeight)
 {
-    const size_t NUM_RECTANGLES = numRectangles;
-    mActionRectangles.resize(NUM_RECTANGLES);
-    for (size_t ii = 0; ii < NUM_RECTANGLES; ++ii)
+    mActionRectangles.resize(numRectangles);
+    for (size_t ii = 0; ii < numRectangles; ++ii)
     {
         static const size_t X_OFFSET = 17;
-        mActionRectangles[ii] =
-                sf::IntRect(initialOffset + (X_OFFSET * ii), 34, 16, 16);
+        mActionRectangles[ii] = sf::IntRect(initialOffset + (X_OFFSET * ii),
+                                            yOffset,
+                                            16,
+                                            rectHeight);
     }
 
     mActiveSprite->setTextureRect(mActionRectangles[0]);
