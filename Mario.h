@@ -25,6 +25,7 @@ public:
 private:
 
     std::shared_ptr<sf::Sprite> mActiveSprite;
+    sf::Texture mTexture;
 
     Animation walkingAnimation;
     Animation jumpingAnimation;

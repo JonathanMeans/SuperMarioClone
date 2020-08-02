@@ -4,28 +4,24 @@
 
 Animation::Animation() = default;
 
-void Animation::load(AnimationType type, const std::shared_ptr<sf::Sprite>& activeSprite)
+void Animation::load(AnimationType type,
+                     const std::shared_ptr<sf::Sprite>& activeSprite)
 {
-
-    if (!mTexture.loadFromFile("../resources/Mario & Luigi.png"))
-    {
-        std::cerr << "Error Loading Texture";
-    }
-    mTexture.setSmooth(false);
     mSpriteIndex = 0;
     mTicsPerFrame = 2;
     mRemainingTicsThisFrame = 2;
     mActiveSprite = activeSprite;
-    mActiveSprite->setTexture(mTexture);
     repeat = true;
     if (type == AnimationType::WALKING)
     {
         generateRectangles(4, 80);
-    } else if (type == AnimationType::JUMPING)
+    }
+    else if (type == AnimationType::JUMPING)
     {
         generateRectangles(2, 148);
         repeat = false;
-    } else if (type == AnimationType::STANDING)
+    }
+    else if (type == AnimationType::STANDING)
     {
         generateRectangles(1, 80);
     }
@@ -38,8 +34,8 @@ void Animation::generateRectangles(size_t numRectangles, size_t initialOffset)
     for (size_t ii = 0; ii < NUM_RECTANGLES; ++ii)
     {
         static const size_t X_OFFSET = 17;
-        mActionRectangles[ii] = sf::IntRect(
-                initialOffset + (X_OFFSET * ii), 34, 16, 16);
+        mActionRectangles[ii] =
+                sf::IntRect(initialOffset + (X_OFFSET * ii), 34, 16, 16);
     }
 
     mActiveSprite->setTextureRect(mActionRectangles[0]);
@@ -51,11 +47,14 @@ std::shared_ptr<sf::Sprite> Animation::processAction()
     if (mRemainingTicsThisFrame == 0)
     {
         ++mSpriteIndex;
-        if (mSpriteIndex >= mActionRectangles.size()) {
+        if (mSpriteIndex >= mActionRectangles.size())
+        {
             if (repeat)
             {
                 mSpriteIndex = 0;
-            } else {
+            }
+            else
+            {
                 mSpriteIndex = mActionRectangles.size() - 1;
             }
         }
@@ -63,12 +62,9 @@ std::shared_ptr<sf::Sprite> Animation::processAction()
     }
     mActiveSprite->setTextureRect(mActionRectangles[mSpriteIndex]);
     return mActiveSprite;
-};
-
-void Animation::setPosition(size_t x, size_t y)
-{
-    mActiveSprite->setPosition(x, y);
 }
 
-
-
+size_t Animation::getSpriteIndex() const
+{
+    return mSpriteIndex;
+}

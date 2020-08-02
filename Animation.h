@@ -21,10 +21,10 @@ public:
     void load(AnimationType type,
               const std::shared_ptr<sf::Sprite>& activeSprite);
     std::shared_ptr<sf::Sprite> processAction();
-    void setPosition(size_t x, size_t y);
+
+    size_t getSpriteIndex() const;
 
 private:
-    sf::Texture mTexture;
     size_t mRemainingTicsThisFrame{};
     size_t mTicsPerFrame{};
     size_t mSpriteIndex{};

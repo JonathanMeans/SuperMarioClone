@@ -31,6 +31,6 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif ()
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(unittests test_vector.cpp)
-target_link_libraries(unittests gtest_main MarioLib)
+add_executable(unittests test_animation.cpp)
+target_link_libraries(unittests gtest_main sfml-window sfml-graphics MarioLib)
 add_test(unittests unittests)
