@@ -8,7 +8,6 @@ Mario::Mario()
 {
     mActiveSprite = std::make_shared<sf::Sprite>();
     mActiveSprite->setPosition(100, 100);
-    mActiveSprite->scale(3, 3);
     walkingAnimation.load(AnimationType::WALKING, mActiveSprite);
     jumpingAnimation.load(AnimationType::JUMPING, mActiveSprite);
     standingAnimation.load(AnimationType::STANDING, mActiveSprite);

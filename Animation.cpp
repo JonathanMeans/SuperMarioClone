@@ -11,6 +11,7 @@ void Animation::load(AnimationType type, const std::shared_ptr<sf::Sprite>& acti
     {
         std::cerr << "Error Loading Texture";
     }
+    mTexture.setSmooth(false);
     mSpriteIndex = 0;
     mTicsPerFrame = 2;
     mRemainingTicsThisFrame = 2;

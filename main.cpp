@@ -8,6 +8,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(200, 200), "Super Mario Bros");
     window.setFramerateLimit(30);
+    window.setSize(sf::Vector2u(960, 720));
     window.clear();
     Mario sprite;
     sprite.draw(window);
