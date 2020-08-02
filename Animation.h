@@ -6,13 +6,20 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include <cstdlib>
-enum class AnimationType { WALKING, JUMPING, STANDING };
+#include <memory>
+enum class AnimationType
+{
+    WALKING,
+    JUMPING,
+    STANDING
+};
 
 class Animation
 {
 public:
     Animation();
-    void load(AnimationType type, const std::shared_ptr<sf::Sprite>& activeSprite);
+    void load(AnimationType type,
+              const std::shared_ptr<sf::Sprite>& activeSprite);
     std::shared_ptr<sf::Sprite> processAction();
     void setPosition(size_t x, size_t y);
 
@@ -27,10 +34,6 @@ private:
     std::shared_ptr<sf::Sprite> mActiveSprite;
 
     void generateRectangles(size_t numRectangles, size_t initialOffset);
-
 };
-
-
-
 
 #endif  // SUPERMARIOBROS_ANIMATION_H

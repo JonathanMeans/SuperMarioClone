@@ -1,7 +1,7 @@
 #include "Mario.h"
 #include "Animation.h"
 
-#include <iostream>
+#include <memory>
 #include "SFML/Graphics.hpp"
 
 Mario::Mario()
@@ -42,7 +42,7 @@ void Mario::walk()
 
 void Mario::stopWalking()
 {
-    mActiveSprite = standingAnimation.processAction();;
+    mActiveSprite = standingAnimation.processAction();
 }
 
 void Mario::jump()

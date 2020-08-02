@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Mario.h"
 
 #include "SFML/Graphics.hpp"
