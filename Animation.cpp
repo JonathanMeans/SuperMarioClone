@@ -1,79 +1,73 @@
 #include "Animation.h"
 
-#include <cstdlib>
+#include <iostream>
 
 Animation::Animation() = default;
 
-void Animation::load(AnimationType type, size_t initialX, size_t initialY, const sf::Texture& texture)
+void Animation::load(AnimationType type, const std::shared_ptr<sf::Sprite>& activeSprite)
 {
-    mX = initialX;
-    mY = initialY;
+
+    if (!mTexture.loadFromFile("../resources/Mario & Luigi.png"))
+    {
+        std::cerr << "Error Loading Texture";
+    }
     mSpriteIndex = 0;
     mTicsPerFrame = 2;
     mRemainingTicsThisFrame = 2;
-    mActiveSprite = nullptr;
+    mActiveSprite = activeSprite;
+    mActiveSprite->setTexture(mTexture);
     repeat = true;
     if (type == AnimationType::WALKING)
     {
-        generateSprites(4, 80, texture);
+        generateRectangles(4, 80);
     } else if (type == AnimationType::JUMPING)
     {
-        generateSprites(2, 148, texture);
+        generateRectangles(2, 148);
         repeat = false;
     } else if (type == AnimationType::STANDING)
     {
-        generateSprites(1, 80, texture);
+        generateRectangles(1, 80);
     }
 }
 
-void Animation::generateSprites(const size_t numSprites, size_t initialOffset, const sf::Texture& texture)
+void Animation::generateRectangles(size_t numRectangles, size_t initialOffset)
 {
-    const size_t NUM_SPRITES = numSprites;
-    mActionSprites.resize(NUM_SPRITES);
-    for (size_t ii = 0; ii < NUM_SPRITES; ++ii)
+    const size_t NUM_RECTANGLES = numRectangles;
+    mActionRectangles.resize(NUM_RECTANGLES);
+    for (size_t ii = 0; ii < NUM_RECTANGLES; ++ii)
     {
         static const size_t X_OFFSET = 17;
-        mActionSprites[ii].setTexture(texture);
-        mActionSprites[ii].setTextureRect(
-                sf::IntRect(initialOffset + (X_OFFSET * ii), 34, 16, 16));
-        mActionSprites[ii].scale(3, 3);
-        mActionSprites[ii].setPosition(100, 100);
+        mActionRectangles[ii] = sf::IntRect(
+                initialOffset + (X_OFFSET * ii), 34, 16, 16);
     }
 
-    mActiveSprite = &mActionSprites[0];
+    mActiveSprite->setTextureRect(mActionRectangles[0]);
 }
 
-sf::Sprite* Animation::processAction()
+std::shared_ptr<sf::Sprite> Animation::processAction()
 {
     --mRemainingTicsThisFrame;
     if (mRemainingTicsThisFrame == 0)
     {
         ++mSpriteIndex;
-        if (mSpriteIndex >= mActionSprites.size()) {
+        if (mSpriteIndex >= mActionRectangles.size()) {
             if (repeat)
             {
                 mSpriteIndex = 0;
             } else {
-                mSpriteIndex = mActionSprites.size() - 1;
+                mSpriteIndex = mActionRectangles.size() - 1;
             }
         }
         mRemainingTicsThisFrame = mTicsPerFrame;
     }
-    mActiveSprite = &mActionSprites[mSpriteIndex];
+    mActiveSprite->setTextureRect(mActionRectangles[mSpriteIndex]);
     return mActiveSprite;
 };
 
 void Animation::setPosition(size_t x, size_t y)
 {
-    for (auto& sprite : mActionSprites)
-        sprite.setPosition(x, y);
+    mActiveSprite->setPosition(x, y);
 }
-
-sf::Sprite* Animation::getActiveSprite()
-{
-    return mActiveSprite;
-}
-
 
 
 

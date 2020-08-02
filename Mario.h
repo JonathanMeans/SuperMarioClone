@@ -23,25 +23,13 @@ public:
     void jump();
 
 private:
-    sf::Texture mTexture;
 
-    sf::Sprite* mActiveSprite{};
+    std::shared_ptr<sf::Sprite> mActiveSprite;
 
     Animation walkingAnimation;
     Animation jumpingAnimation;
     Animation standingAnimation;
 
-    // Walking animation
-//    std::vector<sf::Sprite> mWalkingSprites;
-//    size_t mSpriteIndex;
-//    size_t mTicksPerFrame;
-//    size_t mRemainingTicsThisFrame;
-
-    // Jumping animation
-//    std::vector<sf::Sprite> mJumpingSprites;
-//    size_t mJumpingIndex;
-//    size_t mJumpingTicksPerFrame;
-//    size_t mJumpingRemainingTicsThisFrame;
 };
 
 #endif  // SUPERMARIOBROS_MARIO_H
