@@ -13,22 +13,21 @@ void Animation::load(AnimationType type,
     mActiveSprite = activeSprite;
     repeat = true;
 
-    if (type == AnimationType::WALKING)
+    switch (type)
     {
+    case AnimationType::WALKING:
         generateRectangles(4, 80, 34, 16);
-    }
-    else if (type == AnimationType::JUMPING)
-    {
+        break;
+    case AnimationType::JUMPING:
         generateRectangles(2, 148, 34, 16);
         repeat = false;
-    }
-    else if (type == AnimationType::STANDING)
-    {
+        break;
+    case AnimationType::STANDING:
         generateRectangles(1, 80, 34, 16);
-    }
-    else if (type == AnimationType::BIG_WALKING)
-    {
+        break;
+    case AnimationType::BIG_WALKING:
         generateRectangles(4, 80, 1, 32);
+        break;
     }
 }
 
