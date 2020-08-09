@@ -57,7 +57,7 @@ void Animation::generateRectangles(size_t numRectangles,
     mActiveSprite->setTextureRect(mActionRectangles[0]);
 }
 
-std::shared_ptr<sf::Sprite> Animation::processAction()
+void Animation::processAction()
 {
     --mRemainingTicsThisFrame;
     if (mRemainingTicsThisFrame == 0)
@@ -77,7 +77,6 @@ std::shared_ptr<sf::Sprite> Animation::processAction()
         mRemainingTicsThisFrame = mTicsPerFrame;
     }
     mActiveSprite->setTextureRect(mActionRectangles[mSpriteIndex]);
-    return mActiveSprite;
 }
 
 size_t Animation::getSpriteIndex() const

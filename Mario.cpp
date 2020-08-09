@@ -32,7 +32,7 @@ Mario::Mario() : mForm(MarioForm::SMALL_MARIO)
     bigJumpingAnimation.load(AnimationType::BIG_JUMPING, mActiveSprite);
 
     mActiveAnimation = &standingAnimation;
-    mActiveSprite = standingAnimation.processAction();
+    mActiveAnimation->processAction();
 }
 
 void Mario::draw(sf::RenderWindow& window)
@@ -57,7 +57,7 @@ size_t Mario::getY() const
 
 void Mario::updateAnimation()
 {
-    mActiveSprite = mActiveAnimation->processAction();
+    mActiveAnimation->processAction();
 }
 
 void Mario::walk()

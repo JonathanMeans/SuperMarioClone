@@ -24,7 +24,7 @@ public:
     Animation();
     void load(AnimationType type,
               const std::shared_ptr<sf::Sprite>& activeSprite);
-    std::shared_ptr<sf::Sprite> processAction();
+    void processAction();
 
     [[nodiscard]] size_t getSpriteIndex() const;
 
