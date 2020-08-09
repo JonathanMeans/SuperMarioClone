@@ -29,6 +29,7 @@ public:
 
     void jump();
     void setForm(MarioForm form);
+    void updateAnimation();
 
 private:
     std::shared_ptr<sf::Sprite> mActiveSprite;
@@ -43,6 +44,8 @@ private:
     Animation bigWalkingAnimation;
     Animation bigJumpingAnimation;
     Animation bigStandingAnimation;
+
+    Animation* mActiveAnimation;
 };
 
 #endif  // SUPERMARIOBROS_MARIO_H

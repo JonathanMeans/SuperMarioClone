@@ -3,6 +3,56 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 
+struct KeyboardInputState
+{
+    bool keyIsDown;
+    bool keyWasDown;
+
+    [[nodiscard]] bool pressedThisFrame() const
+    {
+        return keyIsDown && !keyWasDown;
+    }
+
+    [[nodiscard]] bool releasedThisFrame() const
+    {
+        return !keyIsDown && keyWasDown;
+    }
+};
+
+struct KeyboardInput
+{
+    KeyboardInputState A;
+    KeyboardInputState B;
+    KeyboardInputState up;
+    KeyboardInputState down;
+    KeyboardInputState left;
+    KeyboardInputState right;
+
+    KeyboardInputState select;
+    KeyboardInputState start;
+};
+
+void updateInputState(KeyboardInputState& currentState,
+                      const KeyboardInputState& previousState,
+                      const sf::Keyboard::Key key)
+{
+    currentState.keyWasDown = previousState.keyIsDown;
+    currentState.keyIsDown = sf::Keyboard::isKeyPressed(key);
+}
+
+void updateKeyboardInputs(KeyboardInput& currentInput,
+                          KeyboardInput& previousInput)
+{
+    updateInputState(currentInput.A, previousInput.A, sf::Keyboard::A);
+    updateInputState(currentInput.B, previousInput.B, sf::Keyboard::S);
+    updateInputState(currentInput.right,
+                     previousInput.right,
+                     sf::Keyboard::Right);
+
+    updateInputState(currentInput.left, previousInput.left, sf::Keyboard::Left);
+    previousInput = currentInput;
+}
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(200, 200), "Super Mario Bros");
@@ -13,6 +63,9 @@ int main()
     sprite.draw(window);
     window.display();
 
+    KeyboardInput currentInput = {};
+    KeyboardInput previousInput = {};
+
     while (window.isOpen())
     {
         sf::Event event = {};
@@ -22,36 +75,46 @@ int main()
                 window.close();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        updateKeyboardInputs(currentInput, previousInput);
+
+        if (currentInput.B.pressedThisFrame())
         {
             sprite.setForm(MarioForm::BIG_MARIO);
         }
-        else
+        else if (currentInput.B.releasedThisFrame())
         {
             sprite.setForm(MarioForm::SMALL_MARIO);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        if (currentInput.A.keyIsDown)
         {
             sprite.jump();
         }
         else
         {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+            if (currentInput.right.keyIsDown)
             {
                 sprite.setPosition(sprite.getX() + 1, sprite.getY());
-                sprite.walk();
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+            if (currentInput.left.keyIsDown)
             {
                 sprite.setPosition(sprite.getX() - 1, sprite.getY());
+            }
+
+            if (currentInput.right.pressedThisFrame() ||
+                currentInput.left.pressedThisFrame())
+            {
                 sprite.walk();
             }
-            if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) &&
-                !sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+
+            if (currentInput.right.releasedThisFrame() ||
+                currentInput.left.releasedThisFrame())
+            {
                 sprite.stopWalking();
+            }
         }
 
+        sprite.updateAnimation();
         window.clear();
         sprite.draw(window);
         window.display();
