@@ -6,6 +6,13 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+
+enum class MarioForm
+{
+    BIG_MARIO,
+    SMALL_MARIO
+};
+
 class Mario
 {
 public:
@@ -21,17 +28,21 @@ public:
     void stopWalking();
 
     void jump();
-    void grow();
+    void setForm(MarioForm form);
 
 private:
     std::shared_ptr<sf::Sprite> mActiveSprite;
     sf::Texture mTexture;
+
+    MarioForm mForm;
 
     Animation walkingAnimation;
     Animation jumpingAnimation;
     Animation standingAnimation;
 
     Animation bigWalkingAnimation;
+    Animation bigJumpingAnimation;
+    Animation bigStandingAnimation;
 };
 
 #endif  // SUPERMARIOBROS_MARIO_H

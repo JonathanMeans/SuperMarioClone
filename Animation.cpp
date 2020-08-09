@@ -25,8 +25,16 @@ void Animation::load(AnimationType type,
     case AnimationType::STANDING:
         generateRectangles(1, 80, 34, 16);
         break;
+
     case AnimationType::BIG_WALKING:
         generateRectangles(4, 80, 1, 32);
+        break;
+    case AnimationType ::BIG_JUMPING:
+        generateRectangles(2, 148, 1, 32);
+        repeat = false;
+        break;
+    case AnimationType::BIG_STANDING:
+        generateRectangles(1, 80, 1, 32);
         break;
     }
 }

@@ -23,6 +23,8 @@ Mario::Mario()
     standingAnimation.load(AnimationType::STANDING, mActiveSprite);
 
     bigWalkingAnimation.load(AnimationType::BIG_WALKING, mActiveSprite);
+    bigStandingAnimation.load(AnimationType::BIG_STANDING, mActiveSprite);
+    bigJumpingAnimation.load(AnimationType::BIG_JUMPING, mActiveSprite);
 }
 
 void Mario::draw(sf::RenderWindow& window)
@@ -47,20 +49,44 @@ size_t Mario::getY() const
 
 void Mario::walk()
 {
-    mActiveSprite = walkingAnimation.processAction();
+    switch (mForm)
+    {
+    case MarioForm::BIG_MARIO:
+        mActiveSprite = bigWalkingAnimation.processAction();
+        break;
+    case MarioForm::SMALL_MARIO:
+        mActiveSprite = walkingAnimation.processAction();
+        break;
+    }
 }
 
-void Mario::grow()
+void Mario::setForm(MarioForm form)
 {
-    mActiveSprite = bigWalkingAnimation.processAction();
+    mForm = form;
 }
 
 void Mario::stopWalking()
 {
-    mActiveSprite = standingAnimation.processAction();
+    switch (mForm)
+    {
+    case MarioForm::BIG_MARIO:
+        mActiveSprite = bigStandingAnimation.processAction();
+        break;
+    case MarioForm::SMALL_MARIO:
+        mActiveSprite = standingAnimation.processAction();
+        break;
+    }
 }
 
 void Mario::jump()
 {
-    mActiveSprite = jumpingAnimation.processAction();
+    switch (mForm)
+    {
+    case MarioForm::BIG_MARIO:
+        mActiveSprite = bigJumpingAnimation.processAction();
+        break;
+    case MarioForm::SMALL_MARIO:
+        mActiveSprite = jumpingAnimation.processAction();
+        break;
+    }
 }

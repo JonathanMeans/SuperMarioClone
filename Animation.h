@@ -12,7 +12,10 @@ enum class AnimationType
     WALKING,
     JUMPING,
     STANDING,
-    BIG_WALKING
+
+    BIG_WALKING,
+    BIG_JUMPING,
+    BIG_STANDING,
 };
 
 class Animation

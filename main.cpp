@@ -24,9 +24,14 @@ int main()
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            sprite.grow();
+            sprite.setForm(MarioForm::BIG_MARIO);
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        else
+        {
+            sprite.setForm(MarioForm::SMALL_MARIO);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
             sprite.jump();
         }
