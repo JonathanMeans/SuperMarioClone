@@ -5,6 +5,11 @@
 #include <memory>
 #include "SFML/Graphics.hpp"
 
+namespace
+{
+const auto MARIO_HEIGHT = 16;
+}
+
 Mario::Mario()
 {
     if (!mTexture.loadFromFile("../resources/Mario & Luigi.png"))
@@ -62,6 +67,23 @@ void Mario::walk()
 
 void Mario::setForm(MarioForm form)
 {
+    const bool formIsChanging = form != mForm;
+    if (formIsChanging)
+    {
+        if (form == MarioForm::BIG_MARIO)
+        {
+            const auto currentY = mActiveSprite->getPosition().y;
+            const auto newY = currentY - MARIO_HEIGHT;
+            mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
+        }
+        else if (form == MarioForm::SMALL_MARIO)
+        {
+            const auto currentY = mActiveSprite->getPosition().y;
+            const auto newY = currentY + MARIO_HEIGHT;
+            mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
+        }
+    }
+
     mForm = form;
 }
 
