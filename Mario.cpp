@@ -10,7 +10,7 @@ namespace
 const auto MARIO_HEIGHT = 16;
 }
 
-Mario::Mario() : mForm(MarioForm::SMALL_MARIO)
+Mario::Mario() : mForm(MarioForm::SMALL_MARIO), mVelocity(0, 0)
 {
     if (!mTexture.loadFromFile("../resources/Mario & Luigi.png"))
     {
@@ -121,4 +121,30 @@ void Mario::jump()
         mActiveAnimation = &jumpingAnimation;
         break;
     }
+}
+
+void Mario::setVelocity(const sf::Vector2<float>& newVelocity)
+{
+    if (newVelocity == this->mVelocity)
+        return;
+
+    if (newVelocity.x != 0)
+    {
+        walk();
+    }
+    else
+    {
+        stopWalking();
+    }
+    mVelocity = newVelocity;
+}
+
+void Mario::updatePosition()
+{
+    setPosition(getX() + mVelocity.x, getY() + mVelocity.y);
+}
+
+sf::Vector2f Mario::getVelocity() const
+{
+    return mVelocity;
 }

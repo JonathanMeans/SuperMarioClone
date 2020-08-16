@@ -31,10 +31,16 @@ public:
     void setForm(MarioForm form);
     void updateAnimation();
 
+    void setVelocity(const sf::Vector2<float>& setVelocity);
+    void updatePosition();
+
+    [[nodiscard]] sf::Vector2f getVelocity() const;
+
 private:
     std::shared_ptr<sf::Sprite> mActiveSprite;
     sf::Texture mTexture;
 
+    sf::Vector2f mVelocity;
     MarioForm mForm;
 
     Animation walkingAnimation;
