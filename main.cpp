@@ -40,6 +40,7 @@ void collideWithGround(Mario& sprite, const size_t groundY)
         sprite.setPosition(sprite.getX(), groundY - 16);
         const auto currentVelocity = sprite.getVelocity();
         sprite.setVelocity(sf::Vector2f(currentVelocity.x, 0));
+        sprite.stopWalking();
     }
 }
 
