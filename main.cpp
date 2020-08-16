@@ -86,7 +86,8 @@ int main()
             sprite.setForm(MarioForm::SMALL_MARIO);
         }
 
-        sf::Vector2f deltaVelocity = sprite.getVelocity();
+        sf::Vector2f acceleration = sprite.getAcceleration();
+        sf::Vector2f velocity = sprite.getVelocity();
         if (currentInput.A.keyIsDown)
         {
             sprite.jump();
@@ -96,21 +97,25 @@ int main()
             if (currentInput.right.pressedThisFrame())
             {
                 if (!currentInput.left.keyIsDown)
-                    deltaVelocity.x = 1;
+                    acceleration.x = 1;
             }
             if (currentInput.left.pressedThisFrame())
             {
                 if (!currentInput.right.keyIsDown)
-                    deltaVelocity.x = -1;
+                    acceleration.x = -1;
             }
-            if (currentInput.left.releasedThisFrame() ||
-                currentInput.right.releasedThisFrame())
+            if ((currentInput.left.releasedThisFrame() &&
+                 !currentInput.right.keyIsDown) ||
+                (currentInput.right.releasedThisFrame() &&
+                 !currentInput.left.keyIsDown))
             {
-                deltaVelocity.x = 0;
+                velocity.x = 0;
+                acceleration.x = 0;
             }
         }
 
-        sprite.setVelocity(deltaVelocity);
+        sprite.setAcceleration(acceleration);
+        sprite.setVelocity(velocity);
 
         sprite.updatePosition();
         sprite.updateAnimation();

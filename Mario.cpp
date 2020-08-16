@@ -10,7 +10,11 @@ namespace
 const auto MARIO_HEIGHT = 16;
 }
 
-Mario::Mario() : mForm(MarioForm::SMALL_MARIO), mVelocity(0, 0)
+Mario::Mario() :
+    mMaxVelocity(2.f),
+    mAcceleration(0, 0),
+    mForm(MarioForm::SMALL_MARIO),
+    mVelocity(0, 0)
 {
     if (!mTexture.loadFromFile("../resources/Mario & Luigi.png"))
     {
@@ -123,12 +127,12 @@ void Mario::jump()
     }
 }
 
-void Mario::setVelocity(const sf::Vector2<float>& newVelocity)
+void Mario::setAcceleration(const sf::Vector2<float>& acceleration)
 {
-    if (newVelocity == this->mVelocity)
+    if (acceleration == this->mAcceleration)
         return;
 
-    if (newVelocity.x != 0)
+    if (acceleration.x != 0)
     {
         walk();
     }
@@ -136,15 +140,34 @@ void Mario::setVelocity(const sf::Vector2<float>& newVelocity)
     {
         stopWalking();
     }
-    mVelocity = newVelocity;
+    mAcceleration = acceleration;
 }
 
 void Mario::updatePosition()
 {
+    mVelocity.x += mAcceleration.x;
+    mVelocity.y += mAcceleration.y;
+    if (mVelocity.x > 0 && mVelocity.x > mMaxVelocity)
+        mVelocity.x = mMaxVelocity;
+    if (mVelocity.x < 0 && mVelocity.x < -mMaxVelocity)
+        mVelocity.x = -mMaxVelocity;
+
+    // TODO: What to do about y?
+
     setPosition(getX() + mVelocity.x, getY() + mVelocity.y);
 }
 
 sf::Vector2f Mario::getVelocity() const
 {
     return mVelocity;
+}
+
+void Mario::setVelocity(const sf::Vector2f& newVelocity)
+{
+    mVelocity = newVelocity;
+}
+
+sf::Vector2f Mario::getAcceleration() const
+{
+    return mAcceleration;
 }

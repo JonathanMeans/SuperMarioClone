@@ -31,16 +31,21 @@ public:
     void setForm(MarioForm form);
     void updateAnimation();
 
-    void setVelocity(const sf::Vector2<float>& setVelocity);
+    void setAcceleration(const sf::Vector2<float>& setVelocity);
     void updatePosition();
 
+    void setVelocity(const sf::Vector2f& newVelocity);
     [[nodiscard]] sf::Vector2f getVelocity() const;
+    [[nodiscard]] sf::Vector2f getAcceleration() const;
 
 private:
+    const float mMaxVelocity;
+    sf::Vector2f mVelocity;
+    sf::Vector2f mAcceleration;
+
     std::shared_ptr<sf::Sprite> mActiveSprite;
     sf::Texture mTexture;
 
-    sf::Vector2f mVelocity;
     MarioForm mForm;
 
     Animation walkingAnimation;
