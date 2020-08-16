@@ -12,7 +12,7 @@ const auto MARIO_HEIGHT = 16;
 
 Mario::Mario() :
     mMaxVelocity(2.f),
-    mAcceleration(0, 0),
+    mAcceleration(0, 1),
     mForm(MarioForm::SMALL_MARIO),
     mVelocity(0, 0)
 {

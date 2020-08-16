@@ -32,6 +32,18 @@ struct KeyboardInput
     KeyboardInputState start;
 };
 
+void collideWithGround(Mario& sprite, const size_t groundY)
+{
+    const auto groundWidth = 4;
+    const auto spriteBottom = sprite.getY() + 16;
+    if (spriteBottom > groundY && spriteBottom < groundY + groundWidth)
+    {
+        sprite.setPosition(sprite.getX(), groundY - 16);
+        const auto currentVelocity = sprite.getVelocity();
+        sprite.setVelocity(sf::Vector2f(currentVelocity.x, 0));
+    }
+}
+
 void updateInputState(KeyboardInputState& currentState,
                       const KeyboardInputState& previousState,
                       const sf::Keyboard::Key key)
@@ -65,6 +77,8 @@ int main()
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
+
+    const size_t groundY = sprite.getY() + 20;
 
     while (window.isOpen())
     {
@@ -109,6 +123,7 @@ int main()
                 (currentInput.right.releasedThisFrame() &&
                  !currentInput.left.keyIsDown))
             {
+                // TODO: Should we decelerate to 0?
                 velocity.x = 0;
                 acceleration.x = 0;
             }
@@ -118,6 +133,8 @@ int main()
         sprite.setVelocity(velocity);
 
         sprite.updatePosition();
+        collideWithGround(sprite, groundY);
+
         sprite.updateAnimation();
         window.clear();
         sprite.draw(window);
