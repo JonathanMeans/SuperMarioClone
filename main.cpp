@@ -34,9 +34,8 @@ struct KeyboardInput
 
 void collideWithGround(Mario& sprite, const size_t groundY)
 {
-    const auto groundWidth = 4;
     const auto spriteBottom = sprite.getY() + 16;
-    if (spriteBottom > groundY && spriteBottom < groundY + groundWidth)
+    if (spriteBottom > groundY)
     {
         sprite.setPosition(sprite.getX(), groundY - 16);
         const auto currentVelocity = sprite.getVelocity();
@@ -105,6 +104,7 @@ int main()
         if (currentInput.A.keyIsDown)
         {
             sprite.jump();
+            velocity.y = -5;
         }
         else
         {
