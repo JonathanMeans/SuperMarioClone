@@ -10,13 +10,13 @@ namespace
 const auto MARIO_HEIGHT = 16;
 }
 
-Mario::Mario() :
+Mario::Mario(const std::string& resourcesDir) :
     mMaxVelocity(2.f),
     mAcceleration(0, 1),
     mForm(MarioForm::SMALL_MARIO),
     mVelocity(0, 0)
 {
-    if (!mTexture.loadFromFile("../resources/Mario & Luigi.png"))
+    if (!mTexture.loadFromFile(resourcesDir + "Mario & Luigi.png"))
     {
         std::cerr << "Error Loading Texture";
         throw std::runtime_error("Unable to load Mario texture");

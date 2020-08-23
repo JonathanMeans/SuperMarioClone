@@ -3,6 +3,8 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 
+#include <file_util.h>
+
 struct KeyboardInputState
 {
     bool keyIsDown;
@@ -65,13 +67,16 @@ void updateKeyboardInputs(KeyboardInput& currentInput,
     previousInput = currentInput;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
+    const auto root = findRootDirectory(argv[0]);
+    const auto resourceDir = root + "resources/";
+
     sf::RenderWindow window(sf::VideoMode(200, 200), "Super Mario Bros");
     window.setFramerateLimit(30);
     window.setSize(sf::Vector2u(960, 720));
     window.clear();
-    Mario sprite;
+    Mario sprite(resourceDir);
     sprite.draw(window);
     window.display();
 

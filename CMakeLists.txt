@@ -19,7 +19,7 @@ endif ()
 
 enable_testing()
 
-add_library(MarioLib Animation.cpp)
+add_library(MarioLib Animation.cpp file_util.cpp)
 target_include_directories(MarioLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(MarioLib PRIVATE -Wall -Wextra -Werror)
 

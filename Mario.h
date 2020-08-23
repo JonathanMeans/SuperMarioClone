@@ -16,7 +16,7 @@ enum class MarioForm
 class Mario
 {
 public:
-    Mario();
+    explicit Mario(const std::string& resourcesDir);
     void draw(sf::RenderWindow& window);
 
     void walk();
