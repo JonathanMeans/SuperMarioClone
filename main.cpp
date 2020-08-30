@@ -36,10 +36,10 @@ struct KeyboardInput
 
 void collideWithGround(Mario& sprite, const size_t groundY)
 {
-    const auto spriteBottom = sprite.getY() + 16;
+    const auto spriteBottom = sprite.getBottomPosition();
     if (spriteBottom > groundY)
     {
-        sprite.setPosition(sprite.getX(), groundY - 16);
+        sprite.setBottomPosition(groundY);
         const auto currentVelocity = sprite.getVelocity();
         sprite.setVelocity(sf::Vector2f(currentVelocity.x, 0));
     }

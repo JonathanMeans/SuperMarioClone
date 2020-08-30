@@ -64,6 +64,22 @@ size_t Mario::getY() const
     return mActiveSprite->getPosition().y;
 }
 
+size_t Mario::getBottomPosition() const
+{
+    if (mForm == MarioForm::SMALL_MARIO)
+        return getY() + MARIO_HEIGHT;
+    else
+        return getY() + (2 * MARIO_HEIGHT);
+}
+
+void Mario::setBottomPosition(size_t newBottomY)
+{
+    const auto newX = getX();
+    const auto newY = newBottomY -
+            (mForm == MarioForm::SMALL_MARIO ? MARIO_HEIGHT : 2 * MARIO_HEIGHT);
+    mActiveSprite->setPosition(newX, newY);
+}
+
 void Mario::setAnimation()
 {
     if (mVelocity.y != 0)

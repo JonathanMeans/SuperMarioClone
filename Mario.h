@@ -25,6 +25,9 @@ public:
     size_t getX() const;
     size_t getY() const;
 
+    size_t getBottomPosition() const;
+    void setBottomPosition(size_t newBottomY);
+
     void stopWalking();
 
     void jump();
