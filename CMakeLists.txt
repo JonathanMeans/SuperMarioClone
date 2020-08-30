@@ -22,9 +22,12 @@ enable_testing()
 add_library(MarioLib Animation.cpp file_util.cpp)
 target_include_directories(MarioLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(MarioLib PRIVATE -Wall -Wextra -Werror)
+target_link_libraries(MarioLib sfml-window sfml-graphics)
+target_include_directories(MarioLib PRIVATE ${sfml_INCLUDE_DIR})
 
 add_executable(SuperMarioBros main.cpp Mario.cpp)
 target_link_libraries(SuperMarioBros sfml-window sfml-graphics MarioLib)
-target_link_libraries(SuperMarioBros PRIVATE ${sfml_INCLUDE_DIR})
+target_include_directories(SuperMarioBros PRIVATE ${sfml_INCLUDE_DIR})
+
 
 add_subdirectory(unittests)

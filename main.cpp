@@ -42,7 +42,6 @@ void collideWithGround(Mario& sprite, const size_t groundY)
         sprite.setPosition(sprite.getX(), groundY - 16);
         const auto currentVelocity = sprite.getVelocity();
         sprite.setVelocity(sf::Vector2f(currentVelocity.x, 0));
-        sprite.stopJumping();
     }
 }
 
@@ -65,6 +64,20 @@ void updateKeyboardInputs(KeyboardInput& currentInput,
 
     updateInputState(currentInput.left, previousInput.left, sf::Keyboard::Left);
     previousInput = currentInput;
+}
+
+void setAnimation(Mario& sprite, sf::Vector2f acceleration, sf::Vector2f velocity)
+{
+    if (velocity.y != 0)
+    {
+        sprite.jump();
+    } else if (acceleration.x != 0)
+    {
+        sprite.walk();
+    } else
+    {
+        sprite.stopWalking();
+    }
 }
 
 int main(int argc, char* argv[])
@@ -109,11 +122,9 @@ int main(int argc, char* argv[])
         sf::Vector2f velocity = sprite.getVelocity();
         if (currentInput.A.keyIsDown)
         {
-            sprite.jump();
             velocity.y = -5;
         }
-        else
-        {
+
             if (currentInput.right.pressedThisFrame())
             {
                 if (!currentInput.left.keyIsDown)
@@ -133,13 +144,13 @@ int main(int argc, char* argv[])
                 velocity.x = 0;
                 acceleration.x = 0;
             }
-        }
 
         sprite.setAcceleration(acceleration);
         sprite.setVelocity(velocity);
 
         sprite.updatePosition();
         collideWithGround(sprite, groundY);
+        setAnimation(sprite, acceleration, velocity);
 
         sprite.updateAnimation();
         window.clear();

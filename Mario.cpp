@@ -131,27 +131,7 @@ void Mario::setAcceleration(const sf::Vector2<float>& acceleration)
 {
     if (acceleration == this->mAcceleration)
         return;
-
-    if (acceleration.x != 0)
-    {
-        walk();
-    }
-    else
-    {
-        stopWalking();
-    }
     mAcceleration = acceleration;
-}
-
-void Mario::stopJumping()
-{
-    if (mActiveAnimation == &jumpingAnimation)
-    {
-        if (getVelocity().x == 0)
-            mActiveAnimation = &standingAnimation;
-        else
-            mActiveAnimation = &walkingAnimation;
-    }
 }
 
 void Mario::updatePosition()

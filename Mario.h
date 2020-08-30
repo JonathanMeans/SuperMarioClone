@@ -26,7 +26,6 @@ public:
     size_t getY() const;
 
     void stopWalking();
-    void stopJumping();
 
     void jump();
     void setForm(MarioForm form);
