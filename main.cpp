@@ -66,15 +66,19 @@ void updateKeyboardInputs(KeyboardInput& currentInput,
     previousInput = currentInput;
 }
 
-void setAnimation(Mario& sprite, sf::Vector2f acceleration, sf::Vector2f velocity)
+void setAnimation(Mario& sprite,
+                  sf::Vector2f acceleration,
+                  sf::Vector2f velocity)
 {
     if (velocity.y != 0)
     {
         sprite.jump();
-    } else if (acceleration.x != 0)
+    }
+    else if (acceleration.x != 0)
     {
         sprite.walk();
-    } else
+    }
+    else
     {
         sprite.stopWalking();
     }
@@ -125,25 +129,25 @@ int main(int argc, char* argv[])
             velocity.y = -5;
         }
 
-            if (currentInput.right.pressedThisFrame())
-            {
-                if (!currentInput.left.keyIsDown)
-                    acceleration.x = 1;
-            }
-            if (currentInput.left.pressedThisFrame())
-            {
-                if (!currentInput.right.keyIsDown)
-                    acceleration.x = -1;
-            }
-            if ((currentInput.left.releasedThisFrame() &&
-                 !currentInput.right.keyIsDown) ||
-                (currentInput.right.releasedThisFrame() &&
-                 !currentInput.left.keyIsDown))
-            {
-                // TODO: Should we decelerate to 0?
-                velocity.x = 0;
-                acceleration.x = 0;
-            }
+        if (currentInput.right.pressedThisFrame())
+        {
+            if (!currentInput.left.keyIsDown)
+                acceleration.x = 1;
+        }
+        if (currentInput.left.pressedThisFrame())
+        {
+            if (!currentInput.right.keyIsDown)
+                acceleration.x = -1;
+        }
+        if ((currentInput.left.releasedThisFrame() &&
+             !currentInput.right.keyIsDown) ||
+            (currentInput.right.releasedThisFrame() &&
+             !currentInput.left.keyIsDown))
+        {
+            // TODO: Should we decelerate to 0?
+            velocity.x = 0;
+            acceleration.x = 0;
+        }
 
         sprite.setAcceleration(acceleration);
         sprite.setVelocity(velocity);
