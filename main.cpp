@@ -76,9 +76,8 @@ int main(int argc, char* argv[])
     window.setFramerateLimit(30);
     window.setSize(sf::Vector2u(960, 720));
     window.clear();
+
     Mario mario(resourceDir);
-    mario.draw(window);
-    window.display();
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
