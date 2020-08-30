@@ -44,6 +44,11 @@ public:
     [[nodiscard]] sf::Vector2f getVelocity() const;
     [[nodiscard]] sf::Vector2f getAcceleration() const;
 
+    inline void setJumping(bool isJumping)
+    {
+        mJumping = isJumping;
+    }
+
 private:
     const float mMaxVelocity;
     sf::Vector2f mVelocity;
@@ -65,6 +70,7 @@ private:
     Animation* mActiveAnimation;
 
     bool mChangingDirection;
+    bool mJumping;
     int mLookDirection;
 };
 

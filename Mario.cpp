@@ -16,7 +16,8 @@ Mario::Mario(const std::string& resourcesDir) :
     mForm(MarioForm::SMALL_MARIO),
     mVelocity(0, 0),
     mChangingDirection(false),
-    mLookDirection(1)
+    mLookDirection(1),
+    mJumping(false)
 {
     if (!mTexture.loadFromFile(resourcesDir + "Mario & Luigi.png"))
     {
@@ -82,7 +83,7 @@ void Mario::setBottomPosition(size_t newBottomY)
 
 void Mario::setAnimation()
 {
-    if (mVelocity.y != 0)
+    if (mJumping)
     {
         jump();
     }

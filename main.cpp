@@ -42,6 +42,7 @@ void collideWithGround(Mario& sprite, const size_t groundY)
         sprite.setBottomPosition(groundY);
         const auto currentVelocity = sprite.getVelocity();
         sprite.setVelocity(sf::Vector2f(currentVelocity.x, 0));
+        sprite.setJumping(false);
     }
 }
 
@@ -108,6 +109,7 @@ int main(int argc, char* argv[])
         sf::Vector2f velocity = mario.getVelocity();
         if (currentInput.A.keyIsDown)
         {
+            mario.setJumping(true);
             velocity.y = -5;
         }
 
