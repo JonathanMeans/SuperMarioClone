@@ -29,6 +29,9 @@ public:
 
     void jump();
     void setForm(MarioForm form);
+
+    // TODO: Make the difference between these more clear
+    void setAnimation();
     void updateAnimation();
 
     void setAcceleration(const sf::Vector2<float>& setVelocity);

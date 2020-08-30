@@ -66,24 +66,6 @@ void updateKeyboardInputs(KeyboardInput& currentInput,
     previousInput = currentInput;
 }
 
-void setAnimation(Mario& sprite,
-                  sf::Vector2f acceleration,
-                  sf::Vector2f velocity)
-{
-    if (velocity.y != 0)
-    {
-        sprite.jump();
-    }
-    else if (acceleration.x != 0)
-    {
-        sprite.walk();
-    }
-    else
-    {
-        sprite.stopWalking();
-    }
-}
-
 int main(int argc, char* argv[])
 {
     const auto root = findRootDirectory(argv[0]);
@@ -93,14 +75,14 @@ int main(int argc, char* argv[])
     window.setFramerateLimit(30);
     window.setSize(sf::Vector2u(960, 720));
     window.clear();
-    Mario sprite(resourceDir);
-    sprite.draw(window);
+    Mario mario(resourceDir);
+    mario.draw(window);
     window.display();
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
 
-    const size_t groundY = sprite.getY() + 20;
+    const size_t groundY = mario.getY() + 20;
 
     while (window.isOpen())
     {
@@ -115,15 +97,15 @@ int main(int argc, char* argv[])
 
         if (currentInput.B.pressedThisFrame())
         {
-            sprite.setForm(MarioForm::BIG_MARIO);
+            mario.setForm(MarioForm::BIG_MARIO);
         }
         else if (currentInput.B.releasedThisFrame())
         {
-            sprite.setForm(MarioForm::SMALL_MARIO);
+            mario.setForm(MarioForm::SMALL_MARIO);
         }
 
-        sf::Vector2f acceleration = sprite.getAcceleration();
-        sf::Vector2f velocity = sprite.getVelocity();
+        sf::Vector2f acceleration = mario.getAcceleration();
+        sf::Vector2f velocity = mario.getVelocity();
         if (currentInput.A.keyIsDown)
         {
             velocity.y = -5;
@@ -149,16 +131,17 @@ int main(int argc, char* argv[])
             acceleration.x = 0;
         }
 
-        sprite.setAcceleration(acceleration);
-        sprite.setVelocity(velocity);
+        mario.setAcceleration(acceleration);
+        mario.setVelocity(velocity);
 
-        sprite.updatePosition();
-        collideWithGround(sprite, groundY);
-        setAnimation(sprite, acceleration, velocity);
+        mario.updatePosition();
+        collideWithGround(mario, groundY);
 
-        sprite.updateAnimation();
+        mario.setAnimation();
+        mario.updateAnimation();
+
         window.clear();
-        sprite.draw(window);
+        mario.draw(window);
         window.display();
     }
 

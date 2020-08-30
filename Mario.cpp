@@ -59,6 +59,22 @@ size_t Mario::getY() const
     return mActiveSprite->getPosition().y;
 }
 
+void Mario::setAnimation()
+{
+    if (mVelocity.y != 0)
+    {
+        jump();
+    }
+    else if (mAcceleration.x != 0)
+    {
+        walk();
+    }
+    else
+    {
+        stopWalking();
+    }
+}
+
 void Mario::updateAnimation()
 {
     mActiveAnimation->processAction();
