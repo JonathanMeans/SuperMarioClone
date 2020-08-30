@@ -60,6 +60,9 @@ private:
     Animation bigStandingAnimation;
 
     Animation* mActiveAnimation;
+
+    bool mChangingDirection;
+    int mLookDirection;
 };
 
 #endif  // SUPERMARIOBROS_MARIO_H

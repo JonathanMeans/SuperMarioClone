@@ -14,7 +14,9 @@ Mario::Mario(const std::string& resourcesDir) :
     mMaxVelocity(2.f),
     mAcceleration(0, 1),
     mForm(MarioForm::SMALL_MARIO),
-    mVelocity(0, 0)
+    mVelocity(0, 0),
+    mChangingDirection(false),
+    mLookDirection(1)
 {
     if (!mTexture.loadFromFile(resourcesDir + "Mario & Luigi.png"))
     {
@@ -37,6 +39,9 @@ Mario::Mario(const std::string& resourcesDir) :
 
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
+
+    const auto spriteOrigin = MARIO_HEIGHT / 2;
+    mActiveSprite->setOrigin(spriteOrigin, 0);
 }
 
 void Mario::draw(sf::RenderWindow& window)
@@ -72,6 +77,12 @@ void Mario::setAnimation()
     else
     {
         stopWalking();
+    }
+
+    if (mChangingDirection)
+    {
+        mActiveSprite->scale(-1.f, 1.f);
+        mChangingDirection = false;
     }
 }
 
@@ -143,10 +154,27 @@ void Mario::jump()
     }
 }
 
+int sign(float val)
+{
+    if (val > 0)
+        return 1;
+    if (val < 0)
+        return -1;
+    return 0;
+}
+
 void Mario::setAcceleration(const sf::Vector2<float>& acceleration)
 {
     if (acceleration == this->mAcceleration)
         return;
+
+    if (acceleration.x != 0 &&
+        (sign(acceleration.x) != sign(static_cast<float>(mLookDirection))))
+    {
+        mChangingDirection = true;
+        mLookDirection *= -1;
+    }
+
     mAcceleration = acceleration;
 }
 
