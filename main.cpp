@@ -78,6 +78,7 @@ int main(int argc, char* argv[])
     window.clear();
 
     Mario mario(resourceDir);
+    Goomba goomba(resourceDir);
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
@@ -141,8 +142,11 @@ int main(int argc, char* argv[])
         mario.setAnimation();
         mario.updateAnimation();
 
-        window.clear();
+        goomba.updateAnimation();
+
+        window.clear(sf::Color(0, 0, 255, 255));
         mario.draw(window);
+        goomba.draw(window);
         window.display();
     }
 

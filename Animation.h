@@ -16,6 +16,8 @@ enum class AnimationType
     BIG_WALKING,
     BIG_JUMPING,
     BIG_STANDING,
+
+    GOOMBA_WALKING,
 };
 
 class Animation
@@ -40,7 +42,8 @@ private:
     void generateRectangles(size_t numRectangles,
                             size_t initialOffset,
                             size_t yOffset,
-                            size_t rectHeight);
+                            size_t rectHeight,
+                            size_t rectXOffset);
 };
 
 #endif  // SUPERMARIOBROS_ANIMATION_H

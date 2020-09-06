@@ -16,25 +16,31 @@ void Animation::load(AnimationType type,
     switch (type)
     {
     case AnimationType::WALKING:
-        generateRectangles(4, 80, 34, 16);
+        generateRectangles(4, 80, 34, 16, 17);
         break;
     case AnimationType::JUMPING:
-        generateRectangles(2, 148, 34, 16);
+        generateRectangles(2, 148, 34, 16, 17);
         repeat = false;
         break;
     case AnimationType::STANDING:
-        generateRectangles(1, 80, 34, 16);
+        generateRectangles(1, 80, 34, 16, 17);
         break;
 
     case AnimationType::BIG_WALKING:
-        generateRectangles(4, 80, 1, 32);
+        generateRectangles(4, 80, 1, 32, 17);
         break;
     case AnimationType ::BIG_JUMPING:
-        generateRectangles(2, 148, 1, 32);
+        generateRectangles(2, 148, 1, 32, 17);
         repeat = false;
         break;
     case AnimationType::BIG_STANDING:
-        generateRectangles(1, 80, 1, 32);
+        generateRectangles(1, 80, 1, 32, 17);
+        break;
+
+    case AnimationType::GOOMBA_WALKING:
+        generateRectangles(2, 0, 16, 16, 16);
+        mTicsPerFrame = 4;
+        mRemainingTicsThisFrame = 4;
         break;
     }
 }
@@ -42,13 +48,13 @@ void Animation::load(AnimationType type,
 void Animation::generateRectangles(size_t numRectangles,
                                    size_t initialOffset,
                                    size_t yOffset,
-                                   size_t rectHeight)
+                                   size_t rectHeight,
+                                   size_t rectXOffset)
 {
     mActionRectangles.resize(numRectangles);
     for (size_t ii = 0; ii < numRectangles; ++ii)
     {
-        static const size_t X_OFFSET = 17;
-        mActionRectangles[ii] = sf::IntRect(initialOffset + (X_OFFSET * ii),
+        mActionRectangles[ii] = sf::IntRect(initialOffset + (rectXOffset * ii),
                                             yOffset,
                                             16,
                                             rectHeight);
