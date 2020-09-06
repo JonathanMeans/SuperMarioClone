@@ -28,16 +28,9 @@ Goomba::Goomba(const std::string& resourcesDir) :
     mActiveAnimation = &walkingAnimation;
 }
 
-size_t Goomba::getBottomPosition() const
+size_t Goomba::getHeight() const
 {
-    return getY() + MARIO_HEIGHT;
-}
-
-void Goomba::setBottomPosition(size_t newBottomY)
-{
-    const auto newX = getX();
-    const auto newY = newBottomY - MARIO_HEIGHT;
-    mActiveSprite->setPosition(newX, newY);
+    return MARIO_HEIGHT;
 }
 
 void Goomba::draw(sf::RenderWindow& window)

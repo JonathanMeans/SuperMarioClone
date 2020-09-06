@@ -5,19 +5,19 @@
 #include <SFML/System.hpp>
 #include "Animation.h"
 
-class Goomba
+#include "Fallable.h"
+
+class Goomba : public Fallable
 {
 public:
     explicit Goomba(const std::string& resourcesDir);
     void draw(sf::RenderWindow& window);
 
-    void setPosition(size_t x, size_t y);
-    size_t getX() const;
-    size_t getY() const;
+    void setPosition(size_t x, size_t y) override;
+    size_t getX() const override;
+    size_t getY() const override;
+    size_t getHeight() const override;
     void updateAnimation();
-
-    size_t getBottomPosition() const;
-    void setBottomPosition(size_t newBottomY);
 
     void setAcceleration(const sf::Vector2<float>& setVelocity);
     void updatePosition();

@@ -1,11 +1,12 @@
 #ifndef SUPERMARIOBROS_MARIO_H
 #define SUPERMARIOBROS_MARIO_H
 
-#include "Animation.h"
-
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+
+#include "Animation.h"
+#include "Fallable.h"
 
 enum class MarioForm
 {
@@ -13,7 +14,7 @@ enum class MarioForm
     SMALL_MARIO
 };
 
-class Mario
+class Mario : public Fallable
 {
 public:
     explicit Mario(const std::string& resourcesDir);
@@ -21,12 +22,10 @@ public:
 
     void walk();
 
-    void setPosition(size_t x, size_t y);
-    size_t getX() const;
-    size_t getY() const;
-
-    size_t getBottomPosition() const;
-    void setBottomPosition(size_t newBottomY);
+    void setPosition(size_t x, size_t y) override;
+    size_t getX() const override;
+    size_t getY() const override;
+    size_t getHeight() const override;
 
     void stopWalking();
 
