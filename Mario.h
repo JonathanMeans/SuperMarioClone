@@ -13,21 +13,6 @@ enum class MarioForm
     SMALL_MARIO
 };
 
-class Goomba
-{
-public:
-    explicit Goomba(const std::string& resourcesDir);
-    void draw(sf::RenderWindow& window);
-
-    void updateAnimation();
-
-private:
-    std::shared_ptr<sf::Sprite> mActiveSprite;
-    Animation* mActiveAnimation;
-    sf::Texture mTexture;
-    Animation walkingAnimation;
-};
-
 class Mario
 {
 public:

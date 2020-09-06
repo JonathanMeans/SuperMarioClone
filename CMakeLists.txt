@@ -19,13 +19,13 @@ endif ()
 
 enable_testing()
 
-add_library(MarioLib Animation.cpp file_util.cpp)
+add_library(MarioLib Animation.cpp file_util.cpp Goomba.cpp Goomba.h)
 target_include_directories(MarioLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(MarioLib PRIVATE -Wall -Wextra -Werror)
 target_link_libraries(MarioLib sfml-window sfml-graphics)
 target_include_directories(MarioLib PRIVATE ${sfml_INCLUDE_DIR})
 
-add_executable(SuperMarioBros main.cpp Mario.cpp)
+add_executable(SuperMarioBros main.cpp Mario.cpp Goomba.cpp)
 target_link_libraries(SuperMarioBros sfml-window sfml-graphics MarioLib)
 target_include_directories(SuperMarioBros PRIVATE ${sfml_INCLUDE_DIR})
 

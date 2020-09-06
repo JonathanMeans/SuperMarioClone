@@ -10,34 +10,18 @@ namespace
 const auto MARIO_HEIGHT = 16;
 }
 
-Goomba::Goomba(const std::string& resourcesDir)
+void Mario::updatePosition()
 {
-    if (!mTexture.loadFromFile(resourcesDir + "enemies.png"))
-    {
-        std::cerr << "Error Loading Texture";
-        throw std::runtime_error("Unable to load Enemies texture");
-    }
-    mTexture.setSmooth(false);
+    mVelocity.x += mAcceleration.x;
+    mVelocity.y += mAcceleration.y;
+    if (mVelocity.x > 0 && mVelocity.x > mMaxVelocity)
+        mVelocity.x = mMaxVelocity;
+    if (mVelocity.x < 0 && mVelocity.x < -mMaxVelocity)
+        mVelocity.x = -mMaxVelocity;
 
-    mActiveSprite = std::make_shared<sf::Sprite>();
-    mActiveSprite->setPosition(150, 100);
-    mActiveSprite->setTexture(mTexture);
+    // TODO: What to do about y?
 
-    walkingAnimation.load(AnimationType::GOOMBA_WALKING, mActiveSprite);
-    const auto spriteOrigin = MARIO_HEIGHT / 2;
-    mActiveSprite->setOrigin(spriteOrigin, 0);
-
-    mActiveAnimation = &walkingAnimation;
-}
-
-void Goomba::draw(sf::RenderWindow& window)
-{
-    window.draw(*mActiveSprite);
-}
-
-void Goomba::updateAnimation()
-{
-    mActiveAnimation->processAction();
+    setPosition(getX() + mVelocity.x, getY() + mVelocity.y);
 }
 
 Mario::Mario(const std::string& resourcesDir) :
@@ -223,20 +207,6 @@ void Mario::setAcceleration(const sf::Vector2<float>& acceleration)
     }
 
     mAcceleration = acceleration;
-}
-
-void Mario::updatePosition()
-{
-    mVelocity.x += mAcceleration.x;
-    mVelocity.y += mAcceleration.y;
-    if (mVelocity.x > 0 && mVelocity.x > mMaxVelocity)
-        mVelocity.x = mMaxVelocity;
-    if (mVelocity.x < 0 && mVelocity.x < -mMaxVelocity)
-        mVelocity.x = -mMaxVelocity;
-
-    // TODO: What to do about y?
-
-    setPosition(getX() + mVelocity.x, getY() + mVelocity.y);
 }
 
 sf::Vector2f Mario::getVelocity() const
