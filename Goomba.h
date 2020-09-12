@@ -22,8 +22,8 @@ public:
     void setAcceleration(const sf::Vector2<float>& setVelocity);
     void updatePosition();
 
-    void setVelocity(const sf::Vector2f& newVelocity);
-    [[nodiscard]] sf::Vector2f getVelocity() const;
+    void setVelocity(const sf::Vector2f& newVelocity) override;
+    [[nodiscard]] sf::Vector2f getVelocity() const override;
     [[nodiscard]] sf::Vector2f getAcceleration() const;
 
 private:

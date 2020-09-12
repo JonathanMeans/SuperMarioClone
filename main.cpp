@@ -35,29 +35,6 @@ struct KeyboardInput
     KeyboardInputState start;
 };
 
-void collideWithGround(Mario& sprite, const size_t groundY)
-{
-    const auto spriteBottom = sprite.getBottomPosition();
-    if (spriteBottom > groundY)
-    {
-        sprite.setBottomPosition(groundY);
-        const auto currentVelocity = sprite.getVelocity();
-        sprite.setVelocity(sf::Vector2f(currentVelocity.x, 0));
-        sprite.setJumping(false);
-    }
-}
-
-void collideWithGround(Goomba& sprite, const size_t groundY)
-{
-    const auto spriteBottom = sprite.getBottomPosition();
-    if (spriteBottom > groundY)
-    {
-        sprite.setBottomPosition(groundY);
-        const auto currentVelocity = sprite.getVelocity();
-        sprite.setVelocity(sf::Vector2f(currentVelocity.x, 0));
-    }
-}
-
 void updateInputState(KeyboardInputState& currentState,
                       const KeyboardInputState& previousState,
                       const sf::Keyboard::Key key)
@@ -150,8 +127,8 @@ int main(int argc, char* argv[])
 
         mario.updatePosition();
         goomba.updatePosition();
-        collideWithGround(mario, groundY);
-        collideWithGround(goomba, groundY);
+        mario.collideWithGround(groundY);
+        goomba.collideWithGround(groundY);
 
         mario.setAnimation();
         mario.updateAnimation();
