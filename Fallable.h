@@ -19,8 +19,6 @@ public:
     virtual void setVelocity(const sf::Vector2f& newVelocity) = 0;
     virtual void setPosition(size_t x, size_t y) = 0;
     virtual bool collideWithGround(const size_t groundY);
-
-
 };
 
 #endif  // SUPERMARIOBROS_FALLABLE_H

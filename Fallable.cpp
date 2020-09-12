@@ -2,7 +2,9 @@
 
 #include "SFML/Graphics.hpp"
 
-Fallable::~Fallable() {}
+Fallable::~Fallable()
+{
+}
 
 size_t Fallable::getBottomPosition()
 {

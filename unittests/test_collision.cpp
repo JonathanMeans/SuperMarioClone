@@ -2,15 +2,13 @@
 #include "Fallable.h"
 #include "file_util.h"
 
-class FallableStub:public Fallable
+class FallableStub : public Fallable
 {
-
     sf::Vector2f mVelocity;
     size_t mX;
     size_t mY;
 
 public:
-
     sf::Vector2f getVelocity() const
     {
         return mVelocity;

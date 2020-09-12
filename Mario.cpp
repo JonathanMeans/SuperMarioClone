@@ -204,7 +204,8 @@ void Mario::setAcceleration(const sf::Vector2<float>& acceleration)
 bool Mario::collideWithGround(const size_t groundY)
 {
     bool atGround = Fallable::collideWithGround(groundY);
-    if (atGround) {
+    if (atGround)
+    {
         setJumping(false);
     }
     return atGround;

@@ -1,5 +1,5 @@
-#include "Mario.h"
 #include "Goomba.h"
+#include "Mario.h"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
