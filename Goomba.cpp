@@ -26,11 +26,6 @@ Goomba::Goomba(const std::string& resourcesDir)
     mActiveAnimation = &walkingAnimation;
 }
 
-size_t Goomba::getHeight() const
-{
-    return MARIO_HEIGHT;
-}
-
 void Goomba::draw(sf::RenderWindow& window)
 {
     window.draw(*mActiveSprite);
@@ -39,19 +34,4 @@ void Goomba::draw(sf::RenderWindow& window)
 void Goomba::updateAnimation()
 {
     mActiveAnimation->processAction();
-}
-
-void Goomba::setPosition(size_t x, size_t y)
-{
-    mActiveSprite->setPosition(x, y);
-}
-
-size_t Goomba::getX() const
-{
-    return mActiveSprite->getPosition().x;
-}
-
-size_t Goomba::getY() const
-{
-    return mActiveSprite->getPosition().y;
 }

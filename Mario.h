@@ -22,9 +22,6 @@ public:
 
     void walk();
 
-    void setPosition(size_t x, size_t y) override;
-    size_t getX() const override;
-    size_t getY() const override;
     size_t getHeight() const override;
 
     void stopWalking();
@@ -44,7 +41,6 @@ public:
     }
 
 private:
-    std::shared_ptr<sf::Sprite> mActiveSprite;
     sf::Texture mTexture;
 
     MarioForm mForm;

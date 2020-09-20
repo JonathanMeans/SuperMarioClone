@@ -105,3 +105,23 @@ void Fallable::setMaxVelocity(size_t maxVelocity)
 {
     mMaxVelocity = maxVelocity;
 }
+
+size_t Fallable::getX() const
+{
+    return mActiveSprite->getPosition().x;
+}
+
+size_t Fallable::getY() const
+{
+    return mActiveSprite->getPosition().y;
+}
+
+size_t Fallable::getHeight() const
+{
+    return GRIDBOX_SIZE;
+}
+
+void Fallable::setPosition(size_t x, size_t y)
+{
+    mActiveSprite->setPosition(x,y);
+}

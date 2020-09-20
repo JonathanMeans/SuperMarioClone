@@ -13,14 +13,9 @@ public:
     explicit Goomba(const std::string& resourcesDir);
     void draw(sf::RenderWindow& window);
 
-    void setPosition(size_t x, size_t y) override;
-    size_t getX() const override;
-    size_t getY() const override;
-    size_t getHeight() const override;
     void updateAnimation();
 
 private:
-    std::shared_ptr<sf::Sprite> mActiveSprite;
     Animation* mActiveAnimation;
     sf::Texture mTexture;
     Animation walkingAnimation;

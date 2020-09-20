@@ -8,17 +8,17 @@ class FallableStub : public Fallable
     size_t mY;
 
 public:
-    size_t getY() const
+    size_t getY() const override
     {
         return mY;
     }
 
-    size_t getX() const
+    size_t getX() const override
     {
         return mX;
     }
 
-    size_t getHeight() const
+    size_t getHeight() const override
     {
         return 16;
     }

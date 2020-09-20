@@ -6,7 +6,7 @@
 
 namespace
 {
-const auto MARIO_HEIGHT = 16;
+//const auto MARIO_HEIGHT = 16;
 }
 
 Mario::Mario(const std::string& resourcesDir) :
@@ -37,7 +37,7 @@ Mario::Mario(const std::string& resourcesDir) :
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
 
-    const auto spriteOrigin = MARIO_HEIGHT / 2;
+    const auto spriteOrigin = GRIDBOX_SIZE / 2;
     mActiveSprite->setOrigin(spriteOrigin, 0);
 }
 
@@ -46,27 +46,12 @@ void Mario::draw(sf::RenderWindow& window)
     window.draw(*mActiveSprite);
 }
 
-void Mario::setPosition(size_t x, size_t y)
-{
-    mActiveSprite->setPosition(x, y);
-}
-
-size_t Mario::getX() const
-{
-    return mActiveSprite->getPosition().x;
-}
-
-size_t Mario::getY() const
-{
-    return mActiveSprite->getPosition().y;
-}
-
 size_t Mario::getHeight() const
 {
     if (mForm == MarioForm::SMALL_MARIO)
-        return MARIO_HEIGHT;
+        return GRIDBOX_SIZE;
     else
-        return 2 * MARIO_HEIGHT;
+        return 2 * GRIDBOX_SIZE;
 }
 
 void Mario::setAnimation()
@@ -117,14 +102,14 @@ void Mario::setForm(MarioForm form)
         if (form == MarioForm::BIG_MARIO)
         {
             const auto currentY = mActiveSprite->getPosition().y;
-            const auto newY = currentY - MARIO_HEIGHT;
+            const auto newY = currentY - GRIDBOX_SIZE;
             mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
             mActiveAnimation = &bigStandingAnimation;
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
             const auto currentY = mActiveSprite->getPosition().y;
-            const auto newY = currentY + MARIO_HEIGHT;
+            const auto newY = currentY + GRIDBOX_SIZE;
             mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
             mActiveAnimation = &standingAnimation;
         }
