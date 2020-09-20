@@ -19,7 +19,7 @@ endif ()
 
 enable_testing()
 
-add_library(MarioLib Animation.cpp file_util.cpp Fallable.cpp Fallable.h)
+add_library(MarioLib Animation.cpp file_util.cpp Fallable.cpp Fallable.h SpriteMaker.cpp SpriteMaker.h)
 target_include_directories(MarioLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(MarioLib PRIVATE -Wall -Wextra -Werror)
 target_link_libraries(MarioLib sfml-window sfml-graphics)

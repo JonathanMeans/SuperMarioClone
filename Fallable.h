@@ -7,7 +7,7 @@
 class Fallable
 {
 public:
-    Fallable();
+    explicit Fallable(const std::shared_ptr<sf::Sprite> sprite);
     virtual ~Fallable();
 
     size_t getBottomPosition();

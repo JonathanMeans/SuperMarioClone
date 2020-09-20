@@ -16,7 +16,8 @@ int sign(float val)
 const float NO_MAX_VELOCITY_VALUE = -1;
 }
 
-Fallable::Fallable() :
+Fallable::Fallable(const std::shared_ptr<sf::Sprite> sprite) :
+    mActiveSprite(sprite),
     mVelocity(0, 0),
     mAcceleration(0, 1),
     mChangingDirection(false),

@@ -17,7 +17,7 @@ enum class MarioForm
 class Mario : public Fallable
 {
 public:
-    explicit Mario(const std::string& resourcesDir);
+    explicit Mario(const std::shared_ptr<sf::Sprite> sprite);
     void draw(sf::RenderWindow& window);
 
     void walk();
@@ -41,8 +41,6 @@ public:
     }
 
 private:
-    sf::Texture mTexture;
-
     MarioForm mForm;
 
     Animation walkingAnimation;

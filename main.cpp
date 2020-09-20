@@ -1,10 +1,12 @@
 #include "Goomba.h"
 #include "Mario.h"
+#include "SpriteMaker.h"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 
 #include <file_util.h>
+#include <iostream>
 
 struct KeyboardInputState
 {
@@ -66,8 +68,9 @@ int main(int argc, char* argv[])
     window.setSize(sf::Vector2u(960, 720));
     window.clear();
 
-    Mario mario(resourceDir);
-    Goomba goomba(resourceDir);
+    SpriteMaker spriteMaker(resourceDir);
+    Mario mario(spriteMaker.marioSprite);
+    Goomba goomba(spriteMaker.goombaSprite);
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};

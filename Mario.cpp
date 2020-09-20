@@ -1,30 +1,21 @@
 #include "Mario.h"
 #include "Animation.h"
 
-#include <iostream>
 #include <memory>
 
 namespace
 {
-//const auto MARIO_HEIGHT = 16;
 }
 
-Mario::Mario(const std::string& resourcesDir) :
+Mario::Mario(const std::shared_ptr<sf::Sprite> sprite) :
+    Fallable(sprite),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false)
 {
     // TODO: Pass in ctor
     setMaxVelocity(2.f);
-    if (!mTexture.loadFromFile(resourcesDir + "Mario & Luigi.png"))
-    {
-        std::cerr << "Error Loading Texture";
-        throw std::runtime_error("Unable to load Mario texture");
-    }
-    mTexture.setSmooth(false);
 
-    mActiveSprite = std::make_shared<sf::Sprite>();
     mActiveSprite->setPosition(100, 100);
-    mActiveSprite->setTexture(mTexture);
 
     walkingAnimation.load(AnimationType::WALKING, mActiveSprite);
     jumpingAnimation.load(AnimationType::JUMPING, mActiveSprite);

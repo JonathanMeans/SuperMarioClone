@@ -6,18 +6,10 @@ namespace
 const auto MARIO_HEIGHT = 16;
 }
 
-Goomba::Goomba(const std::string& resourcesDir)
+Goomba::Goomba(const std::shared_ptr<sf::Sprite> sprite) :
+    Fallable(sprite)
 {
-    if (!mTexture.loadFromFile(resourcesDir + "enemies.png"))
-    {
-        std::cerr << "Error Loading Texture";
-        throw std::runtime_error("Unable to load Enemies texture");
-    }
-    mTexture.setSmooth(false);
-
-    mActiveSprite = std::make_shared<sf::Sprite>();
     mActiveSprite->setPosition(150, 50);
-    mActiveSprite->setTexture(mTexture);
 
     walkingAnimation.load(AnimationType::GOOMBA_WALKING, mActiveSprite);
     const auto spriteOrigin = MARIO_HEIGHT / 2;
