@@ -36,13 +36,12 @@ public:
     void setAnimation();
     void updateAnimation();
 
-    void setAcceleration(const sf::Vector2<float>& setVelocity);
-    void updatePosition();
+    void setAcceleration(const sf::Vector2<float>& setVelocity) override;
 
     void setVelocity(const sf::Vector2f& newVelocity) override;
     [[nodiscard]] sf::Vector2f getVelocity() const override;
-    [[nodiscard]] sf::Vector2f getAcceleration() const;
-    bool collideWithGround(const size_t groundY) override;
+    [[nodiscard]] sf::Vector2f getAcceleration() const override ;
+    bool collideWithGround(size_t groundY) override;
 
     inline void setJumping(bool isJumping)
     {
@@ -50,7 +49,7 @@ public:
     }
 
 private:
-    const float mMaxVelocity;
+    //const float mMaxVelocity;
     sf::Vector2f mVelocity;
     sf::Vector2f mAcceleration;
 

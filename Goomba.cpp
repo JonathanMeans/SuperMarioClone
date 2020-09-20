@@ -73,14 +73,6 @@ sf::Vector2f Goomba::getAcceleration() const
     return mAcceleration;
 }
 
-void Goomba::updatePosition()
-{
-    mVelocity.x += mAcceleration.x;
-    mVelocity.y += mAcceleration.y;
-
-    setPosition(getX() + mVelocity.x, getY() + mVelocity.y);
-}
-
 void Goomba::setAcceleration(const sf::Vector2<float>& acceleration)
 {
     mAcceleration = acceleration;

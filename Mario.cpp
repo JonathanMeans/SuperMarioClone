@@ -10,22 +10,7 @@ namespace
 const auto MARIO_HEIGHT = 16;
 }
 
-void Mario::updatePosition()
-{
-    mVelocity.x += mAcceleration.x;
-    mVelocity.y += mAcceleration.y;
-    if (mVelocity.x > 0 && mVelocity.x > mMaxVelocity)
-        mVelocity.x = mMaxVelocity;
-    if (mVelocity.x < 0 && mVelocity.x < -mMaxVelocity)
-        mVelocity.x = -mMaxVelocity;
-
-    // TODO: What to do about y?
-
-    setPosition(getX() + mVelocity.x, getY() + mVelocity.y);
-}
-
 Mario::Mario(const std::string& resourcesDir) :
-    mMaxVelocity(2.f),
     mAcceleration(0, 1),
     mForm(MarioForm::SMALL_MARIO),
     mVelocity(0, 0),
@@ -33,6 +18,8 @@ Mario::Mario(const std::string& resourcesDir) :
     mLookDirection(1),
     mJumping(false)
 {
+    // TODO: Pass in ctor
+    setMaxVelocity(2.f);
     if (!mTexture.loadFromFile(resourcesDir + "Mario & Luigi.png"))
     {
         std::cerr << "Error Loading Texture";
