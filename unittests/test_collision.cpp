@@ -4,22 +4,10 @@
 
 class FallableStub : public Fallable
 {
-    sf::Vector2f mVelocity;
-    sf::Vector2f mAcceleration;
     size_t mX;
     size_t mY;
 
 public:
-    sf::Vector2f getVelocity() const
-    {
-        return mVelocity;
-    }
-
-    sf::Vector2f getAcceleration() const override
-    {
-        return mAcceleration;
-    }
-
     size_t getY() const
     {
         return mY;
@@ -35,20 +23,10 @@ public:
         return 16;
     }
 
-    void setVelocity(const sf::Vector2f& newVelocity)
-    {
-        mVelocity = newVelocity;
-    }
-
-    void setPosition(size_t x, size_t y)
+    void setPosition(size_t x, size_t y) override
     {
         mY = y;
         mX = x;
-    }
-
-    void setAcceleration(const sf::Vector2f& newAcceleration) override
-    {
-        mAcceleration = newAcceleration;
     }
 };
 
@@ -91,5 +69,4 @@ TEST_F(FallableTest, UpdatePositionLimitedByMaxVelocity)
     fallable.setMaxVelocity(105);
     fallable.updatePosition();
     EXPECT_EQ(fallable.getX(), 205);
-    EXPECT_EQ(fallable.getY(), 205);
 }

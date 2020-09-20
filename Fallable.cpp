@@ -87,7 +87,7 @@ void Fallable::updatePosition()
     velocity.x += getAcceleration().x;
     velocity.y += getAcceleration().y;
 
-    if (mMaxVelocity != static_cast<size_t>(-1))
+    if (mMaxVelocity != -1.f)
     {
         if (velocity.x > 0 && velocity.x > mMaxVelocity)
             velocity.x = mMaxVelocity;
