@@ -13,6 +13,7 @@ int sign(float val)
         return -1;
     return 0;
 }
+const float NO_MAX_VELOCITY_VALUE = -1;
 }
 
 Fallable::Fallable() :
@@ -20,7 +21,7 @@ Fallable::Fallable() :
     mAcceleration(0, 1),
     mChangingDirection(false),
     mLookDirection(1),
-    mMaxVelocity(-1)
+    mMaxVelocity(NO_MAX_VELOCITY_VALUE)
 {
 }
 
@@ -83,23 +84,20 @@ bool Fallable::collideWithGround(const size_t groundY)
 
 void Fallable::updatePosition()
 {
-    auto velocity = getVelocity();
-    velocity.x += getAcceleration().x;
-    velocity.y += getAcceleration().y;
+    mVelocity.x += mAcceleration.x;
+    mVelocity.y += mAcceleration.y;
 
-    if (mMaxVelocity != -1.f)
+    if (mMaxVelocity != NO_MAX_VELOCITY_VALUE)
     {
-        if (velocity.x > 0 && velocity.x > mMaxVelocity)
-            velocity.x = mMaxVelocity;
+        if (mVelocity.x > 0 && mVelocity.x > mMaxVelocity)
+            mVelocity.x = mMaxVelocity;
 
-        if (velocity.x < 0 && velocity.x < -mMaxVelocity)
-            velocity.x = -mMaxVelocity;
+        if (mVelocity.x < 0 && mVelocity.x < -mMaxVelocity)
+            mVelocity.x = -mMaxVelocity;
     }
 
-    setVelocity(velocity);
-
-    const auto newX = getX() + velocity.x;
-    const auto newY = getY() + velocity.y;
+    const auto newX = getX() + mVelocity.x;
+    const auto newY = getY() + mVelocity.y;
     setPosition(newX, newY);
 }
 
