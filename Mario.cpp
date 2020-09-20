@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <memory>
-#include "SFML/Graphics.hpp"
 
 namespace
 {
@@ -11,11 +10,7 @@ const auto MARIO_HEIGHT = 16;
 }
 
 Mario::Mario(const std::string& resourcesDir) :
-    mAcceleration(0, 1),
     mForm(MarioForm::SMALL_MARIO),
-    mVelocity(0, 0),
-    mChangingDirection(false),
-    mLookDirection(1),
     mJumping(false)
 {
     // TODO: Pass in ctor
@@ -164,30 +159,6 @@ void Mario::jump()
     }
 }
 
-int sign(float val)
-{
-    if (val > 0)
-        return 1;
-    if (val < 0)
-        return -1;
-    return 0;
-}
-
-void Mario::setAcceleration(const sf::Vector2<float>& acceleration)
-{
-    if (acceleration == this->mAcceleration)
-        return;
-
-    if (acceleration.x != 0 &&
-        (sign(acceleration.x) != sign(static_cast<float>(mLookDirection))))
-    {
-        mChangingDirection = true;
-        mLookDirection *= -1;
-    }
-
-    mAcceleration = acceleration;
-}
-
 bool Mario::collideWithGround(const size_t groundY)
 {
     bool atGround = Fallable::collideWithGround(groundY);
@@ -198,17 +169,3 @@ bool Mario::collideWithGround(const size_t groundY)
     return atGround;
 }
 
-sf::Vector2f Mario::getVelocity() const
-{
-    return mVelocity;
-}
-
-void Mario::setVelocity(const sf::Vector2f& newVelocity)
-{
-    mVelocity = newVelocity;
-}
-
-sf::Vector2f Mario::getAcceleration() const
-{
-    return mAcceleration;
-}

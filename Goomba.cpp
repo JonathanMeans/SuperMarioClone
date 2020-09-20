@@ -6,9 +6,7 @@ namespace
 const auto MARIO_HEIGHT = 16;
 }
 
-Goomba::Goomba(const std::string& resourcesDir) :
-    mVelocity(0, 0),
-    mAcceleration(0, 1)
+Goomba::Goomba(const std::string& resourcesDir)
 {
     if (!mTexture.loadFromFile(resourcesDir + "enemies.png"))
     {
@@ -56,24 +54,4 @@ size_t Goomba::getX() const
 size_t Goomba::getY() const
 {
     return mActiveSprite->getPosition().y;
-}
-
-sf::Vector2f Goomba::getVelocity() const
-{
-    return mVelocity;
-}
-
-void Goomba::setVelocity(const sf::Vector2f& newVelocity)
-{
-    mVelocity = newVelocity;
-}
-
-sf::Vector2f Goomba::getAcceleration() const
-{
-    return mAcceleration;
-}
-
-void Goomba::setAcceleration(const sf::Vector2<float>& acceleration)
-{
-    mAcceleration = acceleration;
 }

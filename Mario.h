@@ -36,11 +36,6 @@ public:
     void setAnimation();
     void updateAnimation();
 
-    void setAcceleration(const sf::Vector2<float>& setVelocity) override;
-
-    void setVelocity(const sf::Vector2f& newVelocity) override;
-    [[nodiscard]] sf::Vector2f getVelocity() const override;
-    [[nodiscard]] sf::Vector2f getAcceleration() const override ;
     bool collideWithGround(size_t groundY) override;
 
     inline void setJumping(bool isJumping)
@@ -49,10 +44,6 @@ public:
     }
 
 private:
-    //const float mMaxVelocity;
-    sf::Vector2f mVelocity;
-    sf::Vector2f mAcceleration;
-
     std::shared_ptr<sf::Sprite> mActiveSprite;
     sf::Texture mTexture;
 
@@ -68,9 +59,7 @@ private:
 
     Animation* mActiveAnimation;
 
-    bool mChangingDirection;
     bool mJumping;
-    int mLookDirection;
 };
 
 #endif  // SUPERMARIOBROS_MARIO_H

@@ -3,7 +3,24 @@
 
 #include "SFML/Graphics.hpp"
 
-Fallable::Fallable() : mMaxVelocity(-1)
+namespace
+{
+int sign(float val)
+{
+    if (val > 0)
+        return 1;
+    if (val < 0)
+        return -1;
+    return 0;
+}
+}
+
+Fallable::Fallable() :
+    mVelocity(0, 0),
+    mAcceleration(0, 1),
+    mChangingDirection(false),
+    mLookDirection(1),
+    mMaxVelocity(-1)
 {
 }
 
@@ -12,6 +29,36 @@ Fallable::~Fallable() = default;
 size_t Fallable::getBottomPosition()
 {
     return getY() + getHeight();
+}
+
+sf::Vector2f Fallable::getVelocity() const
+{
+    return mVelocity;
+}
+
+void Fallable::setVelocity(const sf::Vector2f& newVelocity)
+{
+    mVelocity = newVelocity;
+}
+
+sf::Vector2f Fallable::getAcceleration() const
+{
+    return mAcceleration;
+}
+
+void Fallable::setAcceleration(const sf::Vector2f& acceleration)
+{
+    if (acceleration == this->mAcceleration)
+        return;
+
+    if (acceleration.x != 0 &&
+        (sign(acceleration.x) != sign(static_cast<float>(mLookDirection))))
+    {
+        mChangingDirection = true;
+        mLookDirection *= -1;
+    }
+
+    mAcceleration = acceleration;
 }
 
 void Fallable::setBottomPosition(size_t newBottomY)
