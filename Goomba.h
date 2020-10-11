@@ -10,7 +10,7 @@
 class Goomba : public Entity
 {
 public:
-    explicit Goomba(const std::shared_ptr<sf::Sprite> sprite);
+    explicit Goomba(std::shared_ptr<sf::Sprite> sprite);
 
 private:
     Animation walkingAnimation;

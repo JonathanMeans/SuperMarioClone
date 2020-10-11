@@ -18,7 +18,7 @@ enum class MarioForm
 class Mario : public Entity
 {
 public:
-    explicit Mario(const std::shared_ptr<sf::Sprite> sprite);
+    explicit Mario(std::shared_ptr<sf::Sprite>& sprite);
 
     void walk();
 

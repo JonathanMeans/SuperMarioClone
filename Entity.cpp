@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include <iostream>
+#include <utility>
 
 #include "SFML/Graphics.hpp"
 
@@ -16,10 +17,10 @@ int sign(float val)
 const float NO_MAX_VELOCITY_VALUE = -1;
 }
 
-Entity::Entity(const std::shared_ptr<sf::Sprite> sprite,
+Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
                size_t hitboxWidth,
                size_t hitboxHeight) :
-    mActiveSprite(sprite),
+    mActiveSprite(std::move(sprite)),
     mVelocity(0, 0),
     mAcceleration(0, 1),
     mChangingDirection(false),

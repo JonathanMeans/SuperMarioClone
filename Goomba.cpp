@@ -1,13 +1,14 @@
 #include "Goomba.h"
-#include <iostream>
+
+#include <utility>
 
 namespace
 {
 const auto MARIO_HEIGHT = 16;
 }
 
-Goomba::Goomba(const std::shared_ptr<sf::Sprite> sprite) :
-    Entity(sprite, 16, 16)
+Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite) :
+    Entity(std::move(sprite), 16, 16)
 {
     mActiveSprite->setPosition(150, 50);
 

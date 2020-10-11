@@ -3,11 +3,7 @@
 
 #include <memory>
 
-namespace
-{
-}
-
-Mario::Mario(const std::shared_ptr<sf::Sprite> sprite) :
+Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
     Entity(sprite, 16, 16),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false)

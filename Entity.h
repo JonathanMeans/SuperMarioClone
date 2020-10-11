@@ -10,7 +10,7 @@
 class Entity
 {
 public:
-    explicit Entity(const std::shared_ptr<sf::Sprite> sprite,
+    explicit Entity(std::shared_ptr<sf::Sprite> sprite,
                     size_t hitboxWidth,
                     size_t hitboxHeight);
     virtual ~Entity();
