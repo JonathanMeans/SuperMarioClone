@@ -22,10 +22,3 @@ void Goomba::draw(sf::RenderWindow& window)
 {
     window.draw(*mActiveSprite);
 }
-
-void Goomba::updateAnimation()
-{
-    mActiveAnimation->processAction();
-}
-
-

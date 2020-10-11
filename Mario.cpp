@@ -67,11 +67,6 @@ void Mario::setAnimation()
     }
 }
 
-void Mario::updateAnimation()
-{
-    mActiveAnimation->processAction();
-}
-
 void Mario::walk()
 {
     switch (mForm)

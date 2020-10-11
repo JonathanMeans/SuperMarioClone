@@ -13,11 +13,7 @@ public:
     explicit Goomba(const std::shared_ptr<sf::Sprite> sprite);
     void draw(sf::RenderWindow& window);
 
-    void updateAnimation();
-
-
 private:
-    Animation* mActiveAnimation;
     Animation walkingAnimation;
 };
 

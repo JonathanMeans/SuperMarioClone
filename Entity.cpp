@@ -17,12 +17,13 @@ const float NO_MAX_VELOCITY_VALUE = -1;
 }
 
 Entity::Entity(const std::shared_ptr<sf::Sprite> sprite,
-                   size_t hitboxWidth,
-                   size_t hitboxHeight) :
+               size_t hitboxWidth,
+               size_t hitboxHeight) :
     mActiveSprite(sprite),
     mVelocity(0, 0),
     mAcceleration(0, 1),
     mChangingDirection(false),
+    mActiveAnimation(nullptr),
     mLookDirection(1),
     mMaxVelocity(NO_MAX_VELOCITY_VALUE),
     mHitboxWidth(hitboxWidth),
@@ -31,6 +32,11 @@ Entity::Entity(const std::shared_ptr<sf::Sprite> sprite,
 }
 
 Entity::~Entity() = default;
+
+void Entity::updateAnimation()
+{
+    mActiveAnimation->processAction();
+}
 
 size_t Entity::getBottomPosition()
 {

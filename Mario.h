@@ -32,7 +32,6 @@ public:
 
     // TODO: Make the difference between these more clear
     void setAnimation();
-    void updateAnimation();
 
     bool collideWithGround(size_t groundY) override;
     bool collideWithEnemy(std::vector<Goomba> &enemies);
@@ -52,8 +51,6 @@ private:
     Animation bigWalkingAnimation;
     Animation bigJumpingAnimation;
     Animation bigStandingAnimation;
-
-    Animation* mActiveAnimation;
 
     bool mJumping;
 };

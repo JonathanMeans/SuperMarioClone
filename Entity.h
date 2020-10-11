@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <memory>
 #include "SFML/Graphics.hpp"
+#include "Animation.h"
 
 class Entity
 {
@@ -33,6 +34,8 @@ public:
     //    virtual bool collideWithEnemy(std::vector<Entity> &enemies);
     void setMaxVelocity(size_t maxVelocity);
 
+    void updateAnimation();
+
     const size_t GRIDBOX_SIZE = 16;
 
 protected:
@@ -40,6 +43,7 @@ protected:
     sf::Vector2f mVelocity;
     sf::Vector2f mAcceleration;
     bool mChangingDirection;
+    Animation* mActiveAnimation;
 
 private:
     int mLookDirection;
