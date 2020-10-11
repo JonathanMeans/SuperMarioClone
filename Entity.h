@@ -18,13 +18,13 @@ public:
     size_t getBottomPosition();
     void setBottomPosition(size_t newBottomY);
 
-    virtual size_t getY() const;
-    virtual size_t getX() const;
-    virtual size_t getHitboxWidth() const;
-    virtual size_t getHitboxHeight() const;
-    virtual size_t getHeight() const;
+    size_t getY() const;
+    size_t getX() const;
+    size_t getHitboxWidth() const;
+    size_t getHitboxHeight() const;
+    size_t getHeight() const;
 
-    virtual void setPosition(size_t x, size_t y);
+    void setPosition(size_t x, size_t y);
     virtual void setAnimationFromState();
 
     [[nodiscard]] sf::Vector2f getVelocity() const;

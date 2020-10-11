@@ -21,8 +21,6 @@ public:
 
     void walk();
 
-    size_t getHeight() const override;
-
     void stopWalking();
 
     void jump();

@@ -28,11 +28,6 @@ Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
     mActiveSprite->setOrigin(spriteOrigin, 0);
 }
 
-size_t Mario::getHeight() const
-{
-    return mHitboxHeight;
-}
-
 void Mario::setAnimationFromState()
 {
     if (mJumping)

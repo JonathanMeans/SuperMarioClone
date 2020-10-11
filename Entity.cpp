@@ -141,7 +141,7 @@ size_t Entity::getY() const
 
 size_t Entity::getHeight() const
 {
-    return GRIDBOX_SIZE;
+    return mHitboxHeight;
 }
 
 size_t Entity::getHitboxWidth() const
