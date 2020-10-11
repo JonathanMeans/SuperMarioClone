@@ -18,11 +18,11 @@ public:
     size_t getBottomPosition();
     void setBottomPosition(size_t newBottomY);
 
-    size_t getY() const;
-    size_t getX() const;
-    size_t getHitboxWidth() const;
-    size_t getHitboxHeight() const;
-    size_t getHeight() const;
+    [[nodiscard]] size_t getY() const;
+    [[nodiscard]] size_t getX() const;
+    [[nodiscard]] size_t getHitboxWidth() const;
+    [[nodiscard]] size_t getHitboxHeight() const;
+    [[nodiscard]] size_t getHeight() const;
 
     void setPosition(size_t x, size_t y);
     virtual void setAnimationFromState();
