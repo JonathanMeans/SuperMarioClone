@@ -131,7 +131,7 @@ bool Mario::collideWithGround(const size_t groundY)
     return atGround;
 }
 
-bool Mario::collideWithEnemy(std::vector<Goomba> &enemies)
+bool Mario::collideWithEnemy(std::vector<Entity> &enemies)
 {
     size_t mTopEdge = Mario::getY();
     size_t mBottomEdge = mTopEdge + 16;

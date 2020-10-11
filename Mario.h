@@ -7,7 +7,6 @@
 
 #include "Animation.h"
 #include "Entity.h"
-#include "Goomba.h"
 
 enum class MarioForm
 {
@@ -29,11 +28,10 @@ public:
     void jump();
     void setForm(MarioForm form);
 
-    // TODO: Make the difference between these more clear
     void setAnimation();
 
     bool collideWithGround(size_t groundY) override;
-    bool collideWithEnemy(std::vector<Goomba> &enemies);
+    bool collideWithEnemy(std::vector<Entity>& enemies);
 
     inline void setJumping(bool isJumping)
     {
