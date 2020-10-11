@@ -20,8 +20,7 @@ public:
 
     [[nodiscard]] size_t getY() const;
     [[nodiscard]] size_t getX() const;
-    [[nodiscard]] size_t getHitboxWidth() const;
-    [[nodiscard]] size_t getHitboxHeight() const;
+    [[nodiscard]] size_t getWidth() const;
     [[nodiscard]] size_t getHeight() const;
 
     void setPosition(size_t x, size_t y);

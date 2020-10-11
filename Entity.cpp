@@ -144,14 +144,9 @@ size_t Entity::getHeight() const
     return mHitboxHeight;
 }
 
-size_t Entity::getHitboxWidth() const
+size_t Entity::getWidth() const
 {
     return mHitboxWidth;
-}
-
-size_t Entity::getHitboxHeight() const
-{
-    return mHitboxHeight;
 }
 
 void Entity::setPosition(size_t x, size_t y)

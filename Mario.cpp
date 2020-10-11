@@ -128,16 +128,16 @@ bool Mario::collideWithGround(const size_t groundY)
 bool Mario::collideWithEnemy(std::vector<Entity>& enemies)
 {
     size_t mTopEdge = Mario::getY();
-    size_t mBottomEdge = mTopEdge + getHitboxHeight();
+    size_t mBottomEdge = mTopEdge + getHeight();
     size_t mLeftEdge = Mario::getX();
-    size_t mRightEdge = mLeftEdge + getHitboxWidth();
+    size_t mRightEdge = mLeftEdge + getWidth();
 
     for (const auto& enemy : enemies)
     {
         size_t eTopEdge = enemy.getY();
         size_t eLeftEdge = enemy.getX();
-        size_t eRightEdge = eLeftEdge + enemy.getHitboxWidth();
-        size_t eBottomEdge = eTopEdge + enemy.getHitboxHeight();
+        size_t eRightEdge = eLeftEdge + enemy.getWidth();
+        size_t eBottomEdge = eTopEdge + enemy.getHeight();
         if (mLeftEdge < eRightEdge && mRightEdge > eLeftEdge &&
             mTopEdge < eBottomEdge && mBottomEdge > eTopEdge)
         {
