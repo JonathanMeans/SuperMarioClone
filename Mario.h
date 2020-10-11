@@ -7,6 +7,7 @@
 
 #include "Animation.h"
 #include "Fallable.h"
+#include "Goomba.h"
 
 enum class MarioForm
 {
@@ -34,6 +35,7 @@ public:
     void updateAnimation();
 
     bool collideWithGround(size_t groundY) override;
+    bool collideWithEnemy(std::vector<Goomba> &enemies);
 
     inline void setJumping(bool isJumping)
     {

@@ -16,13 +16,15 @@ int sign(float val)
 const float NO_MAX_VELOCITY_VALUE = -1;
 }
 
-Fallable::Fallable(const std::shared_ptr<sf::Sprite> sprite) :
+Fallable::Fallable(const std::shared_ptr<sf::Sprite> sprite, size_t hitboxWidth, size_t hitboxHeight) :
     mActiveSprite(sprite),
     mVelocity(0, 0),
     mAcceleration(0, 1),
     mChangingDirection(false),
     mLookDirection(1),
-    mMaxVelocity(NO_MAX_VELOCITY_VALUE)
+    mMaxVelocity(NO_MAX_VELOCITY_VALUE),
+    mHitboxWidth(hitboxWidth),
+    mHitboxHeight(hitboxHeight)
 {
 }
 
@@ -120,6 +122,16 @@ size_t Fallable::getY() const
 size_t Fallable::getHeight() const
 {
     return GRIDBOX_SIZE;
+}
+
+size_t Fallable::getHitboxWidth() const
+{
+    return mHitboxWidth;
+}
+
+size_t Fallable::getHitboxHeight() const
+{
+    return mHitboxHeight;
 }
 
 void Fallable::setPosition(size_t x, size_t y)

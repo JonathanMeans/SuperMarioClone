@@ -72,6 +72,9 @@ int main(int argc, char* argv[])
     Mario mario(spriteMaker.marioSprite);
     Goomba goomba(spriteMaker.goombaSprite);
 
+    std::vector<Goomba> enemies;
+    enemies.push_back(goomba);
+
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
 
@@ -129,14 +132,18 @@ int main(int argc, char* argv[])
         mario.setVelocity(velocity);
 
         mario.updatePosition();
-        goomba.updatePosition();
+//        goomba.updatePosition();
+        enemies[0].updatePosition();
         mario.collideWithGround(groundY);
-        goomba.collideWithGround(groundY);
+//        goomba.collideWithGround(groundY);
+        enemies[0].collideWithGround(groundY);
+        mario.collideWithEnemy(enemies);
 
         mario.setAnimation();
         mario.updateAnimation();
+//        goomba.updateAnimation();
+        enemies[0].updateAnimation();
 
-        goomba.updateAnimation();
 
         window.clear(sf::Color(0, 0, 255, 255));
         mario.draw(window);

@@ -7,7 +7,7 @@ const auto MARIO_HEIGHT = 16;
 }
 
 Goomba::Goomba(const std::shared_ptr<sf::Sprite> sprite) :
-    Fallable(sprite)
+    Fallable(sprite, 16, 16)
 {
     mActiveSprite->setPosition(150, 50);
 
@@ -27,3 +27,5 @@ void Goomba::updateAnimation()
 {
     mActiveAnimation->processAction();
 }
+
+

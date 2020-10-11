@@ -21,6 +21,9 @@ SpriteMaker::SpriteMaker(const std::string &resourcesDir)
     marioTexture.setSmooth(false);
     marioSprite = std::make_shared<sf::Sprite>();
     marioSprite->setTexture(marioTexture);
+
 }
+
+
 
 

@@ -8,7 +8,7 @@ namespace
 }
 
 Mario::Mario(const std::shared_ptr<sf::Sprite> sprite) :
-    Fallable(sprite),
+    Fallable(sprite, 16, 16),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false)
 {
@@ -143,5 +143,29 @@ bool Mario::collideWithGround(const size_t groundY)
         setJumping(false);
     }
     return atGround;
+}
+
+bool Mario::collideWithEnemy(std::vector<Goomba> &enemies)
+{
+    size_t mTopEdge = Mario::getY();
+    size_t mBottomEdge = mTopEdge + 16;
+    size_t mLeftEdge = Mario::getX();
+    size_t mRightEdge = mLeftEdge + 16;
+
+    for (const auto& enemy : enemies)
+    {
+        size_t eTopEdge = enemy.getY();
+        size_t eLeftEdge = enemy.getX();
+        size_t eRightEdge = eLeftEdge + enemy.getHitboxWidth();
+        size_t eBottomEdge = eTopEdge + enemy.getHitboxHeight();
+        if (mLeftEdge < eRightEdge && mRightEdge > eLeftEdge
+            && mTopEdge < eBottomEdge && mBottomEdge > eTopEdge)
+        {
+            setPosition(enemy.getX(), getBottomPosition());
+            setBottomPosition(enemy.getY());
+            return true;
+        }
+    }
+    return false;
 }
 

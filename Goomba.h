@@ -15,6 +15,7 @@ public:
 
     void updateAnimation();
 
+
 private:
     Animation* mActiveAnimation;
     Animation walkingAnimation;

@@ -7,7 +7,7 @@
 class Fallable
 {
 public:
-    explicit Fallable(const std::shared_ptr<sf::Sprite> sprite);
+    explicit Fallable(const std::shared_ptr<sf::Sprite> sprite, size_t hitboxWidth, size_t hitboxHeight);
     virtual ~Fallable();
 
     size_t getBottomPosition();
@@ -15,6 +15,8 @@ public:
 
     virtual size_t getY() const;
     virtual size_t getX() const;
+    virtual size_t getHitboxWidth() const;
+    virtual size_t getHitboxHeight() const;
     virtual size_t getHeight() const;
 
     virtual void setPosition(size_t x, size_t y);
@@ -25,6 +27,7 @@ public:
     void setAcceleration(const sf::Vector2f& newAcceleration);
     void updatePosition();
     virtual bool collideWithGround(size_t groundY);
+//    virtual bool collideWithEnemy(std::vector<Fallable> &enemies);
     void setMaxVelocity(size_t maxVelocity);
 
     const size_t GRIDBOX_SIZE = 16;
@@ -38,6 +41,8 @@ protected:
 private:
     int mLookDirection;
     float mMaxVelocity;
+    size_t mHitboxWidth;
+    size_t mHitboxHeight;
 };
 
 #endif  // SUPERMARIOBROS_FALLABLE_H
