@@ -47,12 +47,12 @@ protected:
     sf::Vector2f mAcceleration;
     bool mChangingDirection;
     Animation* mActiveAnimation;
+    size_t mHitboxWidth;
+    size_t mHitboxHeight;
 
 private:
     int mLookDirection;
     float mMaxVelocity;
-    size_t mHitboxWidth;
-    size_t mHitboxHeight;
 };
 
 #endif  // SUPERMARIOBROS_ENTITY_H

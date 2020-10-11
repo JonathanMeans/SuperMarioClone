@@ -30,10 +30,7 @@ Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
 
 size_t Mario::getHeight() const
 {
-    if (mForm == MarioForm::SMALL_MARIO)
-        return GRIDBOX_SIZE;
-    else
-        return 2 * GRIDBOX_SIZE;
+    return mHitboxHeight;
 }
 
 void Mario::setAnimationFromState()
@@ -82,6 +79,7 @@ void Mario::setForm(MarioForm form)
             const auto newY = currentY - GRIDBOX_SIZE;
             mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
             mActiveAnimation = &bigStandingAnimation;
+            mHitboxHeight *= 2;
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
@@ -89,6 +87,7 @@ void Mario::setForm(MarioForm form)
             const auto newY = currentY + GRIDBOX_SIZE;
             mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
             mActiveAnimation = &standingAnimation;
+            mHitboxHeight /= 2;
         }
     }
 
@@ -131,12 +130,12 @@ bool Mario::collideWithGround(const size_t groundY)
     return atGround;
 }
 
-bool Mario::collideWithEnemy(std::vector<Entity> &enemies)
+bool Mario::collideWithEnemy(std::vector<Entity>& enemies)
 {
     size_t mTopEdge = Mario::getY();
-    size_t mBottomEdge = mTopEdge + 16;
+    size_t mBottomEdge = mTopEdge + getHitboxHeight();
     size_t mLeftEdge = Mario::getX();
-    size_t mRightEdge = mLeftEdge + 16;
+    size_t mRightEdge = mLeftEdge + getHitboxWidth();
 
     for (const auto& enemy : enemies)
     {
@@ -144,8 +143,8 @@ bool Mario::collideWithEnemy(std::vector<Entity> &enemies)
         size_t eLeftEdge = enemy.getX();
         size_t eRightEdge = eLeftEdge + enemy.getHitboxWidth();
         size_t eBottomEdge = eTopEdge + enemy.getHitboxHeight();
-        if (mLeftEdge < eRightEdge && mRightEdge > eLeftEdge
-            && mTopEdge < eBottomEdge && mBottomEdge > eTopEdge)
+        if (mLeftEdge < eRightEdge && mRightEdge > eLeftEdge &&
+            mTopEdge < eBottomEdge && mBottomEdge > eTopEdge)
         {
             setPosition(enemy.getX(), getBottomPosition());
             setBottomPosition(enemy.getY());
@@ -154,4 +153,3 @@ bool Mario::collideWithEnemy(std::vector<Entity> &enemies)
     }
     return false;
 }
-

@@ -25,10 +25,10 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
     mAcceleration(0, 1),
     mChangingDirection(false),
     mActiveAnimation(nullptr),
-    mLookDirection(1),
-    mMaxVelocity(NO_MAX_VELOCITY_VALUE),
     mHitboxWidth(hitboxWidth),
-    mHitboxHeight(hitboxHeight)
+    mHitboxHeight(hitboxHeight),
+    mLookDirection(1),
+    mMaxVelocity(NO_MAX_VELOCITY_VALUE)
 {
 }
 
