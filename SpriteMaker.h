@@ -2,6 +2,7 @@
 #define SUPERMARIOBROS_SPRITEMAKER_H
 
 #include <string>
+#include <memory>
 #include "SFML/Graphics.hpp"
 
 class SpriteMaker
