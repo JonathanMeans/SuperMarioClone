@@ -28,7 +28,7 @@ public:
     void jump();
     void setForm(MarioForm form);
 
-    void setAnimation();
+    void setAnimationFromState() override;
 
     bool collideWithGround(size_t groundY) override;
     bool collideWithEnemy(std::vector<Entity>& enemies);

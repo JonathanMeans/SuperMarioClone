@@ -25,6 +25,7 @@ public:
     virtual size_t getHeight() const;
 
     virtual void setPosition(size_t x, size_t y);
+    virtual void setAnimationFromState();
 
     [[nodiscard]] sf::Vector2f getVelocity() const;
     [[nodiscard]] sf::Vector2f getAcceleration() const;

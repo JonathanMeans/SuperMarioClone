@@ -36,7 +36,13 @@ Entity::~Entity() = default;
 
 void Entity::updateAnimation()
 {
+    setAnimationFromState();
     mActiveAnimation->processAction();
+}
+
+void Entity::setAnimationFromState()
+{
+    // Do nothing
 }
 
 void Entity::draw(sf::RenderWindow& window)

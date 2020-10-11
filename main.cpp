@@ -139,8 +139,6 @@ int main(int argc, char* argv[])
             enemy.collideWithGround(groundY);
         mario.collideWithEnemy(enemies);
 
-        // TODO: Make the difference between these more clear
-        mario.setAnimation();
         mario.updateAnimation();
 
         for (auto& enemy : enemies)

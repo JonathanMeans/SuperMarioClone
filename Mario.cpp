@@ -36,7 +36,7 @@ size_t Mario::getHeight() const
         return 2 * GRIDBOX_SIZE;
 }
 
-void Mario::setAnimation()
+void Mario::setAnimationFromState()
 {
     if (mJumping)
     {
