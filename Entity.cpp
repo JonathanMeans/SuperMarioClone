@@ -38,6 +38,11 @@ void Entity::updateAnimation()
     mActiveAnimation->processAction();
 }
 
+void Entity::draw(sf::RenderWindow& window)
+{
+    window.draw(*mActiveSprite);
+}
+
 size_t Entity::getBottomPosition()
 {
     return getY() + getHeight();

@@ -19,7 +19,6 @@ class Mario : public Entity
 {
 public:
     explicit Mario(const std::shared_ptr<sf::Sprite> sprite);
-    void draw(sf::RenderWindow& window);
 
     void walk();
 

@@ -32,11 +32,6 @@ Mario::Mario(const std::shared_ptr<sf::Sprite> sprite) :
     mActiveSprite->setOrigin(spriteOrigin, 0);
 }
 
-void Mario::draw(sf::RenderWindow& window)
-{
-    window.draw(*mActiveSprite);
-}
-
 size_t Mario::getHeight() const
 {
     if (mForm == MarioForm::SMALL_MARIO)

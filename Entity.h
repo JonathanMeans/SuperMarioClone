@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <memory>
 #include "SFML/Graphics.hpp"
+#include <SFML/System.hpp>
 #include "Animation.h"
 
 class Entity
@@ -35,6 +36,7 @@ public:
     void setMaxVelocity(size_t maxVelocity);
 
     void updateAnimation();
+    void draw(sf::RenderWindow& window);
 
     const size_t GRIDBOX_SIZE = 16;
 

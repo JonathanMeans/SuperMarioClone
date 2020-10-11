@@ -17,8 +17,3 @@ Goomba::Goomba(const std::shared_ptr<sf::Sprite> sprite) :
 
     mActiveAnimation = &walkingAnimation;
 }
-
-void Goomba::draw(sf::RenderWindow& window)
-{
-    window.draw(*mActiveSprite);
-}
