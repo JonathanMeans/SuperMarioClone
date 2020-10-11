@@ -1,4 +1,4 @@
-#include "Fallable.h"
+#include "Entity.h"
 #include <iostream>
 
 #include "SFML/Graphics.hpp"
@@ -16,7 +16,7 @@ int sign(float val)
 const float NO_MAX_VELOCITY_VALUE = -1;
 }
 
-Fallable::Fallable(const std::shared_ptr<sf::Sprite> sprite,
+Entity::Entity(const std::shared_ptr<sf::Sprite> sprite,
                    size_t hitboxWidth,
                    size_t hitboxHeight) :
     mActiveSprite(sprite),
@@ -30,29 +30,29 @@ Fallable::Fallable(const std::shared_ptr<sf::Sprite> sprite,
 {
 }
 
-Fallable::~Fallable() = default;
+Entity::~Entity() = default;
 
-size_t Fallable::getBottomPosition()
+size_t Entity::getBottomPosition()
 {
     return getY() + getHeight();
 }
 
-sf::Vector2f Fallable::getVelocity() const
+sf::Vector2f Entity::getVelocity() const
 {
     return mVelocity;
 }
 
-void Fallable::setVelocity(const sf::Vector2f& newVelocity)
+void Entity::setVelocity(const sf::Vector2f& newVelocity)
 {
     mVelocity = newVelocity;
 }
 
-sf::Vector2f Fallable::getAcceleration() const
+sf::Vector2f Entity::getAcceleration() const
 {
     return mAcceleration;
 }
 
-void Fallable::setAcceleration(const sf::Vector2f& acceleration)
+void Entity::setAcceleration(const sf::Vector2f& acceleration)
 {
     if (acceleration == this->mAcceleration)
         return;
@@ -67,14 +67,14 @@ void Fallable::setAcceleration(const sf::Vector2f& acceleration)
     mAcceleration = acceleration;
 }
 
-void Fallable::setBottomPosition(size_t newBottomY)
+void Entity::setBottomPosition(size_t newBottomY)
 {
     const auto newX = getX();
     const auto newY = newBottomY - getHeight();
     setPosition(newX, newY);
 }
 
-bool Fallable::collideWithGround(const size_t groundY)
+bool Entity::collideWithGround(const size_t groundY)
 {
     const auto spriteBottom = getBottomPosition();
     if (spriteBottom > groundY)
@@ -87,7 +87,7 @@ bool Fallable::collideWithGround(const size_t groundY)
     return false;
 }
 
-void Fallable::updatePosition()
+void Entity::updatePosition()
 {
     mVelocity.x += mAcceleration.x;
     mVelocity.y += mAcceleration.y;
@@ -106,37 +106,37 @@ void Fallable::updatePosition()
     setPosition(newX, newY);
 }
 
-void Fallable::setMaxVelocity(size_t maxVelocity)
+void Entity::setMaxVelocity(size_t maxVelocity)
 {
     mMaxVelocity = maxVelocity;
 }
 
-size_t Fallable::getX() const
+size_t Entity::getX() const
 {
     return mActiveSprite->getPosition().x;
 }
 
-size_t Fallable::getY() const
+size_t Entity::getY() const
 {
     return mActiveSprite->getPosition().y;
 }
 
-size_t Fallable::getHeight() const
+size_t Entity::getHeight() const
 {
     return GRIDBOX_SIZE;
 }
 
-size_t Fallable::getHitboxWidth() const
+size_t Entity::getHitboxWidth() const
 {
     return mHitboxWidth;
 }
 
-size_t Fallable::getHitboxHeight() const
+size_t Entity::getHitboxHeight() const
 {
     return mHitboxHeight;
 }
 
-void Fallable::setPosition(size_t x, size_t y)
+void Entity::setPosition(size_t x, size_t y)
 {
     mActiveSprite->setPosition(x, y);
 }

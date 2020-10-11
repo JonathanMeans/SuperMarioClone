@@ -1,17 +1,17 @@
-#ifndef SUPERMARIOBROS_FALLABLE_H
-#define SUPERMARIOBROS_FALLABLE_H
+#ifndef SUPERMARIOBROS_ENTITY_H
+#define SUPERMARIOBROS_ENTITY_H
 
 #include <cstdlib>
 #include <memory>
 #include "SFML/Graphics.hpp"
 
-class Fallable
+class Entity
 {
 public:
-    explicit Fallable(const std::shared_ptr<sf::Sprite> sprite,
-                      size_t hitboxWidth,
-                      size_t hitboxHeight);
-    virtual ~Fallable();
+    explicit Entity(const std::shared_ptr<sf::Sprite> sprite,
+                    size_t hitboxWidth,
+                    size_t hitboxHeight);
+    virtual ~Entity();
 
     size_t getBottomPosition();
     void setBottomPosition(size_t newBottomY);
@@ -30,7 +30,7 @@ public:
     void setAcceleration(const sf::Vector2f& newAcceleration);
     void updatePosition();
     virtual bool collideWithGround(size_t groundY);
-    //    virtual bool collideWithEnemy(std::vector<Fallable> &enemies);
+    //    virtual bool collideWithEnemy(std::vector<Entity> &enemies);
     void setMaxVelocity(size_t maxVelocity);
 
     const size_t GRIDBOX_SIZE = 16;
@@ -48,4 +48,4 @@ private:
     size_t mHitboxHeight;
 };
 
-#endif  // SUPERMARIOBROS_FALLABLE_H
+#endif  // SUPERMARIOBROS_ENTITY_H

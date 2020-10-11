@@ -6,7 +6,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include "Animation.h"
-#include "Fallable.h"
+#include "Entity.h"
 #include "Goomba.h"
 
 enum class MarioForm
@@ -15,7 +15,7 @@ enum class MarioForm
     SMALL_MARIO
 };
 
-class Mario : public Fallable
+class Mario : public Entity
 {
 public:
     explicit Mario(const std::shared_ptr<sf::Sprite> sprite);

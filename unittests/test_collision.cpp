@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-#include "Fallable.h"
+#include "Entity.h"
 #include "file_util.h"
 
-class FallableStub : public Fallable
+class FallableStub : public Entity
 {
     size_t mX;
     size_t mY;

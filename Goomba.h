@@ -5,9 +5,9 @@
 #include <SFML/System.hpp>
 #include "Animation.h"
 
-#include "Fallable.h"
+#include "Entity.h"
 
-class Goomba : public Fallable
+class Goomba : public Entity
 {
 public:
     explicit Goomba(const std::shared_ptr<sf::Sprite> sprite);

@@ -8,7 +8,7 @@ namespace
 }
 
 Mario::Mario(const std::shared_ptr<sf::Sprite> sprite) :
-    Fallable(sprite, 16, 16),
+    Entity(sprite, 16, 16),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false)
 {
@@ -137,7 +137,7 @@ void Mario::jump()
 
 bool Mario::collideWithGround(const size_t groundY)
 {
-    bool atGround = Fallable::collideWithGround(groundY);
+    bool atGround = Entity::collideWithGround(groundY);
     if (atGround)
     {
         setJumping(false);
