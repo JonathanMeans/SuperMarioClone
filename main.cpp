@@ -100,6 +100,15 @@ int main(int argc, char* argv[])
             mario.setForm(MarioForm::SMALL_MARIO);
         }
 
+        mario.mDeltaP.x = 0;
+        mario.mDeltaP.y = 0;
+
+        for (auto& enemy : enemies)
+        {
+            enemy.mDeltaP.x = 0;
+            enemy.mDeltaP.y = 0;
+        }
+
         sf::Vector2f acceleration = mario.getAcceleration();
         sf::Vector2f velocity = mario.getVelocity();
         if (currentInput.A.keyIsDown)
@@ -139,7 +148,15 @@ int main(int argc, char* argv[])
             enemy.collideWithGround(groundY);
         mario.collideWithEnemy(enemies);
 
+        mario.setPosition(mario.getX() + mario.mDeltaP.x,
+                          mario.getY() + mario.mDeltaP.y);
         mario.updateAnimation();
+
+        for (auto& enemy : enemies)
+        {
+            enemy.setPosition(enemy.getX() + enemy.mDeltaP.x,
+                              enemy.getY() + enemy.mDeltaP.y);
+        }
 
         for (auto& enemy : enemies)
             enemy.updateAnimation();

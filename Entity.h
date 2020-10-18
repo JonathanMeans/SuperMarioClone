@@ -40,6 +40,8 @@ public:
 
     const size_t GRIDBOX_SIZE = 16;
 
+    sf::Vector2f mDeltaP;
+
 protected:
     std::shared_ptr<sf::Sprite> mActiveSprite;
     sf::Vector2f mVelocity;

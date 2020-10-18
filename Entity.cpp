@@ -52,7 +52,7 @@ void Entity::draw(sf::RenderWindow& window)
 
 size_t Entity::getBottomPosition()
 {
-    return getY() + getHeight();
+    return getY() + getHeight() + mDeltaP.y;
 }
 
 sf::Vector2f Entity::getVelocity() const
@@ -87,22 +87,24 @@ void Entity::setAcceleration(const sf::Vector2f& acceleration)
 
 void Entity::setBottomPosition(size_t newBottomY)
 {
-    const auto newX = getX();
+    // const auto newX = getX();
     const auto newY = newBottomY - getHeight();
-    setPosition(newX, newY);
+    mDeltaP.y += static_cast<float>(newY) - getY();
+    // setPosition(newX, newY);
 }
 
 bool Entity::collideWithGround(const size_t groundY)
 {
-    const auto spriteBottom = getBottomPosition();
-    if (spriteBottom > groundY)
+    auto spriteBottom = getBottomPosition();
+    if (spriteBottom <= groundY) return false;
+    while (spriteBottom > groundY)
     {
-        setBottomPosition(groundY);
+        mDeltaP.y -= 1;
         const auto currentVelocity = getVelocity();
         setVelocity(sf::Vector2f(currentVelocity.x, 0));
-        return true;
+        spriteBottom = getBottomPosition();
     }
-    return false;
+    return true;
 }
 
 void Entity::updatePosition()
@@ -119,9 +121,11 @@ void Entity::updatePosition()
             mVelocity.x = -mMaxVelocity;
     }
 
-    const auto newX = getX() + mVelocity.x;
-    const auto newY = getY() + mVelocity.y;
-    setPosition(newX, newY);
+    // const auto newX = getX() + mVelocity.x;
+    // const auto newY = getY() + mVelocity.y;
+    mDeltaP.x += mVelocity.x;
+    mDeltaP.y += mVelocity.y;
+    // setPosition(newX, newY);
 }
 
 void Entity::setMaxVelocity(size_t maxVelocity)
@@ -131,12 +135,12 @@ void Entity::setMaxVelocity(size_t maxVelocity)
 
 size_t Entity::getX() const
 {
-    return mActiveSprite->getPosition().x;
+    return mActiveSprite->getPosition().x + mDeltaP.x;
 }
 
 size_t Entity::getY() const
 {
-    return mActiveSprite->getPosition().y;
+    return mActiveSprite->getPosition().y + mDeltaP.y;
 }
 
 size_t Entity::getHeight() const
