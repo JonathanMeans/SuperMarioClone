@@ -3,7 +3,8 @@
 
 bool Utils::IsIntersecting(sf::Vector2f a,  sf::Vector2f b, sf::Vector2f c, sf::Vector2f d)
 {
-    return (IsOnLeft(a, b, c) && IsOnRight(a, b, d)) || (IsOnLeft(a, b, d) && IsOnRight(a, b, c));
+    return !IsCollinear(a, b, c) && !IsCollinear(a, b, d)
+            && ((IsOnLeft(a, b, c) && IsOnRight(a, b, d)) || (IsOnLeft(a, b, d) && IsOnRight(a, b, c)));
 }
 
 bool Utils::IsOnLeft(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c)
@@ -14,6 +15,11 @@ bool Utils::IsOnLeft(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c)
 bool Utils::IsOnRight(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c)
 {
     return Area2(a, b, c) < 0;
+}
+
+bool Utils::IsCollinear(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c)
+{
+    return Area2(a, b, c) == 0;
 }
 
 int Utils::Area2( sf::Vector2f a,  sf::Vector2f b,  sf::Vector2f c)
