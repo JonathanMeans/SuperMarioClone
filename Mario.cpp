@@ -141,11 +141,19 @@ bool Mario::collideWithEnemy(std::vector<Entity>& enemies)
         if (mLeftEdge < eRightEdge && mRightEdge > eLeftEdge &&
             mTopEdge < eBottomEdge && mBottomEdge > eTopEdge)
         {
+            size_t prevX = Mario::getX();
+            size_t prevY = Mario::getY();
+            size_t newX = prevX + mDeltaP.x;
+            size_t newY = prevY + mDeltaP.y;
+
+
             //setPosition(enemy.getX(), getBottomPosition());
-            mDeltaP.x -= 5;
+//            mDeltaP.x -= 5;
             setBottomPosition(enemy.getY());
             return true;
         }
     }
     return false;
 }
+
+

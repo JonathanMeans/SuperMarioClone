@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "Entity.h"
+//#include "Utils.h"
 #include "file_util.h"
 
 class FallableStub : public Entity
@@ -70,3 +71,8 @@ TEST_F(FallableTest, UpdatePositionLimitedByMaxVelocity)
     fallable.updatePosition();
     EXPECT_EQ(fallable.getX(), 205);
 }
+
+//TEST(Utils, IsLeftOf)
+//{
+//
+//}
