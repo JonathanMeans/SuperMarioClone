@@ -1,5 +1,6 @@
 #include "Mario.h"
 #include "Animation.h"
+#include "Utils.h"
 
 #include <memory>
 
@@ -141,19 +142,27 @@ bool Mario::collideWithEnemy(std::vector<Entity>& enemies)
         if (mLeftEdge < eRightEdge && mRightEdge > eLeftEdge &&
             mTopEdge < eBottomEdge && mBottomEdge > eTopEdge)
         {
-            size_t prevX = Mario::getX();
-            size_t prevY = Mario::getY();
-            size_t newX = prevX + mDeltaP.x;
-            size_t newY = prevY + mDeltaP.y;
-
-
-            //setPosition(enemy.getX(), getBottomPosition());
-//            mDeltaP.x -= 5;
-            setBottomPosition(enemy.getY());
-            return true;
+            sf::Vector2f enemyEdge1, enemyEdge2;
+            for (int marioSide = 0; marioSide < 4; ++marioSide)
+            {
+                sf::Vector2f marioPath1;
+                this->getCorner(marioSide, marioPath1);
+                const sf::Vector2f marioPath2 = marioPath1 + mDeltaP;
+                for (int side = 0; side < 4; ++side)
+                {
+                    enemy.getHitboxSide(side, enemyEdge1, enemyEdge2);
+                    if (Utils::IsIntersecting(
+                                marioPath1, marioPath2, enemyEdge1, enemyEdge2))
+                    {
+                        if (side == 0)
+                            mDeltaP.y -= 5;
+                        else
+                            mDeltaP.x -= 5;
+                        return true;
+                    }
+                }
+            }
         }
     }
     return false;
 }
-
-

@@ -96,7 +96,8 @@ void Entity::setBottomPosition(size_t newBottomY)
 bool Entity::collideWithGround(const size_t groundY)
 {
     auto spriteBottom = getBottomPosition();
-    if (spriteBottom <= groundY) return false;
+    if (spriteBottom <= groundY)
+        return false;
     while (spriteBottom > groundY)
     {
         mDeltaP.y -= 1;
@@ -105,6 +106,68 @@ bool Entity::collideWithGround(const size_t groundY)
         spriteBottom = getBottomPosition();
     }
     return true;
+}
+
+void Entity::getHitboxSide(int side, sf::Vector2f& p1, sf::Vector2f& p2) const
+{
+    if (side == 0)
+    {
+        p1.x = getX();
+        p1.y = getY();
+        p2.x = getX() + getWidth();
+        p2.y = getY();
+    }
+    else if (side == 1)
+    {
+        p1.x = getX() + getWidth();
+        p1.y = getY();
+        p2.x = getX() + getWidth();
+        p2.y = getY() + getHeight();
+    }
+    else if (side == 2)
+    {
+        p1.x = getX() + getWidth();
+        p1.y = getY() + getHeight();
+        p2.x = getX();
+        p2.y = getY() + getHeight();
+    }
+    else if (side == 3)
+    {
+        p1.x = getX();
+        p1.y = getY() + getHeight();
+        p2.x = getX();
+        p2.y = getY();
+    }
+    else
+    {
+        throw std::runtime_error("Invalid side: '" + std::to_string(side) +
+                                 "'");
+    }
+}
+
+void Entity::getCorner(int corner, sf::Vector2f& point) const
+{
+    point.x = getX();
+    point.y = getY();
+    if (corner == 0)
+    {
+    }
+    else if (corner == 1)
+    {
+        point.x += getWidth();
+    }
+    else if (corner == 2)
+    {
+        point.x += getWidth();
+        point.y += getWidth();
+    }
+    else if (corner == 3)
+    {
+        point.y += getWidth();
+    }
+    else
+        throw std::runtime_error("Invalid corner: '" + std::to_string(corner) +
+                                 "'");
 }
 
 void Entity::updatePosition()

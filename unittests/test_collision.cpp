@@ -161,10 +161,20 @@ TEST(Utils, IsIntersecting)
                                        sf::Vector2f(-100, 0),
                                        sf::Vector2f(200, 0),
                                        sf::Vector2f(300, 0)));
-    EXPECT_FALSE(Utils::IsIntersecting(sf::Vector2f(100, 0),
-                                       sf::Vector2f(-100, 0),
-                                       sf::Vector2f(200, 0),
-                                       sf::Vector2f(-300, 0)));
+    EXPECT_TRUE(Utils::IsIntersecting(sf::Vector2f(100, 0),
+                                      sf::Vector2f(-100, 0),
+                                      sf::Vector2f(200, 0),
+                                      sf::Vector2f(-300, 0)));
+}
+
+TEST(Utils, IntersectingEdgeCases)
+{
+    const sf::Vector2f lineOneStart(152, 104);
+    const sf::Vector2f lineOneEnd(154, 104);
+    const sf::Vector2f lineTwoStart(150, 104);
+    const sf::Vector2f lineTwoEnd(166, 104);
+    EXPECT_TRUE(Utils::IsIntersecting(
+            lineOneStart, lineOneEnd, lineTwoStart, lineTwoEnd));
 }
 
 // TEST(Utils, Area2)

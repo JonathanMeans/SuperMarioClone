@@ -1,11 +1,11 @@
 #ifndef SUPERMARIOBROS_ENTITY_H
 #define SUPERMARIOBROS_ENTITY_H
 
+#include <SFML/System.hpp>
 #include <cstdlib>
 #include <memory>
-#include "SFML/Graphics.hpp"
-#include <SFML/System.hpp>
 #include "Animation.h"
+#include "SFML/Graphics.hpp"
 
 class Entity
 {
@@ -37,6 +37,9 @@ public:
 
     void updateAnimation();
     void draw(sf::RenderWindow& window);
+
+    void getHitboxSide(int side, sf::Vector2f& p1, sf::Vector2f& p2) const;
+    void getCorner(int corner, sf::Vector2f& point) const;
 
     const size_t GRIDBOX_SIZE = 16;
 
