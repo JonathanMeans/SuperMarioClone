@@ -19,7 +19,10 @@ const float NO_MAX_VELOCITY_VALUE = -1;
 
 Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
                size_t hitboxWidth,
-               size_t hitboxHeight) :
+               size_t hitboxHeight,
+               size_t spriteWidth,
+               size_t spriteHeight,
+               sf::Vector2f hitboxULCornerOffset) :
     mActiveSprite(std::move(sprite)),
     mVelocity(0, 0),
     mAcceleration(0, 1),
@@ -27,6 +30,9 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
     mActiveAnimation(nullptr),
     mHitboxWidth(hitboxWidth),
     mHitboxHeight(hitboxHeight),
+    mSpriteWidth(spriteWidth),
+    mSpriteHeight(spriteHeight),
+    mHitboxULCornerOffset(hitboxULCornerOffset),
     mLookDirection(1),
     mMaxVelocity(NO_MAX_VELOCITY_VALUE)
 {
@@ -147,23 +153,24 @@ void Entity::getHitboxSide(int side, sf::Vector2f& p1, sf::Vector2f& p2) const
 
 void Entity::getCorner(int corner, sf::Vector2f& point) const
 {
-    point.x = getX();
-    point.y = getY();
+
+    point.x = getX() + mHitboxULCornerOffset.x;
+    point.y = getY() + mHitboxULCornerOffset.y;
     if (corner == 0)
     {
     }
     else if (corner == 1)
     {
-        point.x += getWidth();
+        point.x += mHitboxWidth;
     }
     else if (corner == 2)
     {
-        point.x += getWidth();
-        point.y += getWidth();
+        point.x += mHitboxWidth;
+        point.y += mHitboxHeight;
     }
     else if (corner == 3)
     {
-        point.y += getWidth();
+        point.y += mHitboxHeight;
     }
     else
         throw std::runtime_error("Invalid corner: '" + std::to_string(corner) +
@@ -208,12 +215,12 @@ size_t Entity::getY() const
 
 size_t Entity::getHeight() const
 {
-    return mHitboxHeight;
+    return mSpriteHeight;
 }
 
 size_t Entity::getWidth() const
 {
-    return mHitboxWidth;
+    return mSpriteWidth;
 }
 
 void Entity::setPosition(size_t x, size_t y)

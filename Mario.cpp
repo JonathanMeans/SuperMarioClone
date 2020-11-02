@@ -5,7 +5,7 @@
 #include <memory>
 
 Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
-    Entity(sprite, 16, 16),
+    Entity(sprite, 8, 11, 16, 16, sf::Vector2f(4, 5)),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false)
 {
@@ -75,7 +75,8 @@ void Mario::setForm(MarioForm form)
             const auto newY = currentY - GRIDBOX_SIZE;
             mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
             mActiveAnimation = &bigStandingAnimation;
-            mHitboxHeight *= 2;
+//            mHitboxHeight *= 2;
+            mSpriteHeight *= 2;
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
@@ -83,7 +84,8 @@ void Mario::setForm(MarioForm form)
             const auto newY = currentY + GRIDBOX_SIZE;
             mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
             mActiveAnimation = &standingAnimation;
-            mHitboxHeight /= 2;
+//            mHitboxHeight /= 2;
+            mSpriteHeight /= 2;
         }
     }
 
@@ -128,10 +130,10 @@ bool Mario::collideWithGround(const size_t groundY)
 
 bool Mario::collideWithEnemy(std::vector<Entity>& enemies)
 {
-    size_t mTopEdge = Mario::getY();
-    size_t mBottomEdge = mTopEdge + getHeight();
-    size_t mLeftEdge = Mario::getX();
-    size_t mRightEdge = mLeftEdge + getWidth();
+    size_t mTopEdge = Mario::getY() + mHitboxULCornerOffset.y;
+    size_t mBottomEdge = mTopEdge + mHitboxHeight;
+    size_t mLeftEdge = Mario::getX() + mHitboxULCornerOffset.x;
+    size_t mRightEdge = mLeftEdge + mHitboxWidth;
 
     for (const auto& enemy : enemies)
     {

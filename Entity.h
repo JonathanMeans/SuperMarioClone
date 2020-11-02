@@ -12,7 +12,10 @@ class Entity
 public:
     explicit Entity(std::shared_ptr<sf::Sprite> sprite,
                     size_t hitboxWidth,
-                    size_t hitboxHeight);
+                    size_t hitboxHeight,
+                    size_t spriteWidth,
+                    size_t spriteHeight,
+                    sf::Vector2f hitboxULCornerOffset);
     virtual ~Entity();
 
     size_t getBottomPosition();
@@ -53,6 +56,9 @@ protected:
     Animation* mActiveAnimation;
     size_t mHitboxWidth;
     size_t mHitboxHeight;
+    size_t mSpriteWidth;
+    size_t mSpriteHeight;
+    sf::Vector2f mHitboxULCornerOffset;
 
 private:
     int mLookDirection;
