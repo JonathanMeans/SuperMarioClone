@@ -75,8 +75,10 @@ void Mario::setForm(MarioForm form)
             const auto newY = currentY - GRIDBOX_SIZE;
             mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
             mActiveAnimation = &bigStandingAnimation;
-//            mHitboxHeight *= 2;
             mSpriteHeight *= 2;
+            mHitboxWidth = 12;
+            mHitboxHeight = 23;
+            mHitboxULCornerOffset = sf::Vector2f(2, 8);
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
@@ -84,8 +86,10 @@ void Mario::setForm(MarioForm form)
             const auto newY = currentY + GRIDBOX_SIZE;
             mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
             mActiveAnimation = &standingAnimation;
-//            mHitboxHeight /= 2;
             mSpriteHeight /= 2;
+            mHitboxWidth = 8;
+            mHitboxHeight = 11;
+            mHitboxULCornerOffset = sf::Vector2f(4, 5);
         }
     }
 
