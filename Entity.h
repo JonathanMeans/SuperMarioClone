@@ -40,7 +40,7 @@ public:
     void updateAnimation();
     void draw(sf::RenderWindow& window);
 
-    void getHitboxSide(int side, sf::Vector2f& p1, sf::Vector2f& p2) const;
+    void getHitboxSide(int side, bool extendEdges, sf::Vector2f& p1, sf::Vector2f& p2) const;
     void getCorner(int corner, sf::Vector2f& point) const;
 
     const size_t GRIDBOX_SIZE = 16;

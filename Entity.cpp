@@ -110,35 +110,71 @@ bool Entity::collideWithGround(const size_t groundY)
     return true;
 }
 
-void Entity::getHitboxSide(int side, sf::Vector2f& p1, sf::Vector2f& p2) const
+void Entity::getHitboxSide(int side,
+                           bool extendEdges,
+                           sf::Vector2f& p1,
+                           sf::Vector2f& p2) const
 {
-    if (side == 0)
+    // Set both points to upper left corner of hitbox
+    // Then adjust per side
+    p1.x = getX() + mHitbox.mUpperLeftOffset.x;
+    p1.y = getY() + mHitbox.mUpperLeftOffset.y;
+    p2.x = getX() + mHitbox.mUpperLeftOffset.x;
+    p2.y = getY() + mHitbox.mUpperLeftOffset.y;
+
+
+    // The `extendEdges` argument is to deal with a corner case where we've
+    // detected a collision, but one hitbox is fully inside the other,
+    // so no two edges will intersect with each other.
+    // If handling this case we extend the edges of the hitbox in question
+    // out to "infinity" so that it can still register intersections
+    // when completely contained inside another hitbox.
+    if (side == 0)  // TOP
     {
-        p1.x = getX();
-        p1.y = getY();
-        p2.x = getX() + getWidth();
-        p2.y = getY();
+        if (!extendEdges)
+            p2.x += mHitbox.mSize.x;
+        else
+        {
+            p1.x -= 1000;
+            p2.x += 1000;
+        }
     }
-    else if (side == 1)
+    else if (side == 1)  // RIGHT
     {
-        p1.x = getX() + getWidth();
-        p1.y = getY();
-        p2.x = getX() + getWidth();
-        p2.y = getY() + getHeight();
+        p1.x += mHitbox.mSize.x;
+        p2.x += mHitbox.mSize.x;
+
+        if (!extendEdges)
+            p2.y += mHitbox.mSize.y;
+        else
+        {
+            p1.y -= 1000;
+            p2.y += 1000;
+        }
     }
-    else if (side == 2)
+    else if (side == 2)  // BOTTOM
     {
-        p1.x = getX() + getWidth();
-        p1.y = getY() + getHeight();
-        p2.x = getX();
-        p2.y = getY() + getHeight();
+        p1.y += mHitbox.mSize.y;
+        p2.y += mHitbox.mSize.y;
+
+        if (!extendEdges)
+            p1.x += mHitbox.mSize.x;
+        else
+        {
+            p1.x -= 1000;
+            p2.x += 1000;
+        }
     }
-    else if (side == 3)
+    else if (side == 3)  // LEFT
     {
-        p1.x = getX();
-        p1.y = getY() + getHeight();
-        p2.x = getX();
-        p2.y = getY();
+        if (!extendEdges)
+            p1.y += mHitbox.mSize.y;
+
+        else
+        {
+            p1.y -= 1000;
+            p2.y += 1000;
+        }
     }
     else
     {
@@ -149,7 +185,6 @@ void Entity::getHitboxSide(int side, sf::Vector2f& p1, sf::Vector2f& p2) const
 
 void Entity::getCorner(int corner, sf::Vector2f& point) const
 {
-
     point.x = getX() + mHitbox.mUpperLeftOffset.x;
     point.y = getY() + mHitbox.mUpperLeftOffset.y;
     if (corner == 0)
@@ -187,11 +222,8 @@ void Entity::updatePosition()
             mVelocity.x = -mMaxVelocity;
     }
 
-    // const auto newX = getX() + mVelocity.x;
-    // const auto newY = getY() + mVelocity.y;
     mDeltaP.x += mVelocity.x;
     mDeltaP.y += mVelocity.y;
-    // setPosition(newX, newY);
 }
 
 void Entity::setMaxVelocity(size_t maxVelocity)

@@ -7,3 +7,4 @@ Hitbox::Hitbox(sf::Vector2f size, sf::Vector2f upperLeftOffset) :
     mUpperLeftOffset(upperLeftOffset)
 {
 }
+

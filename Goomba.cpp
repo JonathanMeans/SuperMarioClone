@@ -8,7 +8,8 @@ const auto MARIO_HEIGHT = 16;
 }
 
 Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite) :
-    Entity(std::move(sprite), 16, 16, Hitbox({16, 16}, {0, 0}))
+    Entity(std::move(sprite), 16, 16, Hitbox({8, 5}, {4, 7}))
+    //Entity(std::move(sprite), 16, 16, Hitbox({16, 16}, {0, 0}))
 {
     mActiveSprite->setPosition(150, 50);
 

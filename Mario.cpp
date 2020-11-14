@@ -158,7 +158,7 @@ bool Mario::collideWithEnemy(std::vector<Entity>& enemies)
                 const sf::Vector2f marioPath2 = marioPath1 + mDeltaP;
                 for (int side = 0; side < 4; ++side)
                 {
-                    enemy.getHitboxSide(side, enemyEdge1, enemyEdge2);
+                    enemy.getHitboxSide(side, true, enemyEdge1, enemyEdge2);
                     if (Utils::IsIntersecting(
                                 marioPath1, marioPath2, enemyEdge1, enemyEdge2))
                     {
