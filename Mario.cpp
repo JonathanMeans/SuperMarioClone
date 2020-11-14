@@ -13,6 +13,10 @@ const std::vector<EntitySide> SIDES{EntitySide::TOP,
                                     EntitySide::RIGHT,
                                     EntitySide::BOTTOM,
                                     EntitySide::LEFT};
+const std::vector<EntityCorner> CORNERS{EntityCorner::UPPER_LEFT,
+                                        EntityCorner::UPPER_RIGHT,
+                                        EntityCorner::LOWER_RIGHT,
+                                        EntityCorner::LOWER_LEFT};
 }
 
 Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
@@ -156,10 +160,10 @@ bool Mario::collideWithEnemy(std::vector<Entity>& enemies)
             mTopEdge < eBottomEdge && mBottomEdge > eTopEdge)
         {
             sf::Vector2f enemyEdge1, enemyEdge2;
-            for (int marioSide = 0; marioSide < 4; ++marioSide)
+            for (const auto& corner : CORNERS)
             {
                 sf::Vector2f marioPath1;
-                this->getCorner(marioSide, marioPath1);
+                this->getHitboxCorner(corner, marioPath1);
                 const sf::Vector2f marioPath2 = marioPath1 + mDeltaP;
                 for (const auto& side : SIDES)
                 {

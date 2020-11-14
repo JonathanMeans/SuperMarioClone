@@ -12,6 +12,10 @@ enum class EntitySide {
     TOP, RIGHT, BOTTOM, LEFT
 };
 
+enum class EntityCorner {
+    UPPER_LEFT, UPPER_RIGHT, LOWER_RIGHT, LOWER_LEFT
+};
+
 class Entity
 {
 public:
@@ -45,7 +49,7 @@ public:
     void draw(sf::RenderWindow& window);
 
     void getHitboxSide(const EntitySide& side, bool extendEdges, sf::Vector2f& p1, sf::Vector2f& p2) const;
-    void getCorner(int corner, sf::Vector2f& point) const;
+    void getHitboxCorner(const EntityCorner& corner, sf::Vector2f& point) const;
 
     const size_t GRIDBOX_SIZE = 16;
 

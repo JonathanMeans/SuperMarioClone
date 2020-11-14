@@ -184,29 +184,26 @@ void Entity::getHitboxSide(const EntitySide& side,
     }
 }
 
-void Entity::getCorner(int corner, sf::Vector2f& point) const
+void Entity::getHitboxCorner(const EntityCorner& corner,
+                             sf::Vector2f& point) const
 {
     point.x = getX() + mHitbox.mUpperLeftOffset.x;
     point.y = getY() + mHitbox.mUpperLeftOffset.y;
-    if (corner == 0)
+    switch (corner)
     {
-    }
-    else if (corner == 1)
-    {
+    case EntityCorner::UPPER_LEFT:
+        break;
+    case EntityCorner::UPPER_RIGHT:
         point.x += mHitbox.mSize.x;
-    }
-    else if (corner == 2)
-    {
+        break;
+    case EntityCorner::LOWER_RIGHT:
         point.x += mHitbox.mSize.x;
         point.y += mHitbox.mSize.y;
-    }
-    else if (corner == 3)
-    {
+        break;
+    case EntityCorner::LOWER_LEFT:
         point.y += mHitbox.mSize.y;
+        break;
     }
-    else
-        throw std::runtime_error("Invalid corner: '" + std::to_string(corner) +
-                                 "'");
 }
 
 void Entity::updatePosition()
