@@ -110,7 +110,7 @@ bool Entity::collideWithGround(const size_t groundY)
     return true;
 }
 
-void Entity::getHitboxSide(int side,
+void Entity::getHitboxSide(const EntitySide& side,
                            bool extendEdges,
                            sf::Vector2f& p1,
                            sf::Vector2f& p2) const
@@ -122,14 +122,15 @@ void Entity::getHitboxSide(int side,
     p2.x = getX() + mHitbox.mUpperLeftOffset.x;
     p2.y = getY() + mHitbox.mUpperLeftOffset.y;
 
-
     // The `extendEdges` argument is to deal with a corner case where we've
     // detected a collision, but one hitbox is fully inside the other,
     // so no two edges will intersect with each other.
     // If handling this case we extend the edges of the hitbox in question
     // out to "infinity" so that it can still register intersections
     // when completely contained inside another hitbox.
-    if (side == 0)  // TOP
+    switch (side)
+    {
+    case EntitySide::TOP:
     {
         if (!extendEdges)
             p2.x += mHitbox.mSize.x;
@@ -138,8 +139,9 @@ void Entity::getHitboxSide(int side,
             p1.x -= 1000;
             p2.x += 1000;
         }
+        break;
     }
-    else if (side == 1)  // RIGHT
+    case EntitySide::RIGHT:
     {
         p1.x += mHitbox.mSize.x;
         p2.x += mHitbox.mSize.x;
@@ -152,7 +154,8 @@ void Entity::getHitboxSide(int side,
             p2.y += 1000;
         }
     }
-    else if (side == 2)  // BOTTOM
+    break;
+    case EntitySide ::BOTTOM:
     {
         p1.y += mHitbox.mSize.y;
         p2.y += mHitbox.mSize.y;
@@ -165,7 +168,8 @@ void Entity::getHitboxSide(int side,
             p2.x += 1000;
         }
     }
-    else if (side == 3)  // LEFT
+    break;
+    case EntitySide ::LEFT:
     {
         if (!extendEdges)
             p1.y += mHitbox.mSize.y;
@@ -176,10 +180,7 @@ void Entity::getHitboxSide(int side,
             p2.y += 1000;
         }
     }
-    else
-    {
-        throw std::runtime_error("Invalid side: '" + std::to_string(side) +
-                                 "'");
+    break;
     }
 }
 

@@ -1,13 +1,18 @@
 #include "Mario.h"
 #include "Animation.h"
-#include "Utils.h"
 #include "Hitbox.h"
+#include "Utils.h"
 
 #include <memory>
 
-namespace {
-    const Hitbox smallHitbox = Hitbox({8, 11}, {4, 5});
-    const Hitbox largeHitbox = Hitbox({12, 23}, {2, 8});
+namespace
+{
+const Hitbox smallHitbox = Hitbox({8, 11}, {4, 5});
+const Hitbox largeHitbox = Hitbox({12, 23}, {2, 8});
+const std::vector<EntitySide> SIDES{EntitySide::TOP,
+                                    EntitySide::RIGHT,
+                                    EntitySide::BOTTOM,
+                                    EntitySide::LEFT};
 }
 
 Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
@@ -156,13 +161,13 @@ bool Mario::collideWithEnemy(std::vector<Entity>& enemies)
                 sf::Vector2f marioPath1;
                 this->getCorner(marioSide, marioPath1);
                 const sf::Vector2f marioPath2 = marioPath1 + mDeltaP;
-                for (int side = 0; side < 4; ++side)
+                for (const auto& side : SIDES)
                 {
                     enemy.getHitboxSide(side, true, enemyEdge1, enemyEdge2);
                     if (Utils::IsIntersecting(
                                 marioPath1, marioPath2, enemyEdge1, enemyEdge2))
                     {
-                        if (side == 0)
+                        if (side == EntitySide::TOP)
                             mDeltaP.y -= 5;
                         else
                             mDeltaP.x -= 5;

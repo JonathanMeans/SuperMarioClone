@@ -8,6 +8,10 @@
 #include "SFML/Graphics.hpp"
 #include "Hitbox.h"
 
+enum class EntitySide {
+    TOP, RIGHT, BOTTOM, LEFT
+};
+
 class Entity
 {
 public:
@@ -40,7 +44,7 @@ public:
     void updateAnimation();
     void draw(sf::RenderWindow& window);
 
-    void getHitboxSide(int side, bool extendEdges, sf::Vector2f& p1, sf::Vector2f& p2) const;
+    void getHitboxSide(const EntitySide& side, bool extendEdges, sf::Vector2f& p1, sf::Vector2f& p2) const;
     void getCorner(int corner, sf::Vector2f& point) const;
 
     const size_t GRIDBOX_SIZE = 16;
