@@ -6,16 +6,15 @@
 #include <memory>
 #include "Animation.h"
 #include "SFML/Graphics.hpp"
+#include "Hitbox.h"
 
 class Entity
 {
 public:
-    explicit Entity(std::shared_ptr<sf::Sprite> sprite,
-                    size_t hitboxWidth,
-                    size_t hitboxHeight,
+    Entity(std::shared_ptr<sf::Sprite> sprite,
                     size_t spriteWidth,
                     size_t spriteHeight,
-                    sf::Vector2f hitboxULCornerOffset);
+                    Hitbox hitbox);
     virtual ~Entity();
 
     size_t getBottomPosition();
@@ -54,11 +53,9 @@ protected:
     sf::Vector2f mAcceleration;
     bool mChangingDirection;
     Animation* mActiveAnimation;
-    size_t mHitboxWidth;
-    size_t mHitboxHeight;
     size_t mSpriteWidth;
     size_t mSpriteHeight;
-    sf::Vector2f mHitboxULCornerOffset;
+    Hitbox mHitbox;
 
 private:
     int mLookDirection;
