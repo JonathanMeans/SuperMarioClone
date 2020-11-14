@@ -8,14 +8,6 @@
 #include "SFML/Graphics.hpp"
 #include "Hitbox.h"
 
-enum class EntitySide {
-    TOP, RIGHT, BOTTOM, LEFT
-};
-
-enum class EntityCorner {
-    UPPER_LEFT, UPPER_RIGHT, LOWER_RIGHT, LOWER_LEFT
-};
-
 class Entity
 {
 public:

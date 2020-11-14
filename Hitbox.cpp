@@ -8,3 +8,100 @@ Hitbox::Hitbox(sf::Vector2f size, sf::Vector2f upperLeftOffset) :
 {
 }
 
+void Hitbox::getCorner(const EntityCorner& corner,
+                       const sf::Vector2f& spritePosition,
+                       sf::Vector2f& point) const
+{
+    point.x = spritePosition.x + mUpperLeftOffset.x;
+    point.y = spritePosition.y + mUpperLeftOffset.y;
+    switch (corner)
+    {
+    case EntityCorner::UPPER_LEFT:
+        break;
+    case EntityCorner::UPPER_RIGHT:
+        point.x += mSize.x;
+        break;
+    case EntityCorner::LOWER_RIGHT:
+        point.x += mSize.x;
+        point.y += mSize.y;
+        break;
+    case EntityCorner::LOWER_LEFT:
+        point.y += mSize.y;
+        break;
+    }
+}
+
+void Hitbox::getSide(const EntitySide& side,
+             bool extendEdges,
+             const sf::Vector2f& spritePosition,
+             sf::Vector2f& p1,
+             sf::Vector2f& p2) const
+{
+    // Set both points to upper left corner of hitbox
+    // Then adjust per side
+    p1.x = spritePosition.x + mUpperLeftOffset.x;
+    p1.y = spritePosition.y + mUpperLeftOffset.y;
+    p2.x = spritePosition.x + mUpperLeftOffset.x;
+    p2.y = spritePosition.y + mUpperLeftOffset.y;
+
+    // The `extendEdges` argument is to deal with a corner case where we've
+    // detected a collision, but one hitbox is fully inside the other,
+    // so no two edges will intersect with each other.
+    // If handling this case we extend the edges of the hitbox in question
+    // out to "infinity" so that it can still register intersections
+    // when completely contained inside another hitbox.
+    switch (side)
+    {
+    case EntitySide::TOP:
+    {
+        if (!extendEdges)
+            p2.x += mSize.x;
+        else
+        {
+            p1.x -= 1000;
+            p2.x += 1000;
+        }
+        break;
+    }
+    case EntitySide::RIGHT:
+    {
+        p1.x += mSize.x;
+        p2.x += mSize.x;
+
+        if (!extendEdges)
+            p2.y += mSize.y;
+        else
+        {
+            p1.y -= 1000;
+            p2.y += 1000;
+        }
+    }
+        break;
+    case EntitySide ::BOTTOM:
+    {
+        p1.y += mSize.y;
+        p2.y += mSize.y;
+
+        if (!extendEdges)
+            p1.x += mSize.x;
+        else
+        {
+            p1.x -= 1000;
+            p2.x += 1000;
+        }
+    }
+        break;
+    case EntitySide ::LEFT:
+    {
+        if (!extendEdges)
+            p1.y += mSize.y;
+
+        else
+        {
+            p1.y -= 1000;
+            p2.y += 1000;
+        }
+    }
+        break;
+    }
+}
