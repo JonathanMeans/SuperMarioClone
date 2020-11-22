@@ -18,6 +18,7 @@ enum class AnimationType
     BIG_STANDING,
 
     GOOMBA_WALKING,
+    GOOMBA_DEATH,
 };
 
 class Animation

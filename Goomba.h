@@ -12,8 +12,11 @@ class Goomba : public Entity
 public:
     explicit Goomba(std::shared_ptr<sf::Sprite> sprite);
 
+    void die() override;
+
 private:
     Animation walkingAnimation;
+    Animation deathAnimation;
 };
 
 #endif  // SUPERMARIOBROS_GOOMBA_H

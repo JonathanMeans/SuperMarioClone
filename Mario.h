@@ -29,7 +29,7 @@ public:
     void setAnimationFromState() override;
 
     bool collideWithGround(size_t groundY) override;
-    bool collideWithEnemy(std::vector<Entity>& enemies);
+    bool collideWithEnemy(std::vector<Entity*>& enemies);
 
     inline void setJumping(bool isJumping)
     {

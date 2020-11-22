@@ -6,7 +6,6 @@
 #include "SFML/Window.hpp"
 
 #include <file_util.h>
-#include <iostream>
 
 struct KeyboardInputState
 {
@@ -72,8 +71,8 @@ int main(int argc, char* argv[])
     Mario mario(spriteMaker.marioSprite);
     Goomba goomba(spriteMaker.goombaSprite);
 
-    std::vector<Entity> enemies;
-    enemies.push_back(goomba);
+    std::vector<Entity*> enemies;
+    enemies.push_back(&goomba);
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
@@ -105,8 +104,8 @@ int main(int argc, char* argv[])
 
         for (auto& enemy : enemies)
         {
-            enemy.mDeltaP.x = 0;
-            enemy.mDeltaP.y = 0;
+            enemy->mDeltaP.x = 0;
+            enemy->mDeltaP.y = 0;
         }
 
         sf::Vector2f acceleration = mario.getAcceleration();
@@ -142,10 +141,10 @@ int main(int argc, char* argv[])
 
         mario.updatePosition();
         for (auto& enemy : enemies)
-            enemy.updatePosition();
+            enemy->updatePosition();
         mario.collideWithGround(groundY);
         for (auto& enemy : enemies)
-            enemy.collideWithGround(groundY);
+            enemy->collideWithGround(groundY);
         mario.collideWithEnemy(enemies);
 
         mario.setPosition(mario.getX() + mario.mDeltaP.x,
@@ -154,12 +153,20 @@ int main(int argc, char* argv[])
 
         for (auto& enemy : enemies)
         {
-            enemy.setPosition(enemy.getX() + enemy.mDeltaP.x,
-                              enemy.getY() + enemy.mDeltaP.y);
+            enemy->setPosition(enemy->getX() + enemy->mDeltaP.x,
+                               enemy->getY() + enemy->mDeltaP.y);
         }
 
         for (auto& enemy : enemies)
-            enemy.updateAnimation();
+            enemy->updateAnimation();
+
+        // Removal code is broken!!
+        auto it = std::remove_if(enemies.begin(), enemies.end(), [](Entity* enemy) {
+            return enemy->needsCleanup();
+        });
+        if (it != enemies.end())
+            enemies.erase(it, enemies.end());
+
 
         window.clear(sf::Color(0, 0, 255, 255));
         mario.draw(window);

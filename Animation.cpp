@@ -42,6 +42,10 @@ void Animation::load(AnimationType type,
         mTicsPerFrame = 4;
         mRemainingTicsThisFrame = 4;
         break;
+
+    case AnimationType::GOOMBA_DEATH:
+        generateRectangles(1, 32, 16, 16, 16);
+        break;
     }
 }
 

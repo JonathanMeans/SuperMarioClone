@@ -143,19 +143,19 @@ bool Mario::collideWithGround(const size_t groundY)
     return atGround;
 }
 
-bool Mario::collideWithEnemy(std::vector<Entity>& enemies)
+bool Mario::collideWithEnemy(std::vector<Entity*>& enemies)
 {
     size_t mTopEdge = Mario::getY() + mHitbox.mUpperLeftOffset.y;
     size_t mBottomEdge = mTopEdge + mHitbox.mSize.y;
     size_t mLeftEdge = Mario::getX() + mHitbox.mUpperLeftOffset.x;
     size_t mRightEdge = mLeftEdge + mHitbox.mSize.x;
 
-    for (const auto& enemy : enemies)
+    for (auto& enemy : enemies)
     {
-        size_t eTopEdge = enemy.getY();
-        size_t eLeftEdge = enemy.getX();
-        size_t eRightEdge = eLeftEdge + enemy.getWidth();
-        size_t eBottomEdge = eTopEdge + enemy.getHeight();
+        size_t eTopEdge = enemy->getY();
+        size_t eLeftEdge = enemy->getX();
+        size_t eRightEdge = eLeftEdge + enemy->getWidth();
+        size_t eBottomEdge = eTopEdge + enemy->getHeight();
         if (mLeftEdge < eRightEdge && mRightEdge > eLeftEdge &&
             mTopEdge < eBottomEdge && mBottomEdge > eTopEdge)
         {
@@ -167,12 +167,15 @@ bool Mario::collideWithEnemy(std::vector<Entity>& enemies)
                 const sf::Vector2f marioPath2 = marioPath1 + mDeltaP;
                 for (const auto& side : SIDES)
                 {
-                    enemy.getHitboxSide(side, true, enemyEdge1, enemyEdge2);
+                    enemy->getHitboxSide(side, true, enemyEdge1, enemyEdge2);
                     if (Utils::IsIntersecting(
                                 marioPath1, marioPath2, enemyEdge1, enemyEdge2))
                     {
                         if (side == EntitySide::TOP)
+                        {
                             mDeltaP.y -= 5;
+                            enemy->die();
+                        }
                         else
                             mDeltaP.x -= 5;
                         return true;

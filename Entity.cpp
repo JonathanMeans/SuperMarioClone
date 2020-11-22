@@ -72,6 +72,10 @@ sf::Vector2f Entity::getAcceleration() const
     return mAcceleration;
 }
 
+void Entity::die()
+{
+}
+
 void Entity::setAcceleration(const sf::Vector2f& acceleration)
 {
     if (acceleration == this->mAcceleration)
@@ -176,4 +180,14 @@ size_t Entity::getWidth() const
 void Entity::setPosition(size_t x, size_t y)
 {
     mActiveSprite->setPosition(x, y);
+}
+
+void Entity::setCleanupFlag()
+{
+    mCleanupFlag = true;
+}
+
+bool Entity::needsCleanup()
+{
+    return mCleanupFlag;
 }

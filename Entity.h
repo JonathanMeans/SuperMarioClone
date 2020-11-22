@@ -43,6 +43,11 @@ public:
     void getHitboxSide(const EntitySide& side, bool extendEdges, sf::Vector2f& p1, sf::Vector2f& p2) const;
     void getHitboxCorner(const EntityCorner& corner, sf::Vector2f& point) const;
 
+    virtual void die();
+
+    void setCleanupFlag();
+    bool needsCleanup();
+
     const size_t GRIDBOX_SIZE = 16;
 
     sf::Vector2f mDeltaP;
@@ -56,6 +61,7 @@ protected:
     size_t mSpriteWidth;
     size_t mSpriteHeight;
     Hitbox mHitbox;
+    bool mCleanupFlag = false;
 
 private:
     int mLookDirection;
