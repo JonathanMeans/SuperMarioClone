@@ -1,6 +1,7 @@
 #include "Goomba.h"
 #include "Mario.h"
 #include "SpriteMaker.h"
+#include "Timer.h"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
@@ -172,6 +173,8 @@ int main(int argc, char* argv[])
         for (auto& enemy : enemies)
             enemy->draw(window);
         window.display();
+
+        getTimer().incrementNumFrames();
     }
 
     return 0;
