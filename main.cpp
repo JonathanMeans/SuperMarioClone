@@ -160,17 +160,17 @@ int main(int argc, char* argv[])
         for (auto& enemy : enemies)
             enemy->updateAnimation();
 
-        // Removal code is broken!!
-        auto it = std::remove_if(enemies.begin(), enemies.end(), [](Entity* enemy) {
-            return enemy->needsCleanup();
-        });
-        if (it != enemies.end())
-            enemies.erase(it, enemies.end());
-
+        enemies.erase(std::remove_if(enemies.begin(),
+                                     enemies.end(),
+                                     [](Entity* enemy) {
+                                         return enemy->needsCleanup();
+                                     }),
+                      enemies.end());
 
         window.clear(sf::Color(0, 0, 255, 255));
         mario.draw(window);
-        goomba.draw(window);
+        for (auto& enemy : enemies)
+            enemy->draw(window);
         window.display();
     }
 
