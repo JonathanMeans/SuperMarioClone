@@ -46,6 +46,10 @@ void Animation::load(AnimationType type,
     case AnimationType::GOOMBA_DEATH:
         generateRectangles(1, 32, 16, 16, 16);
         break;
+
+    case AnimationType::MARIO_DEATH:
+        generateRectangles(1, 182, 34, 16, 16);
+        break;
     }
 }
 

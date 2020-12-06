@@ -19,6 +19,8 @@ enum class AnimationType
 
     GOOMBA_WALKING,
     GOOMBA_DEATH,
+
+    MARIO_DEATH,
 };
 
 class Animation

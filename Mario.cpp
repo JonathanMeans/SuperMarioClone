@@ -22,7 +22,8 @@ const std::vector<EntityCorner> CORNERS{EntityCorner::UPPER_LEFT,
 Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
     Entity(sprite, 16, 16, smallHitbox),
     mForm(MarioForm::SMALL_MARIO),
-    mJumping(false)
+    mJumping(false),
+    mIsDead(false)
 {
     // TODO: Pass in ctor
     setMaxVelocity(2.f);
@@ -32,6 +33,7 @@ Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
     walkingAnimation.load(AnimationType::WALKING, mActiveSprite);
     jumpingAnimation.load(AnimationType::JUMPING, mActiveSprite);
     standingAnimation.load(AnimationType::STANDING, mActiveSprite);
+    deathAnimation.load(AnimationType::MARIO_DEATH, mActiveSprite);
 
     bigWalkingAnimation.load(AnimationType::BIG_WALKING, mActiveSprite);
     bigStandingAnimation.load(AnimationType::BIG_STANDING, mActiveSprite);
@@ -46,7 +48,11 @@ Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
 
 void Mario::setAnimationFromState()
 {
-    if (mJumping)
+    if (mIsDead)
+    {
+        mActiveAnimation = &deathAnimation;
+    }
+    else if (mJumping)
     {
         jump();
     }
@@ -177,7 +183,7 @@ bool Mario::collideWithEnemy(std::vector<Entity*>& enemies)
                             enemy->die();
                         }
                         else
-                            mDeltaP.x -= 5;
+                            die();
                         return true;
                     }
                 }
@@ -186,3 +192,10 @@ bool Mario::collideWithEnemy(std::vector<Entity*>& enemies)
     }
     return false;
 }
+
+void Mario::die()
+{
+    mIsDead = true;
+    mHitbox = Hitbox({0.f, 0.f}, {-10000.f, -100000.f});
+}
+

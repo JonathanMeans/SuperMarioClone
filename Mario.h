@@ -36,18 +36,22 @@ public:
         mJumping = isJumping;
     }
 
+    void die() override;
+
 private:
     MarioForm mForm;
 
     Animation walkingAnimation;
     Animation jumpingAnimation;
     Animation standingAnimation;
+    Animation deathAnimation;
 
     Animation bigWalkingAnimation;
     Animation bigJumpingAnimation;
     Animation bigStandingAnimation;
 
     bool mJumping;
+    bool mIsDead;
 };
 
 #endif  // SUPERMARIOBROS_MARIO_H
