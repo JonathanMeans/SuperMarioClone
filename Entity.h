@@ -33,6 +33,7 @@ public:
     void setVelocity(const sf::Vector2f& newVelocity);
     void setAcceleration(const sf::Vector2f& newAcceleration);
     void updatePosition();
+    void applyDeltaP();
     virtual bool collideWithGround(size_t groundY);
     //    virtual bool collideWithEnemy(std::vector<Entity> &enemies);
     void setMaxVelocity(size_t maxVelocity);

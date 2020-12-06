@@ -191,3 +191,8 @@ bool Entity::needsCleanup()
 {
     return mCleanupFlag;
 }
+
+void Entity::applyDeltaP()
+{
+    setPosition(getX() + mDeltaP.x, getY() + mDeltaP.y);
+}

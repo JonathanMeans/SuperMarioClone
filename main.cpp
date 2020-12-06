@@ -148,18 +148,14 @@ int main(int argc, char* argv[])
             enemy->collideWithGround(groundY);
         mario.collideWithEnemy(enemies);
 
-        mario.setPosition(mario.getX() + mario.mDeltaP.x,
-                          mario.getY() + mario.mDeltaP.y);
+        mario.applyDeltaP();
         mario.updateAnimation();
 
         for (auto& enemy : enemies)
         {
-            enemy->setPosition(enemy->getX() + enemy->mDeltaP.x,
-                               enemy->getY() + enemy->mDeltaP.y);
-        }
-
-        for (auto& enemy : enemies)
+            enemy->applyDeltaP();
             enemy->updateAnimation();
+        }
 
         enemies.erase(std::remove_if(enemies.begin(),
                                      enemies.end(),
