@@ -1,5 +1,7 @@
 #include "Timer.h"
 
+#include <utility>
+
 namespace
 {
 Timer gTimer;
@@ -10,17 +12,14 @@ Timer& getTimer()
     return gTimer;
 }
 
-void Timer::scheduleSeconds(size_t numSeconds, std::function<void()> callback)
+void Timer::scheduleSeconds(double numSeconds, const std::function<void()>& callback)
 {
-    (void) numSeconds;
-    (void) callback;
-
-    scheduledTimes.push_back(ScheduledEvent(numFrames + numSeconds * FRAMES_PER_SECOND, callback));
+    scheduledTimes.emplace_back(numFrames + numSeconds * FRAMES_PER_SECOND, callback);
 }
 
 void Timer::incrementNumFrames()
 {
-    for (int i = scheduledTimes.size() - 1; i >= 0; i--)
+    for (int i = static_cast<int>(scheduledTimes.size() - 1); i >= 0; i--)
     {
         ScheduledEvent event = scheduledTimes[i];
         if (numFrames == event.mTime)
@@ -34,7 +33,7 @@ void Timer::incrementNumFrames()
 
 ScheduledEvent::ScheduledEvent(size_t time, std::function<void()> callback) :
     mTime(time),
-    mCallback(callback)
+    mCallback(std::move(callback))
 {
 }
 

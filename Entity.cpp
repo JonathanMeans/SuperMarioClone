@@ -23,7 +23,7 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
                Hitbox hitbox) :
     mActiveSprite(std::move(sprite)),
     mVelocity(0, 0),
-    mAcceleration(0, 1),
+    mAcceleration(0, GRAVITY_ACCELERATION),
     mChangingDirection(false),
     mActiveAnimation(nullptr),
     mSpriteWidth(spriteWidth),

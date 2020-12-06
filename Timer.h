@@ -12,7 +12,7 @@
 class ScheduledEvent
 {
 public:
-    size_t mTime;
+    double mTime;
     std::function<void()> mCallback;
 
     ScheduledEvent(size_t time, std::function<void()> callback);
@@ -21,7 +21,7 @@ public:
 class Timer
 {
 public:
-    void scheduleSeconds(size_t numSeconds, std::function<void()> callback);
+    void scheduleSeconds(double numSeconds, const std::function<void()>& callback);
     void incrementNumFrames();
 
     size_t numFrames;

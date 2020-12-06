@@ -2,6 +2,7 @@
 #include "Animation.h"
 #include "Hitbox.h"
 #include "Utils.h"
+#include "Timer.h"
 
 #include <memory>
 
@@ -141,12 +142,15 @@ void Mario::jump()
 
 bool Mario::collideWithGround(const size_t groundY)
 {
-    bool atGround = Entity::collideWithGround(groundY);
-    if (atGround)
+    if (!mIsDead)
     {
-        setJumping(false);
+        bool atGround = Entity::collideWithGround(groundY);
+        if (atGround)
+        {
+            setJumping(false);
+        }
+        return atGround;
     }
-    return atGround;
 }
 
 bool Mario::collideWithEnemy(std::vector<Entity*>& enemies)
@@ -197,5 +201,7 @@ void Mario::die()
 {
     mIsDead = true;
     mHitbox = Hitbox({0.f, 0.f}, {-10000.f, -100000.f});
+    mAcceleration.y = 0;
+    getTimer().scheduleSeconds(0.5, [&]() { mVelocity.y = -10; mAcceleration.y = GRAVITY_ACCELERATION;});
 }
 
