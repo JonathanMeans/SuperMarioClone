@@ -57,7 +57,7 @@ public:
     sf::Vector2f mDeltaP;
 
 protected:
-    virtual void setPosition(size_t x, size_t y);
+    virtual void setPosition(float x, float y);
 
     std::shared_ptr<sf::Sprite> mActiveSprite;
     sf::Vector2f mVelocity;

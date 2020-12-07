@@ -58,6 +58,50 @@ void updateKeyboardInputs(KeyboardInput& currentInput,
     previousInput = currentInput;
 }
 
+void setMarioMovementFromController(Mario& mario,
+                                    const KeyboardInput& currentInput)
+{
+    if (currentInput.B.pressedThisFrame())
+    {
+        mario.setForm(MarioForm::BIG_MARIO);
+    }
+    else if (currentInput.B.releasedThisFrame())
+    {
+        mario.setForm(MarioForm::SMALL_MARIO);
+    }
+
+    sf::Vector2f acceleration = mario.getAcceleration();
+    sf::Vector2f velocity = mario.getVelocity();
+    if (currentInput.A.keyIsDown)
+    {
+        mario.setJumping(true);
+        velocity.y = -5;
+    }
+
+    if (currentInput.right.pressedThisFrame())
+    {
+        if (!currentInput.left.keyIsDown)
+            acceleration.x = 1;
+    }
+    if (currentInput.left.pressedThisFrame())
+    {
+        if (!currentInput.right.keyIsDown)
+            acceleration.x = -1;
+    }
+    if ((currentInput.left.releasedThisFrame() &&
+         !currentInput.right.keyIsDown) ||
+        (currentInput.right.releasedThisFrame() &&
+         !currentInput.left.keyIsDown))
+    {
+        // TODO: Should we decelerate to 0?
+        velocity.x = 0;
+        acceleration.x = 0;
+    }
+
+    mario.setAcceleration(acceleration);
+    mario.setVelocity(velocity);
+}
+
 int main(int argc, char* argv[])
 {
     const auto root = findRootDirectory(argv[0]);
@@ -89,17 +133,6 @@ int main(int argc, char* argv[])
                 window.close();
         }
 
-        updateKeyboardInputs(currentInput, previousInput);
-
-        if (currentInput.B.pressedThisFrame())
-        {
-            mario.setForm(MarioForm::BIG_MARIO);
-        }
-        else if (currentInput.B.releasedThisFrame())
-        {
-            mario.setForm(MarioForm::SMALL_MARIO);
-        }
-
         mario.mDeltaP.x = 0;
         mario.mDeltaP.y = 0;
 
@@ -108,42 +141,16 @@ int main(int argc, char* argv[])
             enemy->mDeltaP.x = 0;
             enemy->mDeltaP.y = 0;
         }
+        updateKeyboardInputs(currentInput, previousInput);
 
-        sf::Vector2f acceleration = mario.getAcceleration();
-        sf::Vector2f velocity = mario.getVelocity();
-        if (currentInput.A.keyIsDown)
-        {
-            mario.setJumping(true);
-            velocity.y = -5;
-        }
-
-        if (currentInput.right.pressedThisFrame())
-        {
-            if (!currentInput.left.keyIsDown)
-                acceleration.x = 1;
-        }
-        if (currentInput.left.pressedThisFrame())
-        {
-            if (!currentInput.right.keyIsDown)
-                acceleration.x = -1;
-        }
-        if ((currentInput.left.releasedThisFrame() &&
-             !currentInput.right.keyIsDown) ||
-            (currentInput.right.releasedThisFrame() &&
-             !currentInput.left.keyIsDown))
-        {
-            // TODO: Should we decelerate to 0?
-            velocity.x = 0;
-            acceleration.x = 0;
-        }
-
-        mario.setAcceleration(acceleration);
-        mario.setVelocity(velocity);
-
+        setMarioMovementFromController(mario, currentInput);
         mario.updatePosition();
-        for (auto& enemy : enemies)
-            enemy->updatePosition();
         mario.collideWithGround(groundY);
+
+        for (auto& enemy : enemies)
+        {
+            enemy->updatePosition();
+        }
         for (auto& enemy : enemies)
             enemy->collideWithGround(groundY);
         mario.collideWithEnemy(enemies);

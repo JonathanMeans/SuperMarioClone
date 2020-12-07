@@ -171,7 +171,7 @@ size_t Entity::getWidth() const
     return mSpriteWidth;
 }
 
-void Entity::setPosition(size_t x, size_t y)
+void Entity::setPosition(float x, float y)
 {
     mActiveSprite->setPosition(x, y);
 }
