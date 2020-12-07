@@ -21,14 +21,11 @@ const std::vector<EntityCorner> CORNERS{EntityCorner::UPPER_LEFT,
 }
 
 Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
-    Entity(sprite, 16, 16, smallHitbox),
+    Entity(sprite, 16, 16, smallHitbox, 2.f),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false),
     mIsDead(false)
 {
-    // TODO: Pass in ctor
-    setMaxVelocity(2.f);
-
     mActiveSprite->setPosition(100, 100);
 
     walkingAnimation.load(AnimationType::WALKING, mActiveSprite);

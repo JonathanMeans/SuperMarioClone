@@ -5,20 +5,22 @@
 #include <cstdlib>
 #include <memory>
 #include "Animation.h"
-#include "SFML/Graphics.hpp"
 #include "Hitbox.h"
+#include "SFML/Graphics.hpp"
 
 class Entity
 {
 public:
+    static const float NO_MAX_VELOCITY_VALUE;
+
     Entity(std::shared_ptr<sf::Sprite> sprite,
-                    size_t spriteWidth,
-                    size_t spriteHeight,
-                    Hitbox hitbox);
+           size_t spriteWidth,
+           size_t spriteHeight,
+           Hitbox hitbox,
+           float maxVelocity = NO_MAX_VELOCITY_VALUE);
     virtual ~Entity();
 
     size_t getBottomPosition();
-    void setBottomPosition(size_t newBottomY);
 
     [[nodiscard]] virtual size_t getY() const;
     [[nodiscard]] virtual size_t getX() const;
@@ -34,13 +36,14 @@ public:
     void updatePosition();
     void applyDeltaP();
     virtual bool collideWithGround(size_t groundY);
-    //    virtual bool collideWithEnemy(std::vector<Entity> &enemies);
-    void setMaxVelocity(size_t maxVelocity);
 
     void updateAnimation();
     void draw(sf::RenderWindow& window);
 
-    void getHitboxSide(const EntitySide& side, bool extendEdges, sf::Vector2f& p1, sf::Vector2f& p2) const;
+    void getHitboxSide(const EntitySide& side,
+                       bool extendEdges,
+                       sf::Vector2f& p1,
+                       sf::Vector2f& p2) const;
     void getHitboxCorner(const EntityCorner& corner, sf::Vector2f& point) const;
 
     virtual void die();
@@ -73,7 +76,6 @@ protected:
 private:
     int mLookDirection;
     float mMaxVelocity;
-
 };
 
 #endif  // SUPERMARIOBROS_ENTITY_H

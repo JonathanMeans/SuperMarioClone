@@ -14,13 +14,15 @@ int sign(float val)
         return -1;
     return 0;
 }
-const float NO_MAX_VELOCITY_VALUE = -1;
 }
+
+const float Entity::NO_MAX_VELOCITY_VALUE = -1;
 
 Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
                size_t spriteWidth,
                size_t spriteHeight,
-               Hitbox hitbox) :
+               Hitbox hitbox,
+               float maxVelocity) :
     mActiveSprite(std::move(sprite)),
     mVelocity(0, 0),
     mAcceleration(0, GRAVITY_ACCELERATION),
@@ -31,7 +33,7 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
     mHitbox(hitbox),
     mInputEnabled(true),
     mLookDirection(1),
-    mMaxVelocity(NO_MAX_VELOCITY_VALUE)
+    mMaxVelocity(maxVelocity)
 {
 }
 
@@ -96,15 +98,6 @@ void Entity::setAcceleration(const sf::Vector2f& acceleration)
     }
 }
 
-void Entity::setBottomPosition(size_t newBottomY)
-{
-    if (mInputEnabled)
-    {
-        const auto newY = newBottomY - getHeight();
-        mDeltaP.y += static_cast<float>(newY) - getY();
-    }
-}
-
 bool Entity::collideWithGround(const size_t groundY)
 {
     auto spriteBottom = getBottomPosition();
@@ -158,12 +151,6 @@ void Entity::updatePosition()
     mDeltaP.y += mVelocity.y;
 }
 
-void Entity::setMaxVelocity(size_t maxVelocity)
-{
-    if (mInputEnabled)
-        mMaxVelocity = maxVelocity;
-}
-
 size_t Entity::getX() const
 {
     return mActiveSprite->getPosition().x + mDeltaP.x;
@@ -186,7 +173,6 @@ size_t Entity::getWidth() const
 
 void Entity::setPosition(size_t x, size_t y)
 {
-    // if (mInputEnabled)
     mActiveSprite->setPosition(x, y);
 }
 
