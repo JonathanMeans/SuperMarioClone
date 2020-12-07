@@ -25,7 +25,6 @@ public:
     [[nodiscard]] size_t getWidth() const;
     [[nodiscard]] virtual size_t getHeight() const;
 
-    virtual void setPosition(size_t x, size_t y);
     virtual void setAnimationFromState();
 
     [[nodiscard]] sf::Vector2f getVelocity() const;
@@ -55,6 +54,8 @@ public:
     sf::Vector2f mDeltaP;
 
 protected:
+    virtual void setPosition(size_t x, size_t y);
+
     std::shared_ptr<sf::Sprite> mActiveSprite;
     sf::Vector2f mVelocity;
     sf::Vector2f mAcceleration;
@@ -65,9 +66,14 @@ protected:
     Hitbox mHitbox;
     bool mCleanupFlag = false;
 
+    // TODO: This only applies to Mario subclass, but
+    // we check it up here???
+    bool mInputEnabled;
+
 private:
     int mLookDirection;
     float mMaxVelocity;
+
 };
 
 #endif  // SUPERMARIOBROS_ENTITY_H

@@ -201,7 +201,9 @@ void Mario::die()
 {
     mIsDead = true;
     mHitbox = Hitbox({0.f, 0.f}, {-10000.f, -100000.f});
-    mAcceleration.y = 0;
+    mAcceleration = {};
+    mVelocity = {};
+    mInputEnabled = false;
     getTimer().scheduleSeconds(0.5, [&]() { mVelocity.y = -10; mAcceleration.y = GRAVITY_ACCELERATION;});
 }
 

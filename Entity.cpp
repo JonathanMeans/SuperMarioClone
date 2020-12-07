@@ -29,6 +29,7 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
     mSpriteWidth(spriteWidth),
     mSpriteHeight(spriteHeight),
     mHitbox(hitbox),
+    mInputEnabled(true),
     mLookDirection(1),
     mMaxVelocity(NO_MAX_VELOCITY_VALUE)
 {
@@ -64,7 +65,8 @@ sf::Vector2f Entity::getVelocity() const
 
 void Entity::setVelocity(const sf::Vector2f& newVelocity)
 {
-    mVelocity = newVelocity;
+    if (mInputEnabled)
+        mVelocity = newVelocity;
 }
 
 sf::Vector2f Entity::getAcceleration() const
@@ -78,25 +80,29 @@ void Entity::die()
 
 void Entity::setAcceleration(const sf::Vector2f& acceleration)
 {
-    if (acceleration == this->mAcceleration)
-        return;
-
-    if (acceleration.x != 0 &&
-        (sign(acceleration.x) != sign(static_cast<float>(mLookDirection))))
+    if (mInputEnabled)
     {
-        mChangingDirection = true;
-        mLookDirection *= -1;
-    }
+        if (acceleration == this->mAcceleration)
+            return;
 
-    mAcceleration = acceleration;
+        if (acceleration.x != 0 &&
+            (sign(acceleration.x) != sign(static_cast<float>(mLookDirection))))
+        {
+            mChangingDirection = true;
+            mLookDirection *= -1;
+        }
+
+        mAcceleration = acceleration;
+    }
 }
 
 void Entity::setBottomPosition(size_t newBottomY)
 {
-    // const auto newX = getX();
-    const auto newY = newBottomY - getHeight();
-    mDeltaP.y += static_cast<float>(newY) - getY();
-    // setPosition(newX, newY);
+    if (mInputEnabled)
+    {
+        const auto newY = newBottomY - getHeight();
+        mDeltaP.y += static_cast<float>(newY) - getY();
+    }
 }
 
 bool Entity::collideWithGround(const size_t groundY)
@@ -154,7 +160,8 @@ void Entity::updatePosition()
 
 void Entity::setMaxVelocity(size_t maxVelocity)
 {
-    mMaxVelocity = maxVelocity;
+    if (mInputEnabled)
+        mMaxVelocity = maxVelocity;
 }
 
 size_t Entity::getX() const
@@ -179,6 +186,7 @@ size_t Entity::getWidth() const
 
 void Entity::setPosition(size_t x, size_t y)
 {
+    // if (mInputEnabled)
     mActiveSprite->setPosition(x, y);
 }
 
