@@ -15,6 +15,8 @@ public:
     void die() override;
 
 private:
+    void onCollision(const Collision& collision) override;
+
     Animation walkingAnimation;
     Animation deathAnimation;
 };

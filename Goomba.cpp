@@ -9,7 +9,11 @@ const auto MARIO_HEIGHT = 16;
 }
 
 Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite) :
-    Entity(std::move(sprite), 16, 16, Hitbox({8, 5}, {4, 7}))
+    Entity(std::move(sprite),
+           16,
+           16,
+           Hitbox({8, 5}, {4, 7}),
+           EntityType::GOOMBA)
 {
     mActiveSprite->setPosition(150, 50);
     mVelocity.x = -.5;
@@ -22,6 +26,13 @@ Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite) :
     mActiveSprite->setOrigin(spriteOrigin, 0);
 
     mActiveAnimation = &walkingAnimation;
+}
+
+void Goomba::onCollision(const Collision& collision)
+{
+    if (collision.entityType == EntityType::MARIO &&
+        collision.side == EntitySide::TOP)
+        die();
 }
 
 void Goomba::die()

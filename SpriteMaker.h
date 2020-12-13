@@ -1,8 +1,8 @@
 #ifndef SUPERMARIOBROS_SPRITEMAKER_H
 #define SUPERMARIOBROS_SPRITEMAKER_H
 
-#include <string>
 #include <memory>
+#include <string>
 #include "SFML/Graphics.hpp"
 
 class SpriteMaker
@@ -16,6 +16,8 @@ public:
     sf::Texture marioTexture;
     std::shared_ptr<sf::Sprite> marioSprite;
 
+    sf::Texture pipeTexture;
+    std::shared_ptr<sf::Sprite> pipeSprite;
 };
 
 #endif  // SUPERMARIOBROS_SPRITEMAKER_H

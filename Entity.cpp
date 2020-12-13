@@ -3,6 +3,7 @@
 #include <utility>
 
 #include "SFML/Graphics.hpp"
+#include "Utils.h"
 
 namespace
 {
@@ -14,6 +15,46 @@ int sign(float val)
         return -1;
     return 0;
 }
+
+EntitySide oppositeSide(EntitySide side)
+{
+    switch (side)
+    {
+    case EntitySide::TOP:
+        return EntitySide::BOTTOM;
+
+    case EntitySide::BOTTOM:
+        return EntitySide::TOP;
+
+    case EntitySide::LEFT:
+        return EntitySide::RIGHT;
+
+    case EntitySide::RIGHT:
+        return EntitySide::LEFT;
+    }
+    throw std::runtime_error("Failed to match EntitySide");
+}
+
+const std::vector<EntitySide> SIDES{EntitySide::TOP,
+                                    EntitySide::RIGHT,
+                                    EntitySide::BOTTOM,
+                                    EntitySide::LEFT};
+
+const std::vector<EntityCorner> CORNERS{EntityCorner::UPPER_LEFT,
+                                        EntityCorner::UPPER_RIGHT,
+                                        EntityCorner::LOWER_RIGHT,
+                                        EntityCorner::LOWER_LEFT};
+}
+
+bool isEnemy(EntityType type)
+{
+    switch (type)
+    {
+    case EntityType::GOOMBA:
+        return true;
+    default:
+        return false;
+    }
 }
 
 const float Entity::NO_MAX_VELOCITY_VALUE = -1;
@@ -22,6 +63,7 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
                size_t spriteWidth,
                size_t spriteHeight,
                Hitbox hitbox,
+               EntityType type,
                float maxVelocity) :
     mActiveSprite(std::move(sprite)),
     mVelocity(0, 0),
@@ -33,11 +75,78 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
     mHitbox(hitbox),
     mInputEnabled(true),
     mLookDirection(1),
-    mMaxVelocity(maxVelocity)
+    mMaxVelocity(maxVelocity),
+    mType(type)
 {
 }
 
 Entity::~Entity() = default;
+
+EntityType Entity::getType() const
+{
+    return mType;
+}
+
+std::optional<Collision> Entity::detectCollision(const Entity& other) const
+{
+    size_t lhsTopEdge = getY() + mHitbox.mUpperLeftOffset.y;
+    size_t lhsBottomEdge = lhsTopEdge + mHitbox.mSize.y;
+    size_t lhsLeftEdge = getX() + mHitbox.mUpperLeftOffset.x;
+    size_t lhsRightEdge = lhsLeftEdge + mHitbox.mSize.x;
+
+    size_t eTopEdge = other.getY();
+    size_t eLeftEdge = other.getX();
+    size_t eRightEdge = eLeftEdge + other.getWidth();
+    size_t eBottomEdge = eTopEdge + other.getHeight();
+    if (lhsLeftEdge < eRightEdge && lhsRightEdge > eLeftEdge &&
+        lhsTopEdge < eBottomEdge && lhsBottomEdge > eTopEdge)
+    {
+        sf::Vector2f enemyEdge1, enemyEdge2;
+        for (const auto& corner : CORNERS)
+        {
+            sf::Vector2f marioPath1;
+            getHitboxCorner(corner, marioPath1);
+            const sf::Vector2f marioPath2 = marioPath1 + mDeltaP;
+            for (const auto& side : SIDES)
+            {
+                other.getHitboxSide(side, true, enemyEdge1, enemyEdge2);
+                if (Utils::IsIntersecting(
+                            marioPath1, marioPath2, enemyEdge1, enemyEdge2))
+                {
+                    // We've detected which side of the enemy we're hitting
+                    // Invert it to get which side of us is colliding
+                    return std::optional<Collision>{
+                            Collision{oppositeSide(side), other.getType()}};
+                }
+            }
+        }
+    }
+    return {};
+}
+
+void Entity::onCollision(const Collision& collision)
+{
+    // do nothing
+    (void)collision;
+}
+
+bool Entity::collideWithEnemy(std::vector<Entity*>& enemies)
+{
+    for (auto& enemy : enemies)
+    {
+        const auto possibleCollision = detectCollision(*enemy);
+        if (possibleCollision.has_value())
+        {
+            const auto collision = possibleCollision.value();
+            onCollision(collision);
+            enemy->onCollision(
+                    Collision{oppositeSide(collision.side), this->getType()});
+
+            return true;
+        }
+    }
+    return false;
+}
 
 void Entity::updateAnimation()
 {

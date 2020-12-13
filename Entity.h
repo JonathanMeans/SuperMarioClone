@@ -8,6 +8,21 @@
 #include "Hitbox.h"
 #include "SFML/Graphics.hpp"
 
+enum class EntityType
+{
+    GOOMBA,
+    MARIO,
+    PIPE
+};
+
+bool isEnemy(EntityType type);
+
+struct Collision
+{
+    EntitySide side;
+    EntityType entityType;
+};
+
 class Entity
 {
 public:
@@ -17,6 +32,7 @@ public:
            size_t spriteWidth,
            size_t spriteHeight,
            Hitbox hitbox,
+           EntityType type,
            float maxVelocity = NO_MAX_VELOCITY_VALUE);
     virtual ~Entity();
 
@@ -56,8 +72,16 @@ public:
 
     sf::Vector2f mDeltaP;
 
+    [[nodiscard]] EntityType getType() const;
+
+    bool collideWithEnemy(std::vector<Entity*>& enemies);
+
 protected:
     virtual void setPosition(float x, float y);
+
+    std::optional<Collision> detectCollision(const Entity& other) const;
+
+    virtual void onCollision(const Collision& collision);
 
     std::shared_ptr<sf::Sprite> mActiveSprite;
     sf::Vector2f mVelocity;
@@ -76,6 +100,29 @@ protected:
 private:
     int mLookDirection;
     float mMaxVelocity;
+    EntityType mType;
 };
 
 #endif  // SUPERMARIOBROS_ENTITY_H
+
+/*
+ *   Collision {
+ *   dirionect,
+ *   entity_type
+ *   }
+ *
+ *   collideWithEnemy(Entity& Other)
+ *   {
+ *      Optional<Collision> collision = detectCollision(other)
+ *      if (collision)
+ *           {
+ *           this->handleCollision(collision);
+ *             other->handleCollision(collision)
+ *           }
+ *   }
+ *
+ *
+ *
+ *
+ *
+ */

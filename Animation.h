@@ -21,6 +21,7 @@ enum class AnimationType
     GOOMBA_DEATH,
 
     MARIO_DEATH,
+    PIPE,
 };
 
 class Animation

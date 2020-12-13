@@ -1,27 +1,20 @@
 #include "Mario.h"
 #include "Animation.h"
 #include "Hitbox.h"
-#include "Utils.h"
 #include "Timer.h"
+#include "Utils.h"
 
 #include <memory>
+#include <optional>
 
 namespace
 {
 const Hitbox smallHitbox = Hitbox({8, 11}, {4, 5});
 const Hitbox largeHitbox = Hitbox({12, 23}, {2, 8});
-const std::vector<EntitySide> SIDES{EntitySide::TOP,
-                                    EntitySide::RIGHT,
-                                    EntitySide::BOTTOM,
-                                    EntitySide::LEFT};
-const std::vector<EntityCorner> CORNERS{EntityCorner::UPPER_LEFT,
-                                        EntityCorner::UPPER_RIGHT,
-                                        EntityCorner::LOWER_RIGHT,
-                                        EntityCorner::LOWER_LEFT};
 }
 
 Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
-    Entity(sprite, 16, 16, smallHitbox, 2.f),
+    Entity(sprite, 16, 16, smallHitbox, EntityType::MARIO, 2.f),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false),
     mIsDead(false)
@@ -148,50 +141,15 @@ bool Mario::collideWithGround(const size_t groundY)
         }
         return atGround;
     }
+    return false;
 }
 
-bool Mario::collideWithEnemy(std::vector<Entity*>& enemies)
+void Mario::onCollision(const Collision& collision)
 {
-    size_t mTopEdge = Mario::getY() + mHitbox.mUpperLeftOffset.y;
-    size_t mBottomEdge = mTopEdge + mHitbox.mSize.y;
-    size_t mLeftEdge = Mario::getX() + mHitbox.mUpperLeftOffset.x;
-    size_t mRightEdge = mLeftEdge + mHitbox.mSize.x;
-
-    for (auto& enemy : enemies)
-    {
-        size_t eTopEdge = enemy->getY();
-        size_t eLeftEdge = enemy->getX();
-        size_t eRightEdge = eLeftEdge + enemy->getWidth();
-        size_t eBottomEdge = eTopEdge + enemy->getHeight();
-        if (mLeftEdge < eRightEdge && mRightEdge > eLeftEdge &&
-            mTopEdge < eBottomEdge && mBottomEdge > eTopEdge)
-        {
-            sf::Vector2f enemyEdge1, enemyEdge2;
-            for (const auto& corner : CORNERS)
-            {
-                sf::Vector2f marioPath1;
-                this->getHitboxCorner(corner, marioPath1);
-                const sf::Vector2f marioPath2 = marioPath1 + mDeltaP;
-                for (const auto& side : SIDES)
-                {
-                    enemy->getHitboxSide(side, true, enemyEdge1, enemyEdge2);
-                    if (Utils::IsIntersecting(
-                                marioPath1, marioPath2, enemyEdge1, enemyEdge2))
-                    {
-                        if (side == EntitySide::TOP)
-                        {
-                            mDeltaP.y -= 5;
-                            enemy->die();
-                        }
-                        else
-                            die();
-                        return true;
-                    }
-                }
-            }
-        }
-    }
-    return false;
+    if (collision.side != EntitySide::TOP)
+        mDeltaP.y -= 5;
+    else if (isEnemy(collision.entityType))
+        die();
 }
 
 void Mario::die()
@@ -201,6 +159,8 @@ void Mario::die()
     mAcceleration = {};
     mVelocity = {};
     mInputEnabled = false;
-    getTimer().scheduleSeconds(0.5, [&]() { mVelocity.y = -10; mAcceleration.y = GRAVITY_ACCELERATION;});
+    getTimer().scheduleSeconds(0.5, [&]() {
+        mVelocity.y = -10;
+        mAcceleration.y = GRAVITY_ACCELERATION;
+    });
 }
-

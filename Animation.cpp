@@ -50,6 +50,10 @@ void Animation::load(AnimationType type,
     case AnimationType::MARIO_DEATH:
         generateRectangles(1, 182, 34, 16, 16);
         break;
+
+    case AnimationType::PIPE:
+        generateRectangles(1, 0, 129, 32, 32);
+        break;
     }
 }
 

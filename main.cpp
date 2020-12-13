@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "SpriteMaker.h"
 #include "Timer.h"
+#include "Pipe.h"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
@@ -116,8 +117,15 @@ int main(int argc, char* argv[])
     Mario mario(spriteMaker.marioSprite);
     Goomba goomba(spriteMaker.goombaSprite);
 
+
     std::vector<Entity*> enemies;
     enemies.push_back(&goomba);
+
+    std::vector<Entity*> objects;
+    Pipe leftPipe(spriteMaker.pipeSprite);
+    objects.push_back(&leftPipe);
+    //Pipe rightPipe = spriteMaker.pipeSprite;
+
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
@@ -152,8 +160,13 @@ int main(int argc, char* argv[])
             enemy->updatePosition();
         }
         for (auto& enemy : enemies)
+        {
             enemy->collideWithGround(groundY);
+        }
+
+
         mario.collideWithEnemy(enemies);
+        mario.collideWithEnemy(objects);
 
         mario.applyDeltaP();
         mario.updateAnimation();
@@ -175,6 +188,7 @@ int main(int argc, char* argv[])
         mario.draw(window);
         for (auto& enemy : enemies)
             enemy->draw(window);
+        leftPipe.draw(window);
         window.display();
 
         getTimer().incrementNumFrames();
