@@ -35,10 +35,12 @@ EntitySide oppositeSide(EntitySide side)
     throw std::runtime_error("Failed to match EntitySide");
 }
 
-const std::vector<EntitySide> SIDES{EntitySide::TOP,
+//Jumping allows entities to clip through other entities
+//To fix this, check the left and right sides for collisions first
+const std::vector<EntitySide> SIDES{EntitySide::LEFT,
                                     EntitySide::RIGHT,
                                     EntitySide::BOTTOM,
-                                    EntitySide::LEFT};
+                                    EntitySide::TOP};
 
 const std::vector<EntityCorner> CORNERS{EntityCorner::UPPER_LEFT,
                                         EntityCorner::UPPER_RIGHT,
@@ -116,7 +118,7 @@ std::optional<Collision> Entity::detectCollision(const Entity& other) const
                     // We've detected which side of the enemy we're hitting
                     // Invert it to get which side of us is colliding
                     return std::optional<Collision>{
-                            Collision{oppositeSide(side), other.getType()}};
+                            Collision{oppositeSide(side), other.getType(), eTopEdge}};
                 }
             }
         }
@@ -138,9 +140,10 @@ bool Entity::collideWithEnemy(std::vector<Entity*>& enemies)
         if (possibleCollision.has_value())
         {
             const auto collision = possibleCollision.value();
-            onCollision(collision);
+//            onCollision(collision);
+            onCollision(Collision{oppositeSide(collision.side), collision.entityType, collision.yIntersection});
             enemy->onCollision(
-                    Collision{oppositeSide(collision.side), this->getType()});
+                    Collision{collision.side, this->getType(), collision.yIntersection});
 
             return true;
         }

@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <optional>
+#include <iostream>
 
 namespace
 {
@@ -19,7 +20,7 @@ Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
     mJumping(false),
     mIsDead(false)
 {
-    mActiveSprite->setPosition(100, 100);
+    mActiveSprite->setPosition(30, 100);
 
     walkingAnimation.load(AnimationType::WALKING, mActiveSprite);
     jumpingAnimation.load(AnimationType::JUMPING, mActiveSprite);
@@ -146,10 +147,36 @@ bool Mario::collideWithGround(const size_t groundY)
 
 void Mario::onCollision(const Collision& collision)
 {
-    if (collision.side != EntitySide::TOP)
-        mDeltaP.y -= 5;
-    else if (isEnemy(collision.entityType))
-        die();
+    if (isEnemy(collision.entityType))
+    {
+
+        if (collision.side != EntitySide::BOTTOM)
+        {
+            die();
+        } else {
+            mDeltaP.y -= 5;
+        }
+    } else {
+        if (collision.side == EntitySide::BOTTOM)
+        {
+            auto spriteBottom = getBottomPosition();
+            while (spriteBottom > collision.yIntersection - 1)
+            {
+                mDeltaP.y -= 1;
+                const auto currentVelocity = getVelocity();
+                setVelocity(sf::Vector2f(currentVelocity.x, 0));
+                spriteBottom = getBottomPosition();
+            }
+            setJumping(false);
+        } else if (collision.side == EntitySide::TOP) {
+            setVelocity(sf::Vector2f(getVelocity().x, 0));
+            mDeltaP.y = 0;
+        } else {
+            setVelocity(sf::Vector2f(0, getVelocity().y));
+            mDeltaP.x = 0;
+        }
+    }
+
 }
 
 void Mario::die()

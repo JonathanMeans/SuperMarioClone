@@ -21,6 +21,7 @@ struct Collision
 {
     EntitySide side;
     EntityType entityType;
+    size_t yIntersection;
 };
 
 class Entity
