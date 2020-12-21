@@ -2,7 +2,7 @@
 #include "Goomba.h"
 #include "Mario.h"
 #include "Pipe.h"
-#include "Spritemaker.h"
+#include "SpriteMaker.h"
 #include "file_util.h"
 
 namespace {
@@ -23,6 +23,11 @@ namespace {
         }
 
     };
+}
+
+TEST_F(EntityCollisionTest, TestRuns)
+{
+    ASSERT_EQ(1, 1);
 }
 
 int main(int argc, char **argv) {

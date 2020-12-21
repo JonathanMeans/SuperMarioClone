@@ -22,7 +22,7 @@ enable_testing()
 add_library(MarioLib Animation.cpp file_util.cpp Entity.cpp Entity.h SpriteMaker.cpp SpriteMaker.h Utils.cpp Utils.h Hitbox.cpp Hitbox.h Timer.cpp Timer.h Pipe.cpp Pipe.h)
 target_include_directories(MarioLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(MarioLib PRIVATE -Wall -Wextra -Werror)
-target_link_libraries(MarioLib sfml-window sfml-graphics)
+target_link_libraries(MarioLib sfml-window sfml-graphics stdc++fs)
 target_include_directories(MarioLib PRIVATE ${sfml_INCLUDE_DIR})
 
 add_executable(SuperMarioBros main.cpp Mario.cpp Goomba.cpp)
