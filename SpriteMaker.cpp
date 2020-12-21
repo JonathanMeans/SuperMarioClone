@@ -1,8 +1,11 @@
 #include "SpriteMaker.h"
+#include "Mario.h"
+#include "Pipe.h"
 
+#include <cassert>
 #include <iostream>
 
-SpriteMaker::SpriteMaker(const std::string &resourcesDir)
+SpriteMaker::SpriteMaker(const std::string& resourcesDir)
 {
     if (!goombaTexture.loadFromFile(resourcesDir + "enemies.png"))
     {
@@ -30,9 +33,35 @@ SpriteMaker::SpriteMaker(const std::string &resourcesDir)
     pipeTexture.setSmooth(false);
     pipeSprite = std::make_shared<sf::Sprite>();
     pipeSprite->setTexture(pipeTexture);
-
 }
 
+EntityBuilder SpriteMaker::getMario()
+{
+    // TODO: All builders will have a reference to the
+    // **same** sprite of each type
+    // We need a way to clone sprites so we can have more than one
+    return EntityBuilder(new Mario(marioSprite));
+}
 
+EntityBuilder SpriteMaker::getPipe()
+{
+    return EntityBuilder(new Pipe(pipeSprite));
+}
 
+EntityBuilder::EntityBuilder(Entity* entity) : mEntity(entity)
+{
+}
 
+EntityBuilder EntityBuilder::atPosition(float x, float y) const
+{
+    assert(mEntity);
+    mEntity->setPosition(x, y);
+    return *this;
+}
+
+Entity* EntityBuilder::build()
+{
+    Entity* result = mEntity;
+    mEntity = nullptr;
+    return result;
+}

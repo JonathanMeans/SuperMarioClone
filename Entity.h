@@ -77,9 +77,9 @@ public:
 
     bool collideWithEnemy(std::vector<Entity*>& enemies);
 
-protected:
     virtual void setPosition(float x, float y);
 
+protected:
     std::optional<Collision> detectCollision(const Entity& other) const;
 
     virtual void onCollision(const Collision& collision);
