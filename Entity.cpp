@@ -91,15 +91,15 @@ EntityType Entity::getType() const
 
 std::optional<Collision> Entity::detectCollision(const Entity& other) const
 {
-    size_t lhsTopEdge = getY() + mHitbox.mUpperLeftOffset.y;
-    size_t lhsBottomEdge = lhsTopEdge + mHitbox.mSize.y;
-    size_t lhsLeftEdge = getX() + mHitbox.mUpperLeftOffset.x;
-    size_t lhsRightEdge = lhsLeftEdge + mHitbox.mSize.x;
+    long lhsTopEdge = getY() + mHitbox.mUpperLeftOffset.y;
+    long lhsBottomEdge = lhsTopEdge + mHitbox.mSize.y;
+    long lhsLeftEdge = getX() + mHitbox.mUpperLeftOffset.x;
+    long lhsRightEdge = lhsLeftEdge + mHitbox.mSize.x;
 
-    size_t eTopEdge = other.getY();
-    size_t eLeftEdge = other.getX();
-    size_t eRightEdge = eLeftEdge + other.getWidth();
-    size_t eBottomEdge = eTopEdge + other.getHeight();
+    long eTopEdge = other.getY();
+    long eLeftEdge = other.getX();
+    long eRightEdge = eLeftEdge + other.getWidth();
+    long eBottomEdge = eTopEdge + other.getHeight();
     if (lhsLeftEdge < eRightEdge && lhsRightEdge > eLeftEdge &&
         lhsTopEdge < eBottomEdge && lhsBottomEdge > eTopEdge)
     {
@@ -167,7 +167,7 @@ void Entity::draw(sf::RenderWindow& window)
     window.draw(*mActiveSprite);
 }
 
-size_t Entity::getBottomPosition()
+long Entity::getBottomPosition() const
 {
     return getY() + getHeight() + mDeltaP.y;
 }
@@ -210,7 +210,7 @@ void Entity::setAcceleration(const sf::Vector2f& acceleration)
     }
 }
 
-bool Entity::collideWithGround(const size_t groundY)
+bool Entity::collideWithGround(const long groundY)
 {
     auto spriteBottom = getBottomPosition();
     if (spriteBottom <= groundY)
@@ -263,12 +263,12 @@ void Entity::updatePosition()
     mDeltaP.y += mVelocity.y;
 }
 
-size_t Entity::getX() const
+long Entity::getX() const
 {
     return mActiveSprite->getPosition().x + mDeltaP.x;
 }
 
-size_t Entity::getY() const
+long Entity::getY() const
 {
     return mActiveSprite->getPosition().y + mDeltaP.y;
 }

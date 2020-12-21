@@ -131,7 +131,7 @@ void Mario::jump()
     }
 }
 
-bool Mario::collideWithGround(const size_t groundY)
+bool Mario::collideWithGround(long groundY)
 {
     if (!mIsDead)
     {
@@ -160,7 +160,7 @@ void Mario::onCollision(const Collision& collision)
         if (collision.side == EntitySide::BOTTOM)
         {
             auto spriteBottom = getBottomPosition();
-            while (spriteBottom > collision.yIntersection - 1)
+            while (spriteBottom > collision.yIntersection)
             {
                 mDeltaP.y -= 1;
                 const auto currentVelocity = getVelocity();

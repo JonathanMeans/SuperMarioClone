@@ -21,7 +21,7 @@ struct Collision
 {
     EntitySide side;
     EntityType entityType;
-    size_t yIntersection;
+    long yIntersection;
 };
 
 class Entity
@@ -37,10 +37,10 @@ public:
            float maxVelocity = NO_MAX_VELOCITY_VALUE);
     virtual ~Entity();
 
-    size_t getBottomPosition();
+    [[nodiscard]] long getBottomPosition() const;
 
-    [[nodiscard]] virtual size_t getY() const;
-    [[nodiscard]] virtual size_t getX() const;
+    [[nodiscard]] virtual long getY() const;
+    [[nodiscard]] virtual long getX() const;
     [[nodiscard]] size_t getWidth() const;
     [[nodiscard]] virtual size_t getHeight() const;
 
@@ -52,7 +52,7 @@ public:
     void setAcceleration(const sf::Vector2f& newAcceleration);
     void updatePosition();
     void applyDeltaP();
-    virtual bool collideWithGround(size_t groundY);
+    virtual bool collideWithGround(long groundY);
 
     void updateAnimation();
     void draw(sf::RenderWindow& window);

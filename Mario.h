@@ -28,7 +28,7 @@ public:
 
     void setAnimationFromState() override;
 
-    bool collideWithGround(size_t groundY) override;
+    bool collideWithGround(long groundY) override;
 
     inline void setJumping(bool isJumping)
     {
