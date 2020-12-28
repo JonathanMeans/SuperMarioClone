@@ -5,4 +5,6 @@
 
 std::string findRootDirectory(const std::string& argv0);
 
+bool dirExists(const std::string& path);
+
 #endif  // SUPERMARIOBROS_FILE_UTIL_H

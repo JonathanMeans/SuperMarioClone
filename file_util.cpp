@@ -1,11 +1,23 @@
 #include <file_util.h>
-#include <experimental/filesystem>
+#include <sys/stat.h>
+
+bool dirExists(const std::string& path)
+{
+    struct stat info;
+
+    if(stat( path.c_str(), &info ) != 0)
+        return false;
+    else if(info.st_mode & S_IFDIR)
+        return true;
+    else
+        return false;
+}
 
 std::string findRootDirectory(const std::string& argv0)
 {
     auto lastSlash = argv0.rfind('/');
     auto directory = argv0.substr(0, lastSlash + 1);
-    while (!std::experimental::filesystem::exists(directory + "/resources"))
+    while (!dirExists(directory + "/resources"))
     {
         lastSlash = argv0.rfind('/', lastSlash - 1);
         if (lastSlash == 0 || lastSlash == std::string::npos)
@@ -14,3 +26,4 @@ std::string findRootDirectory(const std::string& argv0)
     }
     return directory;
 }
+
