@@ -157,6 +157,7 @@ void Mario::onCollision(const Collision& collision)
             mDeltaP.y -= 5;
         }
     } else {
+        // BOTTOM means mario's bottom side is colliding with something
         if (collision.side == EntitySide::BOTTOM)
         {
             auto spriteBottom = getBottomPosition();

@@ -35,8 +35,8 @@ EntitySide oppositeSide(EntitySide side)
     throw std::runtime_error("Failed to match EntitySide");
 }
 
-//Jumping allows entities to clip through other entities
-//To fix this, check the left and right sides for collisions first
+// Jumping allows entities to clip through other entities
+// To fix this, check the left and right sides for collisions first
 const std::vector<EntitySide> SIDES{EntitySide::LEFT,
                                     EntitySide::RIGHT,
                                     EntitySide::BOTTOM,
@@ -117,8 +117,8 @@ std::optional<Collision> Entity::detectCollision(const Entity& other) const
                 {
                     // We've detected which side of the enemy we're hitting
                     // Invert it to get which side of us is colliding
-                    return std::optional<Collision>{
-                            Collision{oppositeSide(side), other.getType(), eTopEdge}};
+                    return std::optional<Collision>{Collision{
+                            oppositeSide(side), other.getType(), eTopEdge}};
                 }
             }
         }
@@ -140,10 +140,12 @@ bool Entity::collideWithEnemy(std::vector<Entity*>& enemies)
         if (possibleCollision.has_value())
         {
             const auto collision = possibleCollision.value();
-//            onCollision(collision);
-            onCollision(Collision{oppositeSide(collision.side), collision.entityType, collision.yIntersection});
-            enemy->onCollision(
-                    Collision{collision.side, this->getType(), collision.yIntersection});
+            onCollision(Collision{oppositeSide(collision.side),
+                                  collision.entityType,
+                                  collision.yIntersection});
+            enemy->onCollision(Collision{collision.side,
+                                         this->getType(),
+                                         collision.yIntersection});
 
             return true;
         }
@@ -169,7 +171,7 @@ void Entity::draw(sf::RenderWindow& window)
 
 long Entity::getBottomPosition() const
 {
-    return getY() + getHeight() + mDeltaP.y;
+    return getY() + getHeight();
 }
 
 sf::Vector2f Entity::getVelocity() const
@@ -241,7 +243,8 @@ void Entity::getHitboxCorner(const EntityCorner& corner,
                              sf::Vector2f& point) const
 {
     mHitbox.getCorner(corner,
-                      {static_cast<float>(getX()), static_cast<float>(getY())},
+                      {static_cast<float>(mActiveSprite->getPosition().x),
+                       static_cast<float>(mActiveSprite->getPosition().y)},
                       point);
 }
 
@@ -300,5 +303,5 @@ bool Entity::needsCleanup()
 
 void Entity::applyDeltaP()
 {
-    setPosition(getX() + mDeltaP.x, getY() + mDeltaP.y);
+    setPosition(getX(), getY());
 }

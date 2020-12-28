@@ -48,23 +48,26 @@ TEST_F(EntityCollisionTest, MarioFallsToGround)
 TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 {
     std::unique_ptr<Entity> mario(gSpriteMaker->getMario().atPosition(0, 100).build());
-    std::unique_ptr<Entity> pipe(gSpriteMaker->getPipe().atPosition(0, 0).build());
+    std::unique_ptr<Entity> pipe(gSpriteMaker->getPipe().atPosition(0, 200).build());
     // TODO: Better interface
     std::vector<Entity*> pipes;
     pipes.emplace_back(pipe.get());
+    EXPECT_EQ(116.f, mario->getBottomPosition());
     for (int i = 0; i < 100; ++i)
     {
+        if (i == 4)
+            int x = 5;
         mario->updatePosition();
         mario->collideWithEnemy(pipes);
         mario->applyDeltaP();
     }
-    EXPECT_EQ(0.f, mario->getBottomPosition());
+    EXPECT_EQ(200.f, mario->getBottomPosition());
 
     // move left two frames
     auto leftAcceleration = mario->getAcceleration();
     leftAcceleration.x = -1;
     mario->setAcceleration(leftAcceleration);
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 1; ++i)
     {
         mario->mDeltaP = {};
         mario->updatePosition();
@@ -73,7 +76,7 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     }
 
     // verify we're still on top of pipe
-    EXPECT_EQ(0.f, mario->getBottomPosition());
+    EXPECT_EQ(200.f, mario->getBottomPosition());
     EXPECT_LE(mario->getX(), 0.f);
 }
 

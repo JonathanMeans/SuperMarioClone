@@ -177,6 +177,16 @@ TEST(Utils, IntersectingEdgeCases)
             lineOneStart, lineOneEnd, lineTwoStart, lineTwoEnd));
 }
 
+TEST(Utils, MovingLeftOnTopOfEntityShouldNotHitLeftSide)
+{
+    const sf::Vector2f moverStart(3, 190);
+    const sf::Vector2f moverEnd(2, 191);
+    const sf::Vector2f lineStart(0, -800);
+    const sf::Vector2f lineEnd(0, 1200);
+    EXPECT_TRUE(!Utils::IsIntersecting(
+            moverStart, moverEnd, lineStart, lineEnd));
+}
+
 // TEST(Utils, Area2)
 //{
 //    //point is to the left
