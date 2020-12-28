@@ -48,6 +48,25 @@ const std::vector<EntityCorner> CORNERS{EntityCorner::UPPER_LEFT,
                                         EntityCorner::LOWER_LEFT};
 }
 
+std::string convertSideToString(EntitySide side)
+{
+    switch (side)
+    {
+    case EntitySide::TOP:
+        return "TOP";
+
+    case EntitySide::BOTTOM:
+        return "BOTTOM";
+
+    case EntitySide::LEFT:
+        return "LEFT";
+
+    case EntitySide::RIGHT:
+        return "RIGHT";
+    }
+    throw std::runtime_error("Failed to match EntitySide");
+}
+
 bool isEnemy(EntityType type)
 {
     switch (type)
@@ -116,7 +135,7 @@ std::optional<Collision> Entity::detectCollision(const Entity& other) const
                             marioPath1, marioPath2, enemyEdge1, enemyEdge2))
                 {
                     // We've detected which side of the enemy we're hitting
-                    // Invert it to get which side of us is colliding
+                    // Invert it to get which side of Mario is colliding
                     return std::optional<Collision>{Collision{
                             oppositeSide(side), other.getType(), eTopEdge}};
                 }
@@ -140,10 +159,10 @@ bool Entity::collideWithEnemy(std::vector<Entity*>& enemies)
         if (possibleCollision.has_value())
         {
             const auto collision = possibleCollision.value();
-            onCollision(Collision{oppositeSide(collision.side),
+            onCollision(Collision{collision.side,
                                   collision.entityType,
                                   collision.yIntersection});
-            enemy->onCollision(Collision{collision.side,
+            enemy->onCollision(Collision{oppositeSide(collision.side),
                                          this->getType(),
                                          collision.yIntersection});
 

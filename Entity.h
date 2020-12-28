@@ -15,6 +15,7 @@ enum class EntityType
     PIPE
 };
 
+std::string convertSideToString(EntitySide side);
 bool isEnemy(EntityType type);
 
 struct Collision

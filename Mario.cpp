@@ -149,7 +149,7 @@ void Mario::onCollision(const Collision& collision)
 {
     if (isEnemy(collision.entityType))
     {
-
+        std::cout << convertSideToString(collision.side) << std::endl;
         if (collision.side != EntitySide::BOTTOM)
         {
             die();
