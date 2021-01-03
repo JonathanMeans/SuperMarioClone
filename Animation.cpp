@@ -16,43 +16,43 @@ void Animation::load(AnimationType type,
     switch (type)
     {
     case AnimationType::WALKING:
-        generateRectangles(4, 80, 34, 16, 17);
+        generateRectangles(4, 80, 34, 16, 17, 16);
         break;
     case AnimationType::JUMPING:
-        generateRectangles(2, 148, 34, 16, 17);
+        generateRectangles(2, 148, 34, 16, 17, 16);
         repeat = false;
         break;
     case AnimationType::STANDING:
-        generateRectangles(1, 80, 34, 16, 17);
+        generateRectangles(1, 80, 34, 16, 17, 16);
         break;
 
     case AnimationType::BIG_WALKING:
-        generateRectangles(4, 80, 1, 32, 17);
+        generateRectangles(4, 80, 1, 32, 17, 16);
         break;
     case AnimationType ::BIG_JUMPING:
-        generateRectangles(2, 148, 1, 32, 17);
+        generateRectangles(2, 148, 1, 32, 17, 16);
         repeat = false;
         break;
     case AnimationType::BIG_STANDING:
-        generateRectangles(1, 80, 1, 32, 17);
+        generateRectangles(1, 80, 1, 32, 17, 16);
         break;
 
     case AnimationType::GOOMBA_WALKING:
-        generateRectangles(2, 0, 16, 16, 16);
+        generateRectangles(2, 0, 16, 16, 16, 16);
         mTicsPerFrame = 4;
         mRemainingTicsThisFrame = 4;
         break;
 
     case AnimationType::GOOMBA_DEATH:
-        generateRectangles(1, 32, 16, 16, 16);
+        generateRectangles(1, 32, 16, 16, 16, 16);
         break;
 
     case AnimationType::MARIO_DEATH:
-        generateRectangles(1, 182, 34, 16, 16);
+        generateRectangles(1, 182, 34, 16, 16, 16);
         break;
 
     case AnimationType::PIPE:
-        generateRectangles(1, 0, 129, 32, 32);
+        generateRectangles(1, 0, 129, 32, 32, 32);
         break;
     }
 }
@@ -61,14 +61,15 @@ void Animation::generateRectangles(size_t numRectangles,
                                    size_t initialOffset,
                                    size_t yOffset,
                                    size_t rectHeight,
-                                   size_t rectXOffset)
+                                   size_t rectXOffset,
+                                   size_t rectWidth)
 {
     mActionRectangles.resize(numRectangles);
     for (size_t ii = 0; ii < numRectangles; ++ii)
     {
         mActionRectangles[ii] = sf::IntRect(initialOffset + (rectXOffset * ii),
                                             yOffset,
-                                            16,
+                                            rectWidth,
                                             rectHeight);
     }
 

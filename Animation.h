@@ -47,7 +47,8 @@ private:
                             size_t initialOffset,
                             size_t yOffset,
                             size_t rectHeight,
-                            size_t rectXOffset);
+                            size_t rectXOffset,
+                            size_t rectWidth);
 };
 
 #endif  // SUPERMARIOBROS_ANIMATION_H

@@ -105,3 +105,11 @@ void Hitbox::getSide(const EntitySide& side,
         break;
     }
 }
+
+void Hitbox::draw(const sf::Vector2f& spritePosition, sf::RenderWindow& window)
+{
+    sf::RectangleShape rectangle(sf::Vector2f(mSize.x, mSize.y));
+    rectangle.setFillColor(sf::Color(150, 50, 250));
+    rectangle.setPosition(spritePosition.x + mUpperLeftOffset.x, spritePosition.y + mUpperLeftOffset.y);
+    window.draw(rectangle);
+}

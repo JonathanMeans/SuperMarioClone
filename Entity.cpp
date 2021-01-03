@@ -186,6 +186,9 @@ void Entity::setAnimationFromState()
 void Entity::draw(sf::RenderWindow& window)
 {
     window.draw(*mActiveSprite);
+    #ifdef DRAW_HITBOX
+    mHitbox.draw(mActiveSprite->getPosition(), window);
+    #endif
 }
 
 long Entity::getBottomPosition() const

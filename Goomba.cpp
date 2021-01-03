@@ -22,6 +22,7 @@ Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite) :
     deathAnimation.load(AnimationType::GOOMBA_DEATH, mActiveSprite);
     walkingAnimation.load(AnimationType::GOOMBA_WALKING, mActiveSprite);
 
+    //sets origin of sprite to be midpoint of top edge
     const auto spriteOrigin = MARIO_HEIGHT / 2;
     mActiveSprite->setOrigin(spriteOrigin, 0);
 

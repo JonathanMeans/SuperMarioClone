@@ -5,7 +5,6 @@
 #include "Utils.h"
 
 #include <memory>
-#include <optional>
 #include <iostream>
 
 namespace
@@ -34,6 +33,7 @@ Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
 
+    //sets origin of sprite to be midpoint of top edge
     const auto spriteOrigin = GRIDBOX_SIZE / 2;
     mActiveSprite->setOrigin(spriteOrigin, 0);
 }

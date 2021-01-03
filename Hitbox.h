@@ -31,6 +31,7 @@ public:
                  const sf::Vector2f& spritePosition,
                  sf::Vector2f& p1,
                  sf::Vector2f& p2) const;
+    void draw(const sf::Vector2f& spritePosition, sf::RenderWindow& window);
 
     sf::Vector2f mSize;
     sf::Vector2f mUpperLeftOffset;
