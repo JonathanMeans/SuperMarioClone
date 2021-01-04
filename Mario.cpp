@@ -4,8 +4,8 @@
 #include "Timer.h"
 #include "Utils.h"
 
-#include <memory>
 #include <iostream>
+#include <memory>
 
 namespace
 {
@@ -33,7 +33,7 @@ Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
 
-    //sets origin of sprite to be midpoint of top edge
+    // sets origin of sprite to be midpoint of top edge
     const auto spriteOrigin = GRIDBOX_SIZE / 2;
     mActiveSprite->setOrigin(spriteOrigin, 0);
 }
@@ -153,10 +153,14 @@ void Mario::onCollision(const Collision& collision)
         if (collision.side != EntitySide::BOTTOM)
         {
             die();
-        } else {
+        }
+        else
+        {
             mDeltaP.y -= 5;
         }
-    } else {
+    }
+    else
+    {
         // BOTTOM means mario's bottom side is colliding with something
         if (collision.side == EntitySide::BOTTOM)
         {
@@ -169,15 +173,18 @@ void Mario::onCollision(const Collision& collision)
                 spriteBottom = getBottomPosition();
             }
             setJumping(false);
-        } else if (collision.side == EntitySide::TOP) {
+        }
+        else if (collision.side == EntitySide::TOP)
+        {
             setVelocity(sf::Vector2f(getVelocity().x, 0));
             mDeltaP.y = 0;
-        } else {
+        }
+        else
+        {
             setVelocity(sf::Vector2f(0, getVelocity().y));
             mDeltaP.x = 0;
         }
     }
-
 }
 
 void Mario::die()

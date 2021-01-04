@@ -1,5 +1,6 @@
 #include <file_util.h>
 #include <sys/stat.h>
+#include <stdexcept>
 
 bool dirExists(const std::string& path)
 {

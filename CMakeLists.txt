@@ -3,6 +3,10 @@ project(SuperMarioBros)
 
 set(CMAKE_CXX_STANDARD 17)
 
+if (DRAW_HITBOX)
+    add_definitions(-DDRAW_HITBOX)
+endif()
+
 include(FetchContent)
 set(SFML_VERSION "2.5.1")
 FetchContent_Declare(

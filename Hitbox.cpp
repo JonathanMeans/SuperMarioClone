@@ -1,7 +1,6 @@
 #include "Hitbox.h"
 #include "SFML/Graphics.hpp"
 
-
 Hitbox::Hitbox(sf::Vector2f size, sf::Vector2f upperLeftOffset) :
     mSize(size),
     mUpperLeftOffset(upperLeftOffset)
@@ -32,10 +31,10 @@ void Hitbox::getCorner(const EntityCorner& corner,
 }
 
 void Hitbox::getSide(const EntitySide& side,
-             bool extendEdges,
-             const sf::Vector2f& spritePosition,
-             sf::Vector2f& p1,
-             sf::Vector2f& p2) const
+                     bool extendEdges,
+                     const sf::Vector2f& spritePosition,
+                     sf::Vector2f& p1,
+                     sf::Vector2f& p2) const
 {
     // Set both points to upper left corner of hitbox
     // Then adjust per side
@@ -76,7 +75,7 @@ void Hitbox::getSide(const EntitySide& side,
             p2.y += 1000;
         }
     }
-        break;
+    break;
     case EntitySide ::BOTTOM:
     {
         p1.y += mSize.y;
@@ -90,7 +89,7 @@ void Hitbox::getSide(const EntitySide& side,
             p2.x += 1000;
         }
     }
-        break;
+    break;
     case EntitySide ::LEFT:
     {
         if (!extendEdges)
@@ -102,7 +101,7 @@ void Hitbox::getSide(const EntitySide& side,
             p2.y += 1000;
         }
     }
-        break;
+    break;
     }
 }
 
@@ -110,6 +109,7 @@ void Hitbox::draw(const sf::Vector2f& spritePosition, sf::RenderWindow& window)
 {
     sf::RectangleShape rectangle(sf::Vector2f(mSize.x, mSize.y));
     rectangle.setFillColor(sf::Color(150, 50, 250));
-    rectangle.setPosition(spritePosition.x + mUpperLeftOffset.x, spritePosition.y + mUpperLeftOffset.y);
+    rectangle.setPosition(spritePosition.x + mUpperLeftOffset.x,
+                          spritePosition.y + mUpperLeftOffset.y);
     window.draw(rectangle);
 }
