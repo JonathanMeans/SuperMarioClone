@@ -44,8 +44,6 @@ public:
     [[nodiscard]] long getLeft() const;
     [[nodiscard]] long getRight() const;
 
-    [[nodiscard]] virtual long getY() const;
-    [[nodiscard]] virtual long getX() const;
     [[nodiscard]] size_t getWidth() const;
     [[nodiscard]] virtual size_t getHeight() const;
 
@@ -104,6 +102,11 @@ protected:
     bool mInputEnabled;
 
 private:
+    // These functions give the midpoint of the top edge
+    // Prefer getTop(), getLeft(), etc.
+    [[nodiscard]] virtual long getY() const;
+    [[nodiscard]] virtual long getX() const;
+
     int mLookDirection;
     float mMaxVelocity;
     EntityType mType;

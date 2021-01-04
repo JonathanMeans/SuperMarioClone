@@ -77,7 +77,7 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 
     // verify we're still on top of pipe
     EXPECT_EQ(200.f, mario->getBottom());
-    EXPECT_LE(mario->getX(), 0.f);
+    EXPECT_GT(mario->getRight(), 0.f);
 }
 
 int main(int argc, char** argv)

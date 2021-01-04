@@ -117,13 +117,13 @@ EntityType Entity::getType() const
 
 std::optional<Collision> Entity::detectCollision(const Entity& other) const
 {
-    long lhsTopEdge = getY() + mHitbox.mUpperLeftOffset.y;
+    long lhsTopEdge = getTop() + mHitbox.mUpperLeftOffset.y;
     long lhsBottomEdge = lhsTopEdge + mHitbox.mSize.y;
-    long lhsLeftEdge = getX() + mHitbox.mUpperLeftOffset.x;
+    long lhsLeftEdge = getLeft() + mHitbox.mUpperLeftOffset.x;
     long lhsRightEdge = lhsLeftEdge + mHitbox.mSize.x;
 
-    long eTopEdge = other.getY();
-    long eLeftEdge = other.getX();
+    long eTopEdge = other.getTop();
+    long eLeftEdge = other.getLeft();
     long eRightEdge = eLeftEdge + other.getWidth();
     long eBottomEdge = eTopEdge + other.getHeight();
     if (lhsLeftEdge < eRightEdge && lhsRightEdge > eLeftEdge &&
@@ -280,7 +280,8 @@ void Entity::getHitboxSide(const EntitySide& side,
 {
     mHitbox.getSide(side,
                     extendEdges,
-                    {static_cast<float>(getX()), static_cast<float>(getY())},
+                    {static_cast<float>(getLeft()),
+                     static_cast<float>(getTop())},
                     p1,
                     p2);
 }

@@ -128,7 +128,7 @@ int main(int argc, char* argv[])
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
 
-    const size_t groundY = mario.getY() + 20;
+    const size_t groundY = mario.getTop() + 20;
 
     while (window.isOpen())
     {
