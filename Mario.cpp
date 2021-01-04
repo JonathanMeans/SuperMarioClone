@@ -159,13 +159,13 @@ void Mario::onCollision(const Collision& collision)
         // BOTTOM means mario's bottom side is colliding with something
         if (collision.side == EntitySide::BOTTOM)
         {
-            auto spriteBottom = getBottomPosition();
+            auto spriteBottom = getBottom();
             while (spriteBottom > collision.yIntersection)
             {
                 mDeltaP.y -= 1;
                 const auto currentVelocity = getVelocity();
                 setVelocity(sf::Vector2f(currentVelocity.x, 0));
-                spriteBottom = getBottomPosition();
+                spriteBottom = getBottom();
             }
             setJumping(false);
         }

@@ -30,7 +30,7 @@ TEST(EntityTest, CanGetPositionsOfEntityBoundaries)
     std::unique_ptr<Mario> mario(
             new Mario(gSpriteMaker->marioSprite, {20, 50}));
     EXPECT_EQ(mario->getTop(), 50);
-    EXPECT_EQ(mario->getBottomPosition(), 66);
+    EXPECT_EQ(mario->getBottom(), 66);
     EXPECT_EQ(mario->getLeft(), 12);
     EXPECT_EQ(mario->getRight(), 28);
 }

@@ -41,7 +41,7 @@ TEST_F(EntityCollisionTest, MarioFallsToGround)
         mario->collideWithGround(GROUND_HEIGHT);
         mario->applyDeltaP();
     }
-    EXPECT_EQ(0.f, mario->getBottomPosition());
+    EXPECT_EQ(0.f, mario->getBottom());
 }
 
 TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
@@ -52,7 +52,7 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     // TODO: Better interface
     std::vector<Entity*> pipes;
     pipes.emplace_back(pipe.get());
-    EXPECT_EQ(116.f, mario->getBottomPosition());
+    EXPECT_EQ(116.f, mario->getBottom());
     for (int i = 0; i < 100; ++i)
     {
         if (i == 4)
@@ -61,7 +61,7 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
         mario->collideWithEnemy(pipes);
         mario->applyDeltaP();
     }
-    EXPECT_EQ(200.f, mario->getBottomPosition());
+    EXPECT_EQ(200.f, mario->getBottom());
 
     // move left two frames
     auto leftAcceleration = mario->getAcceleration();
@@ -76,7 +76,7 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     }
 
     // verify we're still on top of pipe
-    EXPECT_EQ(200.f, mario->getBottomPosition());
+    EXPECT_EQ(200.f, mario->getBottom());
     EXPECT_LE(mario->getX(), 0.f);
 }
 

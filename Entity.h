@@ -39,7 +39,7 @@ public:
            float maxVelocity = NO_MAX_VELOCITY_VALUE);
     virtual ~Entity();
 
-    [[nodiscard]] long getBottomPosition() const;
+    [[nodiscard]] long getBottom() const;
     [[nodiscard]] long getTop() const;
     [[nodiscard]] long getLeft() const;
     [[nodiscard]] long getRight() const;

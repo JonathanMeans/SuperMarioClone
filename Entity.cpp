@@ -198,7 +198,7 @@ void Entity::draw(sf::RenderWindow& window)
 #endif
 }
 
-long Entity::getBottomPosition() const
+long Entity::getBottom() const
 {
     return getY() + getHeight();
 }
@@ -260,7 +260,7 @@ void Entity::setAcceleration(const sf::Vector2f& acceleration)
 
 bool Entity::collideWithGround(const long groundY)
 {
-    auto spriteBottom = getBottomPosition();
+    auto spriteBottom = getBottom();
     if (spriteBottom <= groundY)
         return false;
     while (spriteBottom > groundY)
@@ -268,7 +268,7 @@ bool Entity::collideWithGround(const long groundY)
         mDeltaP.y -= 1;
         const auto currentVelocity = getVelocity();
         setVelocity(sf::Vector2f(currentVelocity.x, 0));
-        spriteBottom = getBottomPosition();
+        spriteBottom = getBottom();
     }
     return true;
 }
