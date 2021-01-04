@@ -101,6 +101,11 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
     mType(type)
 {
     mActiveSprite->setPosition(position);
+
+    // sets origin of sprite to be midpoint of top edge
+    // So that scaling by -1 works properly
+    const auto horizontalMidpoint = spriteWidth / 2;
+    mActiveSprite->setOrigin(horizontalMidpoint, 0);
 }
 
 Entity::~Entity() = default;
@@ -196,6 +201,23 @@ void Entity::draw(sf::RenderWindow& window)
 long Entity::getBottomPosition() const
 {
     return getY() + getHeight();
+}
+
+long Entity::getTop() const
+{
+    return getY();
+}
+
+long Entity::getLeft() const
+{
+    const auto halfWidth = static_cast<long>(getWidth() / 2);
+    return getX() - halfWidth;
+}
+
+long Entity::getRight() const
+{
+    const auto halfWidth = static_cast<long>(getWidth() / 2);
+    return getX() + halfWidth;
 }
 
 sf::Vector2f Entity::getVelocity() const

@@ -23,3 +23,14 @@ TEST(EntityTest, CanConstructEntitiesWithPosition)
     EXPECT_EQ(goomba->getX(), 10);
     EXPECT_EQ(goomba->getY(), 50);
 }
+
+TEST(EntityTest, CanGetPositionsOfEntityBoundaries)
+{
+    // Mario is 16x16 pixels
+    std::unique_ptr<Mario> mario(
+            new Mario(gSpriteMaker->marioSprite, {20, 50}));
+    EXPECT_EQ(mario->getTop(), 50);
+    EXPECT_EQ(mario->getBottomPosition(), 66);
+    EXPECT_EQ(mario->getLeft(), 12);
+    EXPECT_EQ(mario->getRight(), 28);
+}

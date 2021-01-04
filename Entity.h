@@ -40,6 +40,9 @@ public:
     virtual ~Entity();
 
     [[nodiscard]] long getBottomPosition() const;
+    [[nodiscard]] long getTop() const;
+    [[nodiscard]] long getLeft() const;
+    [[nodiscard]] long getRight() const;
 
     [[nodiscard]] virtual long getY() const;
     [[nodiscard]] virtual long getX() const;
