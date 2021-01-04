@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
     window.clear();
 
     SpriteMaker spriteMaker(resourceDir);
-    Mario mario(spriteMaker.marioSprite);
+    Mario mario(spriteMaker.marioSprite, {30, 100});
     Goomba goomba(spriteMaker.goombaSprite);
 
 

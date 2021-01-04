@@ -6,26 +6,10 @@
 #include "Entity.h"
 #include "SFML/Graphics.hpp"
 
-class EntityBuilder
-{
-public:
-    explicit EntityBuilder(Entity* entity);
-
-    [[nodiscard]] EntityBuilder atPosition(float x, float y) const;
-
-    Entity* build();
-
-private:
-    Entity* mEntity;
-};
-
 class SpriteMaker
 {
 public:
     explicit SpriteMaker(const std::string& resourcesDir);
-
-    EntityBuilder getMario();
-    EntityBuilder getPipe();
 
     sf::Texture goombaTexture;
     std::shared_ptr<sf::Sprite> goombaSprite;

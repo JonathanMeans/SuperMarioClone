@@ -5,30 +5,29 @@
 #include "SpriteMaker.h"
 #include "file_util.h"
 
-namespace {
+SpriteMaker* gSpriteMaker;
 
-    SpriteMaker* gSpriteMaker;
+namespace
+{
+class EntityCollisionTest : public ::testing::Test
+{
+protected:
+    Mario* mario{};
 
-    class EntityCollisionTest: public ::testing::Test {
-    protected:
+    EntityCollisionTest() = default;
 
-        Mario * mario{};
+    void SetUp() override
+    {
+        mario = new Mario(gSpriteMaker->marioSprite, {30, 100});
+    }
 
-        EntityCollisionTest() = default;
+    void TearDown() override
+    {
+        delete mario;
+    }
 
-        void SetUp() override
-        {
-            mario = new Mario(gSpriteMaker->marioSprite);
-        }
-
-        void TearDown() override
-        {
-            delete mario;
-        }
-
-        ~EntityCollisionTest() override = default;
-
-    };
+    ~EntityCollisionTest() override = default;
+};
 }
 
 TEST_F(EntityCollisionTest, MarioFallsToGround)
@@ -47,8 +46,10 @@ TEST_F(EntityCollisionTest, MarioFallsToGround)
 
 TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 {
-    std::unique_ptr<Entity> mario(gSpriteMaker->getMario().atPosition(0, 100).build());
-    std::unique_ptr<Entity> pipe(gSpriteMaker->getPipe().atPosition(0, 200).build());
+    std::unique_ptr<Entity> mario(
+            new Mario(gSpriteMaker->marioSprite, {0, 100}));
+    std::unique_ptr<Entity> pipe(new Pipe(gSpriteMaker->pipeSprite));
+    pipe->setPosition(0, 200);
     // TODO: Better interface
     std::vector<Entity*> pipes;
     pipes.emplace_back(pipe.get());
@@ -80,7 +81,8 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     EXPECT_LE(mario->getX(), 0.f);
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv)
+{
     std::cout << "Running main() from gtest_main.cc\n";
     ::testing::GTEST_FLAG(output) = "xml:hello.xml";
     testing::InitGoogleTest(&argc, argv);

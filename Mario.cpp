@@ -13,13 +13,13 @@ const Hitbox smallHitbox = Hitbox({8, 11}, {4, 5});
 const Hitbox largeHitbox = Hitbox({12, 23}, {2, 8});
 }
 
-Mario::Mario(std::shared_ptr<sf::Sprite>& sprite) :
+Mario::Mario(std::shared_ptr<sf::Sprite>& sprite, const sf::Vector2f& initialPosition) :
     Entity(sprite, 16, 16, smallHitbox, EntityType::MARIO, 2.f),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false),
     mIsDead(false)
 {
-    mActiveSprite->setPosition(30, 100);
+    mActiveSprite->setPosition(initialPosition);
 
     walkingAnimation.load(AnimationType::WALKING, mActiveSprite);
     jumpingAnimation.load(AnimationType::JUMPING, mActiveSprite);
