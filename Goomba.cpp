@@ -14,9 +14,9 @@ Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite,
            16,
            16,
            Hitbox({8, 5}, {4, 7}),
-           EntityType::GOOMBA)
+           EntityType::GOOMBA,
+           position)
 {
-    mActiveSprite->setPosition(position);
     mVelocity.x = -.5;
 
     // TODO: WHy does order matter? Make this less bug-prone

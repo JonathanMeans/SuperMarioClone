@@ -35,6 +35,7 @@ public:
            size_t spriteHeight,
            Hitbox hitbox,
            EntityType type,
+           const sf::Vector2f& position,
            float maxVelocity = NO_MAX_VELOCITY_VALUE);
     virtual ~Entity();
 

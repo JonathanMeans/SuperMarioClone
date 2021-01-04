@@ -5,9 +5,9 @@ Pipe::Pipe(std::shared_ptr<sf::Sprite> sprite, const sf::Vector2f& position) :
            32,
            32,
            Hitbox({32, 32}, {0, 0}),
-           EntityType::PIPE)
+           EntityType::PIPE,
+           position)
 {
-    mActiveSprite->setPosition(position);
     mAcceleration = {};
 
     defaultAnimation.load(AnimationType::PIPE, mActiveSprite);

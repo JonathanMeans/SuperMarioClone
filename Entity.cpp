@@ -85,6 +85,7 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
                size_t spriteHeight,
                Hitbox hitbox,
                EntityType type,
+               const sf::Vector2f& position,
                float maxVelocity) :
     mActiveSprite(std::move(sprite)),
     mVelocity(0, 0),
@@ -99,6 +100,7 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
     mMaxVelocity(maxVelocity),
     mType(type)
 {
+    mActiveSprite->setPosition(position);
 }
 
 Entity::~Entity() = default;
