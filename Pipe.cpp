@@ -1,13 +1,13 @@
 #include "Pipe.h"
 
-Pipe::Pipe(std::shared_ptr<sf::Sprite> sprite) :
+Pipe::Pipe(std::shared_ptr<sf::Sprite> sprite, const sf::Vector2f& position) :
     Entity(std::move(sprite),
            32,
            32,
            Hitbox({32, 32}, {0, 0}),
            EntityType::PIPE)
 {
-    mActiveSprite->setPosition(110, 100);
+    mActiveSprite->setPosition(position);
     mAcceleration = {};
 
     defaultAnimation.load(AnimationType::PIPE, mActiveSprite);

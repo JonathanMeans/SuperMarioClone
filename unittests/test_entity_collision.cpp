@@ -48,8 +48,7 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 {
     std::unique_ptr<Entity> mario(
             new Mario(gSpriteMaker->marioSprite, {0, 100}));
-    std::unique_ptr<Entity> pipe(new Pipe(gSpriteMaker->pipeSprite));
-    pipe->setPosition(0, 200);
+    std::unique_ptr<Entity> pipe(new Pipe(gSpriteMaker->pipeSprite, {0, 200}));
     // TODO: Better interface
     std::vector<Entity*> pipes;
     pipes.emplace_back(pipe.get());

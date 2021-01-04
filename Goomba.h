@@ -10,7 +10,7 @@
 class Goomba : public Entity
 {
 public:
-    explicit Goomba(std::shared_ptr<sf::Sprite> sprite);
+    Goomba(std::shared_ptr<sf::Sprite> sprite, const sf::Vector2f& position);
 
     void die() override;
 

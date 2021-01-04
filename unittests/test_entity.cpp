@@ -1,3 +1,5 @@
+#include <Goomba.h>
+#include <Pipe.h>
 #include <SpriteMaker.h>
 #include <file_util.h>
 #include <gtest/gtest.h>
@@ -5,32 +7,19 @@
 
 extern SpriteMaker* gSpriteMaker;
 
-namespace
+TEST(EntityTest, CanConstructEntitiesWithPosition)
 {
-class EntityTest : public ::testing::Test
-{
-protected:
-    Mario* mario{};
+    std::unique_ptr<Mario> mario(
+            new Mario(gSpriteMaker->marioSprite, {10, 50}));
+    EXPECT_EQ(mario->getX(), 10);
+    EXPECT_EQ(mario->getY(), 50);
 
-    EntityTest() = default;
+    std::unique_ptr<Pipe> pipe(new Pipe(gSpriteMaker->pipeSprite, {15, 70}));
+    EXPECT_EQ(pipe->getX(), 15);
+    EXPECT_EQ(pipe->getY(), 70);
 
-    void SetUp() override
-    {
-        mario = new Mario(gSpriteMaker->marioSprite, sf::Vector2f{30, 100});
-        ;
-    }
-
-    void TearDown() override
-    {
-        delete mario;
-    }
-
-    ~EntityTest() override = default;
-};
-}
-
-TEST_F(EntityTest, EntityPositionAfterRotating)
-{
-    ASSERT_NE(mario, nullptr);
-    EXPECT_EQ(mario->getX(), 30);
+    std::unique_ptr<Goomba> goomba(
+            new Goomba(gSpriteMaker->goombaSprite, {10, 50}));
+    EXPECT_EQ(goomba->getX(), 10);
+    EXPECT_EQ(goomba->getY(), 50);
 }

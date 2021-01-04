@@ -1,8 +1,8 @@
 #include "Goomba.h"
 #include "Mario.h"
+#include "Pipe.h"
 #include "SpriteMaker.h"
 #include "Timer.h"
-#include "Pipe.h"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
@@ -115,17 +115,15 @@ int main(int argc, char* argv[])
 
     SpriteMaker spriteMaker(resourceDir);
     Mario mario(spriteMaker.marioSprite, {30, 100});
-    Goomba goomba(spriteMaker.goombaSprite);
-
+    Goomba goomba(spriteMaker.goombaSprite, {150, 50});
 
     std::vector<Entity*> enemies;
     enemies.push_back(&goomba);
 
     std::vector<Entity*> objects;
-    Pipe leftPipe(spriteMaker.pipeSprite);
+    Pipe leftPipe(spriteMaker.pipeSprite, {110, 100});
     objects.push_back(&leftPipe);
-    //Pipe rightPipe = spriteMaker.pipeSprite;
-
+    // Pipe rightPipe = spriteMaker.pipeSprite;
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
@@ -163,7 +161,6 @@ int main(int argc, char* argv[])
         {
             enemy->collideWithGround(groundY);
         }
-
 
         mario.collideWithEnemy(enemies);
         mario.collideWithEnemy(objects);

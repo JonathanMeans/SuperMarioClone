@@ -6,7 +6,7 @@
 class Pipe : public Entity
 {
 public:
-    explicit Pipe(std::shared_ptr<sf::Sprite> sprite);
+    Pipe(std::shared_ptr<sf::Sprite> sprite, const sf::Vector2f& position);
 
 private:
     Animation defaultAnimation;

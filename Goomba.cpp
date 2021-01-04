@@ -8,14 +8,15 @@ namespace
 const auto MARIO_HEIGHT = 16;
 }
 
-Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite) :
+Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite,
+               const sf::Vector2f& position) :
     Entity(std::move(sprite),
            16,
            16,
            Hitbox({8, 5}, {4, 7}),
            EntityType::GOOMBA)
 {
-    mActiveSprite->setPosition(150, 50);
+    mActiveSprite->setPosition(position);
     mVelocity.x = -.5;
 
     // TODO: WHy does order matter? Make this less bug-prone
