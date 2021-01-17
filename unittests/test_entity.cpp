@@ -34,3 +34,15 @@ TEST(EntityTest, CanGetPositionsOfEntityBoundaries)
     EXPECT_EQ(mario->getLeft(), 12);
     EXPECT_EQ(mario->getRight(), 28);
 }
+
+TEST(EntityTest, CanGetPositionOfHitboxBoundaries)
+{
+    std::unique_ptr<Mario> mario(
+            new Mario(gSpriteMaker->marioSprite, {20, 50}));
+    const auto hitbox = mario->getHitbox();
+    EXPECT_EQ(hitbox.getLeft(), 16);
+    EXPECT_EQ(hitbox.getRight(), 24);
+    EXPECT_EQ(hitbox.getTop(), 55);
+    EXPECT_EQ(hitbox.getBottom(), 66);
+
+}

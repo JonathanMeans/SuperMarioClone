@@ -13,7 +13,7 @@ Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite,
     Entity(std::move(sprite),
            16,
            16,
-           Hitbox({8, 5}, {4, 7}),
+           Hitbox(*this, {8, 5}, {4, 7}),
            EntityType::GOOMBA,
            position)
 {
@@ -39,7 +39,7 @@ void Goomba::die()
     mVelocity.x = 0;
 
     // Remove hitbox
-    mHitbox = Hitbox({0.f, 0.f}, {-10000.f, -100000.f});
+    mHitbox = Hitbox(*this, {0.f, 0.f}, {-10000.f, -100000.f});
 
     getTimer().scheduleSeconds(1, [&]() { this->setCleanupFlag(); });
 }

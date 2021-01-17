@@ -41,6 +41,9 @@ public:
 private:
     void onCollision(const Collision& collision) override;
 
+    Hitbox smallHitbox;
+    Hitbox largeHitbox;
+
     MarioForm mForm;
 
     Animation walkingAnimation;

@@ -47,6 +47,8 @@ public:
     [[nodiscard]] size_t getWidth() const;
     [[nodiscard]] virtual size_t getHeight() const;
 
+    [[nodiscard]] const Hitbox& getHitbox() const;
+
     virtual void setAnimationFromState();
 
     [[nodiscard]] sf::Vector2f getVelocity() const;

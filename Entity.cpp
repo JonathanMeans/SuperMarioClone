@@ -273,6 +273,11 @@ bool Entity::collideWithGround(const long groundY)
     return true;
 }
 
+const Hitbox& Entity::getHitbox() const
+{
+    return mHitbox;
+}
+
 void Entity::getHitboxSide(const EntitySide& side,
                            bool extendEdges,
                            sf::Vector2f& p1,

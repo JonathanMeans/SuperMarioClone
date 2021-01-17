@@ -7,15 +7,17 @@
 #include <iostream>
 #include <memory>
 
-namespace
-{
-const Hitbox smallHitbox = Hitbox({8, 11}, {4, 5});
-const Hitbox largeHitbox = Hitbox({12, 23}, {2, 8});
-}
-
 Mario::Mario(std::shared_ptr<sf::Sprite>& sprite,
              const sf::Vector2f& position) :
-    Entity(sprite, 16, 16, smallHitbox, EntityType::MARIO, position, 2.f),
+    Entity(sprite,
+           16,
+           16,
+           Hitbox(*this, {8, 11}, {4, 5}),
+           EntityType::MARIO,
+           position,
+           2.f),
+    smallHitbox(this->mHitbox),
+    largeHitbox(*this, {12, 23}, {2, 8}),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false),
     mIsDead(false)
@@ -185,7 +187,7 @@ void Mario::onCollision(const Collision& collision)
 void Mario::die()
 {
     mIsDead = true;
-    mHitbox = Hitbox({0.f, 0.f}, {-10000.f, -100000.f});
+    mHitbox = Hitbox(*this, {0.f, 0.f}, {-10000.f, -100000.f});
     mAcceleration = {};
     mVelocity = {};
     mInputEnabled = false;

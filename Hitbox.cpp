@@ -1,10 +1,43 @@
 #include "Hitbox.h"
 #include "SFML/Graphics.hpp"
+#include "Entity.h"
 
-Hitbox::Hitbox(sf::Vector2f size, sf::Vector2f upperLeftOffset) :
+Hitbox::Hitbox(Entity& entity, sf::Vector2f size, sf::Vector2f upperLeftOffset) :
     mSize(size),
-    mUpperLeftOffset(upperLeftOffset)
+    mUpperLeftOffset(upperLeftOffset),
+    mEntity(entity)
 {
+}
+
+Hitbox& Hitbox::operator=(const Hitbox& other)
+{
+    if (this == &other)
+        return *this;
+    if (&mEntity != &other.mEntity)
+        throw std::runtime_error("Cannot assign to hitbox of different entity");
+    mUpperLeftOffset = other.mUpperLeftOffset;
+    mSize = other.mSize;
+    return *this;
+}
+
+long Hitbox::getBottom() const
+{
+    return getTop() + mSize.y;
+}
+
+long Hitbox::getTop() const
+{
+    return mEntity.getTop() + mUpperLeftOffset.y;
+}
+
+long Hitbox::getLeft() const
+{
+    return mEntity.getLeft() + mUpperLeftOffset.x;
+}
+
+long Hitbox::getRight() const
+{
+    return getLeft() + mSize.x;
 }
 
 void Hitbox::getCorner(const EntityCorner& corner,
