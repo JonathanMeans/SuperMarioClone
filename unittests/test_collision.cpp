@@ -1,76 +1,7 @@
 #include <gtest/gtest.h>
-#include "Entity.h"
 #include "Utils.h"
 #include "file_util.h"
 
-// class FallableStub : public Entity
-//{
-//    size_t mX;
-//    size_t mY;
-//
-// public:
-//    size_t getY() const override
-//    {
-//        return mY;
-//    }
-//
-//    size_t getX() const override
-//    {
-//        return mX;
-//    }
-//
-//    size_t getHeight() const override
-//    {
-//        return 16;
-//    }
-//
-//    void setPosition(size_t x, size_t y) override
-//    {
-//        mY = y;
-//        mX = x;
-//    }
-//};
-//
-// class FallableTest : public ::testing::Test
-//{
-// protected:
-//    FallableStub fallable;
-//
-//    void SetUp() override
-//    {
-//        fallable.setPosition(100, 100);
-//        fallable.setVelocity(sf::Vector2f(100, 100));
-//    }
-//};
-//
-// TEST_F(FallableTest, CollidedWithGround)
-//{
-//    EXPECT_TRUE(fallable.collideWithGround(20));
-//    EXPECT_EQ(fallable.getVelocity(), sf::Vector2f(100, 0));
-//    EXPECT_EQ(fallable.getY(), 4);
-//}
-//
-// TEST_F(FallableTest, DidNotCollideWithGround)
-//{
-//    EXPECT_FALSE(fallable.collideWithGround(150));
-//}
-//
-// TEST_F(FallableTest, UpdatePosition)
-//{
-//    fallable.setAcceleration(sf::Vector2f(10, 15));
-//    fallable.updatePosition();
-//    EXPECT_EQ(fallable.getX(), 210);
-//    EXPECT_EQ(fallable.getY(), 215);
-//}
-//
-// TEST_F(FallableTest, UpdatePositionLimitedByMaxVelocity)
-//{
-//    fallable.setAcceleration(sf::Vector2f(10, 15));
-//    fallable.setVelocity(sf::Vector2f(100, 105));
-//    fallable.setMaxVelocity(105);
-//    fallable.updatePosition();
-//    EXPECT_EQ(fallable.getX(), 205);
-//}
 
 TEST(Utils, IsOnRightOf)
 {
@@ -187,21 +118,3 @@ TEST(Utils, MovingLeftOnTopOfEntityShouldNotHitLeftSide)
             moverStart, moverEnd, lineStart, lineEnd));
 }
 
-// TEST(Utils, Area2)
-//{
-//    //point is to the left
-//    EXPECT_GT(Utils::Area2(sf::Vector2f(0, 100), sf::Vector2f(0, 0),
-//    sf::Vector2f(-100, 0)), 0);
-//    //point is to the right
-//    EXPECT_FLOAT_EQ(Utils::Area2(sf::Vector2f(0, 100), sf::Vector2f(0, 0),
-//    sf::Vector2f(100, 0)), 0);
-//    //point is above (left) //point below (right)
-//    EXPECT_FLOAT_EQ(Utils::Area2(sf::Vector2f(100, 0), sf::Vector2f(-100, 0),
-//    sf::Vector2f(0, 100)), 0);
-//    //on the same line and intersecting
-//    EXPECT_FLOAT_EQ(Utils::Area2(sf::Vector2f(100, 0), sf::Vector2f(-100, 0),
-//    sf::Vector2f(0, 0)), 0);
-//    //on the same line, not intersecting
-//    EXPECT_FLOAT_EQ(Utils::Area2(sf::Vector2f(100, 0), sf::Vector2f(-100, 0),
-//    sf::Vector2f(200, 0)), 0);
-//}
