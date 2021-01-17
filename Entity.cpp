@@ -100,12 +100,19 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
     mMaxVelocity(maxVelocity),
     mType(type)
 {
-    mActiveSprite->setPosition(position);
+    mActiveSprite->setPosition(upperCenterToUpperLeft(position));
 
     // sets origin of sprite to be midpoint of top edge
     // So that scaling by -1 works properly
     const auto horizontalMidpoint = spriteWidth / 2;
     mActiveSprite->setOrigin(horizontalMidpoint, 0);
+}
+
+sf::Vector2f Entity::upperCenterToUpperLeft(
+        const sf::Vector2f& originalPosition) const
+{
+    return sf::Vector2(originalPosition.x + mSpriteWidth / 2,
+                       originalPosition.y);
 }
 
 Entity::~Entity() = default;

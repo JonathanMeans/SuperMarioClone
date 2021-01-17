@@ -109,31 +109,12 @@ private:
     [[nodiscard]] virtual long getY() const;
     [[nodiscard]] virtual long getX() const;
 
+    [[nodiscard]] sf::Vector2f upperCenterToUpperLeft(
+            const sf::Vector2f& originalPosition) const;
+
     int mLookDirection;
     float mMaxVelocity;
     EntityType mType;
 };
 
 #endif  // SUPERMARIOBROS_ENTITY_H
-
-/*
- *   Collision {
- *   dirionect,
- *   entity_type
- *   }
- *
- *   collideWithEnemy(Entity& Other)
- *   {
- *      Optional<Collision> collision = detectCollision(other)
- *      if (collision)
- *           {
- *           this->handleCollision(collision);
- *             other->handleCollision(collision)
- *           }
- *   }
- *
- *
- *
- *
- *
- */

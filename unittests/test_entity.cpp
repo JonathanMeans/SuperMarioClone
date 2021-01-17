@@ -11,16 +11,16 @@ TEST(EntityTest, CanConstructEntitiesWithPosition)
 {
     std::unique_ptr<Mario> mario(
             new Mario(gSpriteMaker->marioSprite, {10, 50}));
-    EXPECT_EQ(mario->getLeft(), 2);
+    EXPECT_EQ(mario->getLeft(), 10);
     EXPECT_EQ(mario->getTop(), 50);
 
     std::unique_ptr<Pipe> pipe(new Pipe(gSpriteMaker->pipeSprite, {15, 70}));
-    EXPECT_EQ(pipe->getLeft(), -1);
+    EXPECT_EQ(pipe->getLeft(), 15);
     EXPECT_EQ(pipe->getTop(), 70);
 
     std::unique_ptr<Goomba> goomba(
             new Goomba(gSpriteMaker->goombaSprite, {10, 50}));
-    EXPECT_EQ(goomba->getLeft(), 2);
+    EXPECT_EQ(goomba->getLeft(), 10);
     EXPECT_EQ(goomba->getTop(), 50);
 }
 
@@ -31,8 +31,8 @@ TEST(EntityTest, CanGetPositionsOfEntityBoundaries)
             new Mario(gSpriteMaker->marioSprite, {20, 50}));
     EXPECT_EQ(mario->getTop(), 50);
     EXPECT_EQ(mario->getBottom(), 66);
-    EXPECT_EQ(mario->getLeft(), 12);
-    EXPECT_EQ(mario->getRight(), 28);
+    EXPECT_EQ(mario->getLeft(), 20);
+    EXPECT_EQ(mario->getRight(), 36);
 }
 
 TEST(EntityTest, CanGetPositionOfHitboxBoundaries)
@@ -40,8 +40,8 @@ TEST(EntityTest, CanGetPositionOfHitboxBoundaries)
     std::unique_ptr<Mario> mario(
             new Mario(gSpriteMaker->marioSprite, {20, 50}));
     const auto hitbox = mario->getHitbox();
-    EXPECT_EQ(hitbox.getLeft(), 16);
-    EXPECT_EQ(hitbox.getRight(), 24);
+    EXPECT_EQ(hitbox.getLeft(), 24);
+    EXPECT_EQ(hitbox.getRight(), 32);
     EXPECT_EQ(hitbox.getTop(), 55);
     EXPECT_EQ(hitbox.getBottom(), 66);
 
