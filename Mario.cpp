@@ -187,7 +187,7 @@ void Mario::onCollision(const Collision& collision)
 void Mario::die()
 {
     mIsDead = true;
-    mHitbox = Hitbox(*this, {0.f, 0.f}, {-10000.f, -100000.f});
+    mHitbox.invalidate();
     mAcceleration = {};
     mVelocity = {};
     mInputEnabled = false;

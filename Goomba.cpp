@@ -3,11 +3,6 @@
 
 #include <utility>
 
-namespace
-{
-const auto MARIO_HEIGHT = 16;
-}
-
 Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite,
                const sf::Vector2f& position) :
     Entity(std::move(sprite),
@@ -38,8 +33,7 @@ void Goomba::die()
     mActiveAnimation->processAction();
     mVelocity.x = 0;
 
-    // Remove hitbox
-    mHitbox = Hitbox(*this, {0.f, 0.f}, {-10000.f, -100000.f});
+    mHitbox.invalidate();
 
     getTimer().scheduleSeconds(1, [&]() { this->setCleanupFlag(); });
 }

@@ -28,6 +28,8 @@ public:
 
     Hitbox& operator=(const Hitbox& other);
 
+    void invalidate();
+
     [[nodiscard]] long getBottom() const;
     [[nodiscard]] long getTop() const;
     [[nodiscard]] long getLeft() const;

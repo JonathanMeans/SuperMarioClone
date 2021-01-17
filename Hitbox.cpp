@@ -1,8 +1,10 @@
 #include "Hitbox.h"
-#include "SFML/Graphics.hpp"
 #include "Entity.h"
+#include "SFML/Graphics.hpp"
 
-Hitbox::Hitbox(Entity& entity, sf::Vector2f size, sf::Vector2f upperLeftOffset) :
+Hitbox::Hitbox(Entity& entity,
+               sf::Vector2f size,
+               sf::Vector2f upperLeftOffset) :
     mSize(size),
     mUpperLeftOffset(upperLeftOffset),
     mEntity(entity)
@@ -18,6 +20,12 @@ Hitbox& Hitbox::operator=(const Hitbox& other)
     mUpperLeftOffset = other.mUpperLeftOffset;
     mSize = other.mSize;
     return *this;
+}
+
+void Hitbox::invalidate()
+{
+    mSize = {};
+    mUpperLeftOffset = {-10000.f, -10000.f};
 }
 
 long Hitbox::getBottom() const
