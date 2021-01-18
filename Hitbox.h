@@ -25,6 +25,7 @@ class Hitbox
 {
 public:
     Hitbox(Entity& entity, sf::Vector2f size, sf::Vector2f upperLeftOffset);
+    Hitbox(const Hitbox& copy);
 
     Hitbox& operator=(const Hitbox& other);
 
@@ -36,14 +37,12 @@ public:
     [[nodiscard]] long getRight() const;
 
     void getCorner(const EntityCorner& corner,
-                   const sf::Vector2f& spritePosition,
                    sf::Vector2f& point) const;
     void getSide(const EntitySide& side,
                  bool extendEdges,
-                 const sf::Vector2f& spritePosition,
                  sf::Vector2f& p1,
                  sf::Vector2f& p2) const;
-    void draw(const sf::Vector2f& spritePosition, sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window);
 
     sf::Vector2f mSize;
     sf::Vector2f mUpperLeftOffset;

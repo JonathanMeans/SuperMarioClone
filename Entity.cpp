@@ -201,7 +201,7 @@ void Entity::draw(sf::RenderWindow& window)
 {
     window.draw(*mActiveSprite);
 #ifdef DRAW_HITBOX
-    mHitbox.draw(mActiveSprite->getPosition(), window);
+    mHitbox.draw(window);
 #endif
 }
 
@@ -292,8 +292,6 @@ void Entity::getHitboxSide(const EntitySide& side,
 {
     mHitbox.getSide(side,
                     extendEdges,
-                    {static_cast<float>(getLeft()),
-                     static_cast<float>(getTop())},
                     p1,
                     p2);
 }
@@ -301,10 +299,7 @@ void Entity::getHitboxSide(const EntitySide& side,
 void Entity::getHitboxCorner(const EntityCorner& corner,
                              sf::Vector2f& point) const
 {
-    mHitbox.getCorner(corner,
-                      {static_cast<float>(mActiveSprite->getPosition().x),
-                       static_cast<float>(mActiveSprite->getPosition().y)},
-                      point);
+    mHitbox.getCorner(corner,point);
 }
 
 void Entity::updatePosition()
