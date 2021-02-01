@@ -144,6 +144,7 @@ bool Mario::collideWithGround(long groundY)
 
 void Mario::onCollision(const Collision& collision)
 {
+    //collision's side is referring to the side of Mario that collided
     if (isEnemy(collision.entityType))
     {
         std::cout << convertSideToString(collision.side) << std::endl;
@@ -158,7 +159,6 @@ void Mario::onCollision(const Collision& collision)
     }
     else
     {
-        // BOTTOM means mario's bottom side is colliding with something
         if (collision.side == EntitySide::BOTTOM)
         {
             auto spriteBottom = getBottom();

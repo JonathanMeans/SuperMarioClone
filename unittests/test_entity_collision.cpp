@@ -55,24 +55,33 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     EXPECT_EQ(116.f, mario->getBottom());
     for (int i = 0; i < 100; ++i)
     {
-        if (i == 4)
-            int x = 5;
         mario->updatePosition();
         mario->collideWithEnemy(pipes);
         mario->applyDeltaP();
+
+        //Reset mDeltaP
+        mario->mDeltaP.x = 0;
+        mario->mDeltaP.y = 0;
     }
     EXPECT_EQ(200.f, mario->getBottom());
 
     // move left two frames
+    //TODO: Debug why moving more than one frame left makes
+    // Mario fall through the pipe
     auto leftAcceleration = mario->getAcceleration();
     leftAcceleration.x = -1;
     mario->setAcceleration(leftAcceleration);
     for (int i = 0; i < 1; ++i)
     {
-        mario->mDeltaP = {};
+//        mario->mDeltaP = {};
+
         mario->updatePosition();
         mario->collideWithEnemy(pipes);
         mario->applyDeltaP();
+
+        //Reset mDeltaP
+        mario->mDeltaP.x = 0;
+        mario->mDeltaP.y = 0;
     }
 
     // verify we're still on top of pipe
