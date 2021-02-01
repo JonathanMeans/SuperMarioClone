@@ -139,15 +139,18 @@ std::optional<Collision> Entity::detectCollision(const Entity& other) const
         sf::Vector2f enemyEdge1, enemyEdge2;
         for (const auto& corner : CORNERS)
         {
-            sf::Vector2f marioPath1;
-            getHitboxCorner(corner, marioPath1);
-            marioPath1 -= mDeltaP;
-            const sf::Vector2f marioPath2 = marioPath1 + mDeltaP;
+            sf::Vector2f marioPathEnd;
+            getHitboxCorner(corner, marioPathEnd);
+
+            // Subtract the recorded mDeltaP to get original position this frame
+            const auto marioPathStart = marioPathEnd - mDeltaP;
+
             for (const auto& side : SIDES)
             {
                 other.getHitboxSide(side, true, enemyEdge1, enemyEdge2);
                 if (Utils::IsIntersecting(
-                            marioPath1, marioPath2, enemyEdge1, enemyEdge2))
+                            marioPathStart,
+                                          marioPathEnd, enemyEdge1, enemyEdge2))
                 {
                     // We've detected which side of the enemy we're hitting
                     // Invert it to get which side of Mario is colliding
@@ -273,7 +276,7 @@ bool Entity::collideWithGround(const long groundY)
         return false;
     while (spriteBottom > groundY)
     {
-        mDeltaP.y -= 1;
+        addPositionDelta(0, -1);
         const auto currentVelocity = getVelocity();
         setVelocity(sf::Vector2f(currentVelocity.x, 0));
         spriteBottom = getBottom();
@@ -291,16 +294,20 @@ void Entity::getHitboxSide(const EntitySide& side,
                            sf::Vector2f& p1,
                            sf::Vector2f& p2) const
 {
-    mHitbox.getSide(side,
-                    extendEdges,
-                    p1,
-                    p2);
+    mHitbox.getSide(side, extendEdges, p1, p2);
 }
 
 void Entity::getHitboxCorner(const EntityCorner& corner,
                              sf::Vector2f& point) const
 {
-    mHitbox.getCorner(corner,point);
+    mHitbox.getCorner(corner, point);
+}
+
+void Entity::addPositionDelta(float deltaX, float deltaY)
+{
+    setPosition(getX() + deltaX, getY() + deltaY);
+    mDeltaP.x += deltaX;
+    mDeltaP.y += deltaY;
 }
 
 void Entity::updatePosition()
@@ -317,18 +324,17 @@ void Entity::updatePosition()
             mVelocity.x = -mMaxVelocity;
     }
 
-    mDeltaP.x += mVelocity.x;
-    mDeltaP.y += mVelocity.y;
+    addPositionDelta(mVelocity.x, mVelocity.y);
 }
 
 long Entity::getX() const
 {
-    return mActiveSprite->getPosition().x + mDeltaP.x;
+    return mActiveSprite->getPosition().x;
 }
 
 long Entity::getY() const
 {
-    return mActiveSprite->getPosition().y + mDeltaP.y;
+    return mActiveSprite->getPosition().y;
 }
 
 size_t Entity::getHeight() const
@@ -354,9 +360,4 @@ void Entity::setCleanupFlag()
 bool Entity::needsCleanup()
 {
     return mCleanupFlag;
-}
-
-void Entity::applyDeltaP()
-{
-    setPosition(getX(), getY());
 }

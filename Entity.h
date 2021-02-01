@@ -56,7 +56,7 @@ public:
     void setVelocity(const sf::Vector2f& newVelocity);
     void setAcceleration(const sf::Vector2f& newAcceleration);
     void updatePosition();
-    void applyDeltaP();
+    void addPositionDelta(float deltaX, float deltaY);
     virtual bool collideWithGround(long groundY);
 
     void updateAnimation();

@@ -165,12 +165,10 @@ int main(int argc, char* argv[])
         mario.collideWithEnemy(enemies);
         mario.collideWithEnemy(objects);
 
-        mario.applyDeltaP();
         mario.updateAnimation();
 
         for (auto& enemy : enemies)
         {
-            enemy->applyDeltaP();
             enemy->updateAnimation();
         }
 

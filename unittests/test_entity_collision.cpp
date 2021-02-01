@@ -37,9 +37,9 @@ TEST_F(EntityCollisionTest, MarioFallsToGround)
     // TODO: Set this from caller, not Mario Ctor
     for (int i = 0; i < 100; ++i)
     {
+        mario->mDeltaP = {};
         mario->updatePosition();
         mario->collideWithGround(GROUND_HEIGHT);
-        mario->applyDeltaP();
     }
     EXPECT_EQ(0.f, mario->getBottom());
 }
@@ -57,7 +57,6 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     {
         mario->updatePosition();
         mario->collideWithEnemy(pipes);
-        mario->applyDeltaP();
 
         //Reset mDeltaP
         mario->mDeltaP.x = 0;
@@ -73,7 +72,6 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     {
         mario->updatePosition();
         mario->collideWithEnemy(pipes);
-        mario->applyDeltaP();
 
         //Reset mDeltaP
         mario->mDeltaP.x = 0;
