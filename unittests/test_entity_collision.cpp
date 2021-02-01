@@ -66,15 +66,11 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     EXPECT_EQ(200.f, mario->getBottom());
 
     // move left two frames
-    //TODO: Debug why moving more than one frame left makes
-    // Mario fall through the pipe
     auto leftAcceleration = mario->getAcceleration();
     leftAcceleration.x = -1;
     mario->setAcceleration(leftAcceleration);
-    for (int i = 0; i < 1; ++i)
+    for (int i = 0; i < 2; ++i)
     {
-//        mario->mDeltaP = {};
-
         mario->updatePosition();
         mario->collideWithEnemy(pipes);
         mario->applyDeltaP();

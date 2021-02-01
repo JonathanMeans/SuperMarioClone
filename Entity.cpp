@@ -141,6 +141,7 @@ std::optional<Collision> Entity::detectCollision(const Entity& other) const
         {
             sf::Vector2f marioPath1;
             getHitboxCorner(corner, marioPath1);
+            marioPath1 -= mDeltaP;
             const sf::Vector2f marioPath2 = marioPath1 + mDeltaP;
             for (const auto& side : SIDES)
             {

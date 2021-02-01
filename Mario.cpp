@@ -165,10 +165,10 @@ void Mario::onCollision(const Collision& collision)
             while (spriteBottom > collision.yIntersection)
             {
                 mDeltaP.y -= 1;
-                const auto currentVelocity = getVelocity();
-                setVelocity(sf::Vector2f(currentVelocity.x, 0));
                 spriteBottom = getBottom();
             }
+            const auto currentVelocity = getVelocity();
+            setVelocity(sf::Vector2f(currentVelocity.x, 0));
             setJumping(false);
         }
         else if (collision.side == EntitySide::TOP)
