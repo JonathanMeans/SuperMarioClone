@@ -209,23 +209,23 @@ void Entity::draw(sf::RenderWindow& window)
 #endif
 }
 
-long Entity::getBottom() const
+float Entity::getBottom() const
 {
     return getY() + getHeight();
 }
 
-long Entity::getTop() const
+float Entity::getTop() const
 {
     return getY();
 }
 
-long Entity::getLeft() const
+float Entity::getLeft() const
 {
     const auto halfWidth = static_cast<long>(getWidth() / 2);
     return getX() - halfWidth;
 }
 
-long Entity::getRight() const
+float Entity::getRight() const
 {
     const auto halfWidth = static_cast<long>(getWidth() / 2);
     return getX() + halfWidth;
@@ -327,22 +327,22 @@ void Entity::updatePosition()
     addPositionDelta(mVelocity.x, mVelocity.y);
 }
 
-long Entity::getX() const
+float Entity::getX() const
 {
     return mActiveSprite->getPosition().x;
 }
 
-long Entity::getY() const
+float Entity::getY() const
 {
     return mActiveSprite->getPosition().y;
 }
 
-size_t Entity::getHeight() const
+float Entity::getHeight() const
 {
     return mSpriteHeight;
 }
 
-size_t Entity::getWidth() const
+float Entity::getWidth() const
 {
     return mSpriteWidth;
 }

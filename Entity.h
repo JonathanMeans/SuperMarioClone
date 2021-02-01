@@ -39,13 +39,13 @@ public:
            float maxVelocity = NO_MAX_VELOCITY_VALUE);
     virtual ~Entity();
 
-    [[nodiscard]] long getBottom() const;
-    [[nodiscard]] long getTop() const;
-    [[nodiscard]] long getLeft() const;
-    [[nodiscard]] long getRight() const;
+    [[nodiscard]] float getBottom() const;
+    [[nodiscard]] float getTop() const;
+    [[nodiscard]] float getLeft() const;
+    [[nodiscard]] float getRight() const;
 
-    [[nodiscard]] size_t getWidth() const;
-    [[nodiscard]] virtual size_t getHeight() const;
+    [[nodiscard]] float getWidth() const;
+    [[nodiscard]] virtual float getHeight() const;
 
     [[nodiscard]] const Hitbox& getHitbox() const;
 
@@ -85,7 +85,7 @@ public:
     virtual void setPosition(float x, float y);
 
 protected:
-    std::optional<Collision> detectCollision(const Entity& other) const;
+    [[nodiscard]] std::optional<Collision> detectCollision(const Entity& other) const;
 
     virtual void onCollision(const Collision& collision);
 
@@ -106,8 +106,8 @@ protected:
 private:
     // These functions give the midpoint of the top edge
     // Prefer getTop(), getLeft(), etc.
-    [[nodiscard]] virtual long getY() const;
-    [[nodiscard]] virtual long getX() const;
+    [[nodiscard]] float getY() const;
+    [[nodiscard]] float getX() const;
 
     [[nodiscard]] sf::Vector2f upperCenterToUpperLeft(
             const sf::Vector2f& originalPosition) const;
