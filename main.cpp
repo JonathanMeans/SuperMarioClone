@@ -2,41 +2,13 @@
 #include "Mario.h"
 #include "Pipe.h"
 #include "SpriteMaker.h"
+#include "Input.h"
 #include "Timer.h"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 
 #include <file_util.h>
-
-struct KeyboardInputState
-{
-    bool keyIsDown;
-    bool keyWasDown;
-
-    [[nodiscard]] bool pressedThisFrame() const
-    {
-        return keyIsDown && !keyWasDown;
-    }
-
-    [[nodiscard]] bool releasedThisFrame() const
-    {
-        return !keyIsDown && keyWasDown;
-    }
-};
-
-struct KeyboardInput
-{
-    KeyboardInputState A;
-    KeyboardInputState B;
-    KeyboardInputState up;
-    KeyboardInputState down;
-    KeyboardInputState left;
-    KeyboardInputState right;
-
-    KeyboardInputState select;
-    KeyboardInputState start;
-};
 
 void updateInputState(KeyboardInputState& currentState,
                       const KeyboardInputState& previousState,
