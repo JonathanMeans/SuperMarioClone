@@ -33,16 +33,15 @@ protected:
 
 TEST_F(EntityCollisionTest, MarioFallsToGround)
 {
-    const float GROUND_HEIGHT = 0.f;
-    // Mario's initial height is 100
+    std::unique_ptr<Mario> mario(
+            new Mario(gSpriteMaker->marioSprite, {0, 100}));
+    Level level(std::move(mario), {});
     // TODO: Set this from caller, not Mario Ctor
     for (int i = 0; i < 100; ++i)
     {
-        mario->mDeltaP = {};
-        mario->updatePosition();
-        mario->collideWithGround(GROUND_HEIGHT);
+        level.executeFrame({});
     }
-    EXPECT_EQ(0.f, mario->getBottom());
+    EXPECT_EQ(500.f, level.getMario().getBottom());
 }
 
 TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
@@ -64,24 +63,17 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     EXPECT_EQ(200.f, level.getMario().getBottom());
 
     // move left two frames
-    /*
-    auto leftAcceleration = mario->getAcceleration();
-    leftAcceleration.x = -1;
-    mario->setAcceleration(leftAcceleration);
     for (int i = 0; i < 2; ++i)
     {
-        mario->updatePosition();
-        mario->collideWithEnemy(pipes);
-
-        // Reset mDeltaP
-        mario->mDeltaP.x = 0;
-        mario->mDeltaP.y = 0;
+        KeyboardInput input = {};
+        input.left.keyIsDown = true;
+        level.executeFrame(input);
     }
 
     // verify we're still on top of pipe
-    EXPECT_EQ(200.f, mario->getBottom());
-    EXPECT_GT(mario->getRight(), 0.f);
-     */
+    EXPECT_EQ(200.f, level.getMario().getBottom());
+    EXPECT_GT(level.getMario().getRight(), 0.f);
+
 }
 
 int main(int argc, char** argv)

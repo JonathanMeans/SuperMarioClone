@@ -18,6 +18,8 @@ public:
      */
     Level(std::unique_ptr<Mario> mario, std::vector<Entity*> entities);
 
+    void setMarioMovementFromController(const KeyboardInput& currentInput);
+
     void executeFrame(const KeyboardInput& input);
 
     [[nodiscard]] const Mario& getMario() const;
@@ -26,6 +28,12 @@ private:
     std::unique_ptr<Mario> mMario;
     // TODO: How can we own a vector of entities?
     std::vector<Entity*> mEntities;
+
+    /*
+     * Ground height is a large arbitrary number so that Mario and all other
+     * entities on the screen are considered above the ground
+     * */
+    float groundHeight = 500.f;
 };
 
 #endif  // SUPERMARIOBROS_LEVEL_H
