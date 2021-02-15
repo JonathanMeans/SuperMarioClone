@@ -128,7 +128,7 @@ void Mario::jump()
     }
 }
 
-bool Mario::collideWithGround(long groundY)
+bool Mario::collideWithGround(float groundY)
 {
     if (!mIsDead)
     {

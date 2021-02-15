@@ -31,10 +31,10 @@ public:
 
     void invalidate();
 
-    [[nodiscard]] long getBottom() const;
-    [[nodiscard]] long getTop() const;
-    [[nodiscard]] long getLeft() const;
-    [[nodiscard]] long getRight() const;
+    [[nodiscard]] float getBottom() const;
+    [[nodiscard]] float getTop() const;
+    [[nodiscard]] float getLeft() const;
+    [[nodiscard]] float getRight() const;
 
     void getCorner(const EntityCorner& corner,
                    sf::Vector2f& point) const;
@@ -42,7 +42,7 @@ public:
                  bool extendEdges,
                  sf::Vector2f& p1,
                  sf::Vector2f& p2) const;
-    void draw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window) const;
 
     sf::Vector2f mSize;
     sf::Vector2f mUpperLeftOffset;

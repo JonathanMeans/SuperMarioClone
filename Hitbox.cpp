@@ -35,22 +35,22 @@ void Hitbox::invalidate()
     mUpperLeftOffset = {-10000.f, -10000.f};
 }
 
-long Hitbox::getBottom() const
+float Hitbox::getBottom() const
 {
     return getTop() + mSize.y;
 }
 
-long Hitbox::getTop() const
+float Hitbox::getTop() const
 {
     return mEntity.getTop() + mUpperLeftOffset.y;
 }
 
-long Hitbox::getLeft() const
+float Hitbox::getLeft() const
 {
     return mEntity.getLeft() + mUpperLeftOffset.x;
 }
 
-long Hitbox::getRight() const
+float Hitbox::getRight() const
 {
     return getLeft() + mSize.x;
 }
@@ -149,7 +149,7 @@ void Hitbox::getSide(const EntitySide& side,
     }
 }
 
-void Hitbox::draw(sf::RenderWindow& window)
+void Hitbox::draw(sf::RenderWindow& window) const
 {
     sf::RectangleShape rectangle(sf::Vector2f(mSize.x, mSize.y));
     rectangle.setFillColor(sf::Color(150, 50, 250));

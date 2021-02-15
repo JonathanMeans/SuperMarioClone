@@ -36,7 +36,6 @@ TEST_F(EntityCollisionTest, MarioFallsToGround)
     std::unique_ptr<Mario> mario(
             new Mario(gSpriteMaker->marioSprite, {0, 100}));
     Level level(std::move(mario), {}, 500.0);
-    // TODO: Set this from caller, not Mario Ctor
     for (int i = 0; i < 100; ++i)
     {
         level.executeFrame({});
@@ -46,10 +45,10 @@ TEST_F(EntityCollisionTest, MarioFallsToGround)
 
 TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 {
+    // TODO: Better interface
     std::unique_ptr<Mario> mario(
             new Mario(gSpriteMaker->marioSprite, {0, 100}));
     std::unique_ptr<Entity> pipe(new Pipe(gSpriteMaker->pipeSprite, {0, 200}));
-    // TODO: Better interface
     std::vector<std::unique_ptr<Entity>> pipes(1);
     pipes[0] = std::move(pipe);
 

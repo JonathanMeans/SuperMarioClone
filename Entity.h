@@ -22,7 +22,7 @@ struct Collision
 {
     EntitySide side;
     EntityType entityType;
-    long yIntersection;
+    float yIntersection;
 };
 
 class Entity
@@ -33,7 +33,7 @@ public:
     Entity(std::shared_ptr<sf::Sprite> sprite,
            size_t spriteWidth,
            size_t spriteHeight,
-           Hitbox hitbox,
+           const Hitbox& hitbox,
            EntityType type,
            const sf::Vector2f& position,
            float maxVelocity = NO_MAX_VELOCITY_VALUE);
@@ -57,10 +57,10 @@ public:
     void setAcceleration(const sf::Vector2f& newAcceleration);
     void updatePosition();
     void addPositionDelta(float deltaX, float deltaY);
-    virtual bool collideWithGround(long groundY);
+    virtual bool collideWithGround(float groundY);
 
     void updateAnimation();
-    void draw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window) const;
 
     void getHitboxSide(const EntitySide& side,
                        bool extendEdges,

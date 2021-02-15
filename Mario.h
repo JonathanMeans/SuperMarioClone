@@ -29,7 +29,7 @@ public:
 
     void setAnimationFromState() override;
 
-    bool collideWithGround(long groundY) override;
+    bool collideWithGround(float groundY) override;
 
     inline void setJumping(bool isJumping)
     {

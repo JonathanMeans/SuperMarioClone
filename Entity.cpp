@@ -83,7 +83,7 @@ const float Entity::NO_MAX_VELOCITY_VALUE = -1;
 Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
                size_t spriteWidth,
                size_t spriteHeight,
-               Hitbox hitbox,
+               const Hitbox& hitbox,
                EntityType type,
                const sf::Vector2f& position,
                float maxVelocity) :
@@ -124,15 +124,15 @@ EntityType Entity::getType() const
 
 std::optional<Collision> Entity::detectCollision(const Entity& other) const
 {
-    long lhsTopEdge = getTop() + mHitbox.mUpperLeftOffset.y;
-    long lhsBottomEdge = lhsTopEdge + mHitbox.mSize.y;
-    long lhsLeftEdge = getLeft() + mHitbox.mUpperLeftOffset.x;
-    long lhsRightEdge = lhsLeftEdge + mHitbox.mSize.x;
+    float lhsTopEdge = getTop() + mHitbox.mUpperLeftOffset.y;
+    float lhsBottomEdge = lhsTopEdge + mHitbox.mSize.y;
+    float lhsLeftEdge = getLeft() + mHitbox.mUpperLeftOffset.x;
+    float lhsRightEdge = lhsLeftEdge + mHitbox.mSize.x;
 
-    long eTopEdge = other.getTop();
-    long eLeftEdge = other.getLeft();
-    long eRightEdge = eLeftEdge + other.getWidth();
-    long eBottomEdge = eTopEdge + other.getHeight();
+    float eTopEdge = other.getTop();
+    float eLeftEdge = other.getLeft();
+    float eRightEdge = eLeftEdge + other.getWidth();
+    float eBottomEdge = eTopEdge + other.getHeight();
     if (lhsLeftEdge < eRightEdge && lhsRightEdge > eLeftEdge &&
         lhsTopEdge < eBottomEdge && lhsBottomEdge > eTopEdge)
     {
@@ -201,7 +201,7 @@ void Entity::setAnimationFromState()
     // Do nothing
 }
 
-void Entity::draw(sf::RenderWindow& window)
+void Entity::draw(sf::RenderWindow& window) const
 {
     window.draw(*mActiveSprite);
 #ifdef DRAW_HITBOX
@@ -269,7 +269,7 @@ void Entity::setAcceleration(const sf::Vector2f& acceleration)
     }
 }
 
-bool Entity::collideWithGround(const long groundY)
+bool Entity::collideWithGround(float groundY)
 {
     auto spriteBottom = getBottom();
     if (spriteBottom <= groundY)
