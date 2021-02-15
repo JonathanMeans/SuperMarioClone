@@ -43,15 +43,17 @@ int main(int argc, char* argv[])
 
     SpriteMaker spriteMaker(resourceDir);
     std::unique_ptr<Mario> mario(new Mario(spriteMaker.marioSprite, {30, 100}));
-    std::unique_ptr<Goomba> goomba(new Goomba(spriteMaker.goombaSprite, {150, 50}));
-    std::unique_ptr<Pipe> leftPipe(new Pipe(spriteMaker.pipeSprite, {110, 100}));
+    std::unique_ptr<Goomba> goomba(
+            new Goomba(spriteMaker.goombaSprite, {150, 50}));
+    std::unique_ptr<Pipe> leftPipe(
+            new Pipe(spriteMaker.pipeSprite, {110, 100}));
 
-    std::vector<Entity*> entities;
-    entities.push_back(goomba.get());
-    entities.push_back(leftPipe.get());
+    std::vector<std::unique_ptr<Entity>> entities(2);
+    entities[0] = std::move(goomba);
+    entities[1] = std::move(leftPipe);
 
     float groundHeight = mario->getTop() + 20;
-    Level level(std::move(mario), entities, groundHeight);
+    Level level(std::move(mario), std::move(entities), groundHeight);
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};

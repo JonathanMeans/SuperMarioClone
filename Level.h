@@ -1,8 +1,8 @@
 #ifndef SUPERMARIOBROS_LEVEL_H
 #define SUPERMARIOBROS_LEVEL_H
 
-#include "Mario.h"
 #include "Input.h"
+#include "Mario.h"
 
 /*
  * Encapsulates the game logic and entities for a single level.
@@ -14,7 +14,9 @@ public:
      * Construct a new level from Mario and the entities in the level.
      * Current, the Level has ownership of Mario and the entities
      */
-    Level(std::unique_ptr<Mario> mario, std::vector<std::unique_ptr<Entity>> entities, float groundHeight);
+    Level(std::unique_ptr<Mario> mario,
+          std::vector<std::unique_ptr<Entity>>&& entities,
+          float groundHeight);
 
     void setMarioMovementFromController(const KeyboardInput& currentInput);
 

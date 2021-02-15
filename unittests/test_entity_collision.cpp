@@ -55,7 +55,7 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 
     EXPECT_EQ(116.f, mario->getBottom());
 
-    Level level(std::move(mario), pipes, 500.0);
+    Level level(std::move(mario), std::move(pipes), 500.0);
     for (int i = 0; i < 100; ++i)
     {
         level.executeFrame({});

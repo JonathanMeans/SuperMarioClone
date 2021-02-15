@@ -2,7 +2,7 @@
 
 #include <utility>
 
-Level::Level(std::unique_ptr<Mario> mario, std::vector<std::unique_ptr<Entity>> entities, float groundHeight) :
+Level::Level(std::unique_ptr<Mario> mario, std::vector<std::unique_ptr<Entity>>&& entities, float groundHeight) :
     mMario(std::move(mario)),
     mEntities(std::move(entities)),
     mGroundHeight(groundHeight)
