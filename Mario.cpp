@@ -160,11 +160,10 @@ void Mario::onCollision(const Collision& collision)
         if (collision.side == EntitySide::BOTTOM)
         {
             auto spriteBottom = getBottom();
-            while (spriteBottom > collision.yIntersection)
-            {
-                addPositionDelta(0, -1);
-                spriteBottom = getBottom();
-            }
+            auto newSpriteBottom = collision.yIntersection;
+            const auto delta = newSpriteBottom - spriteBottom;
+            addPositionDelta(0, delta);
+
             const auto currentVelocity = getVelocity();
             setVelocity(sf::Vector2f(currentVelocity.x, 0));
             setJumping(false);
@@ -175,14 +174,27 @@ void Mario::onCollision(const Collision& collision)
             // TODO: Bug: We want to clip to the bottom of the object
             mDeltaP.y = 0;
         }
-        else
+        else if (collision.side == EntitySide::RIGHT)
         {
+            auto spriteRight = getRight();
+            auto newSpriteRight = collision.xIntersection;
+            const auto delta = newSpriteRight - spriteRight;
+            addPositionDelta(0, delta);
             setVelocity(sf::Vector2f(0, getVelocity().y));
-            // TODO: Bug: We want to clip to the side of the object
+        }
+        else if (collision.side == EntitySide::LEFT)
+        {
+            auto spriteLeft= getLeft();
+            auto newSpriteLeft= collision.xIntersection;
+            const auto delta = newSpriteLeft - spriteLeft;
+            addPositionDelta(0, delta);
+            setVelocity(sf::Vector2f(0, getVelocity().y));
             mDeltaP.x = 0;
         }
     }
 }
+
+
 
 void Mario::die()
 {

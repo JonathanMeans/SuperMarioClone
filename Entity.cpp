@@ -155,8 +155,20 @@ std::optional<Collision> Entity::detectCollision(const Entity& other) const
                 {
                     // We've detected which side of the enemy we're hitting
                     // Invert it to get which side of Mario is colliding
-                    return std::optional<Collision>{Collision{
-                            oppositeSide(side), other.getType(), eTopEdge}};
+                    float xIntersection = 0.f;
+                    if (side == EntitySide::LEFT)
+                    {
+                        xIntersection = eLeftEdge;
+                    }
+                    else if (side == EntitySide ::RIGHT)
+                    {
+                        xIntersection = eRightEdge;
+                    }
+                    return std::optional<Collision>{
+                            Collision{oppositeSide(side),
+                                      other.getType(),
+                                      eTopEdge,
+                                      xIntersection}};
                 }
             }
         }
@@ -180,10 +192,12 @@ bool Entity::collideWithEnemy(std::vector<std::unique_ptr<Entity>>& enemies)
             const auto collision = possibleCollision.value();
             onCollision(Collision{collision.side,
                                   collision.entityType,
-                                  collision.yIntersection});
+                                  collision.yIntersection,
+                                  collision.xIntersection});
             enemy->onCollision(Collision{oppositeSide(collision.side),
                                          this->getType(),
-                                         collision.yIntersection});
+                                         collision.yIntersection,
+                                         collision.xIntersection});
 
             return true;
         }

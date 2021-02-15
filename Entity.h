@@ -23,6 +23,7 @@ struct Collision
     EntitySide side;
     EntityType entityType;
     float yIntersection;
+    float xIntersection;
 };
 
 class Entity
