@@ -146,7 +146,6 @@ void Mario::onCollision(const Collision& collision)
     // collision's side is referring to the side of Mario that collided
     if (isEnemy(collision.entityType))
     {
-        std::cout << convertSideToString(collision.side) << std::endl;
         if (collision.side != EntitySide::BOTTOM)
         {
             die();
