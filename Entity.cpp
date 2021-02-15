@@ -169,7 +169,7 @@ void Entity::onCollision(const Collision& collision)
     (void)collision;
 }
 
-bool Entity::collideWithEnemy(std::vector<Entity*>& enemies)
+bool Entity::collideWithEnemy(std::vector<std::unique_ptr<Entity>>& enemies)
 {
     for (auto& enemy : enemies)
     {

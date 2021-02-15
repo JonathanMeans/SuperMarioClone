@@ -2,9 +2,10 @@
 
 #include <utility>
 
-Level::Level(std::unique_ptr<Mario> mario, std::vector<Entity*> entities) :
+Level::Level(std::unique_ptr<Mario> mario, std::vector<std::unique_ptr<Entity>> entities, float groundHeight) :
     mMario(std::move(mario)),
-    mEntities(std::move(entities))
+    mEntities(std::move(entities)),
+    mGroundHeight(groundHeight)
 {
 }
 
@@ -14,11 +15,53 @@ void Level::executeFrame(const KeyboardInput& input)
     mMario->mDeltaP.x = 0;
     mMario->mDeltaP.y = 0;
 
+    for (auto& entity : mEntities)
+    {
+        entity->mDeltaP.x = 0;
+        entity->mDeltaP.y = 0;
+    }
+
     (void) input;
     setMarioMovementFromController(input);
     mMario->updatePosition();
-    mMario->collideWithGround(groundHeight);
+    mMario->collideWithGround(mGroundHeight);
+
+
+    for (auto& entity : mEntities)
+    {
+        entity->updatePosition();
+    }
+    for (auto& entity : mEntities)
+    {
+        entity->collideWithGround(mGroundHeight);
+    }
+
     mMario->collideWithEnemy(mEntities);
+
+    mMario->updateAnimation();
+
+    for (auto& entity : mEntities)
+    {
+        entity->updateAnimation();
+    }
+
+    mEntities.erase(std::remove_if(mEntities.begin(),
+                                 mEntities.end(),
+                                 [](std::unique_ptr<Entity>& entity) {
+                                   return entity->needsCleanup();
+                                 }),
+                  mEntities.end());
+
+}
+
+void Level::drawFrame(sf::RenderWindow& window)
+{
+    window.clear(sf::Color(0, 0, 255, 255));
+    mMario->draw(window);
+    for (auto& entity : mEntities)
+    {
+        entity->draw(window);
+    }
 
 }
 

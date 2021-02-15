@@ -11,4 +11,5 @@ Pipe::Pipe(std::shared_ptr<sf::Sprite> sprite, const sf::Vector2f& position) :
     mAcceleration = {};
 
     defaultAnimation.load(AnimationType::PIPE, mActiveSprite);
+    mActiveAnimation = &defaultAnimation;
 }
