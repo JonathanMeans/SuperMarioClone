@@ -28,8 +28,7 @@ class Animation
 {
 public:
     Animation();
-    void load(AnimationType type,
-              const std::shared_ptr<sf::Sprite>& activeSprite);
+    void load(AnimationType type, sf::Sprite& activeSprite);
     void processAction();
 
     [[nodiscard]] size_t getSpriteIndex() const;
@@ -41,7 +40,7 @@ private:
     bool repeat{};
 
     std::vector<sf::IntRect> mActionRectangles;
-    std::shared_ptr<sf::Sprite> mActiveSprite;
+    sf::Sprite* mActiveSprite = nullptr;
 
     void generateRectangles(size_t numRectangles,
                             size_t initialOffset,

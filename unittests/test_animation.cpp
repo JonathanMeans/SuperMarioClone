@@ -10,7 +10,7 @@ TEST(Animation, InitializeSpriteIndex)
 TEST(Animation, JumpingSpriteIndexIncreasesWithStep)
 {
     Animation animation;
-    auto sprite = std::make_shared<sf::Sprite>();
+    sf::Sprite sprite;
     animation.load(AnimationType::JUMPING, sprite);
 
     animation.processAction();
@@ -25,7 +25,7 @@ TEST(Animation, JumpingSpriteIndexIncreasesWithStep)
 TEST(Animation, WalkingSpriteIndexIncreasesWithStep)
 {
     Animation animation;
-    auto sprite = std::make_shared<sf::Sprite>();
+    sf::Sprite sprite;
     animation.load(AnimationType::WALKING, sprite);
 
     animation.processAction();

@@ -80,7 +80,7 @@ bool isEnemy(EntityType type)
 
 const float Entity::NO_MAX_VELOCITY_VALUE = -1;
 
-Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
+Entity::Entity(sf::Sprite sprite,
                size_t spriteWidth,
                size_t spriteHeight,
                const Hitbox& hitbox,
@@ -100,18 +100,18 @@ Entity::Entity(std::shared_ptr<sf::Sprite> sprite,
     mMaxVelocity(maxVelocity),
     mType(type)
 {
-    mActiveSprite->setPosition(upperCenterToUpperLeft(position));
+    mActiveSprite.setPosition(upperCenterToUpperLeft(position));
 
     // sets origin of sprite to be midpoint of top edge
     // So that scaling by -1 works properly
     const auto horizontalMidpoint = spriteWidth / 2;
-    mActiveSprite->setOrigin(horizontalMidpoint, 0);
+    mActiveSprite.setOrigin(horizontalMidpoint, 0);
 }
 
 sf::Vector2f Entity::upperCenterToUpperLeft(
         const sf::Vector2f& originalPosition) const
 {
-    return sf::Vector2(originalPosition.x + mSpriteWidth / 2,
+    return sf::Vector2(originalPosition.x + (mSpriteWidth / 2.f),
                        originalPosition.y);
 }
 
@@ -148,9 +148,10 @@ std::optional<Collision> Entity::detectCollision(const Entity& other) const
             for (const auto& side : SIDES)
             {
                 other.getHitboxSide(side, true, enemyEdge1, enemyEdge2);
-                if (Utils::IsIntersecting(
-                            marioPathStart,
-                                          marioPathEnd, enemyEdge1, enemyEdge2))
+                if (Utils::IsIntersecting(marioPathStart,
+                                          marioPathEnd,
+                                          enemyEdge1,
+                                          enemyEdge2))
                 {
                     // We've detected which side of the enemy we're hitting
                     // Invert it to get which side of Mario is colliding
@@ -203,7 +204,7 @@ void Entity::setAnimationFromState()
 
 void Entity::draw(sf::RenderWindow& window) const
 {
-    window.draw(*mActiveSprite);
+    window.draw(mActiveSprite);
 #ifdef DRAW_HITBOX
     mHitbox.draw(window);
 #endif
@@ -329,12 +330,12 @@ void Entity::updatePosition()
 
 float Entity::getX() const
 {
-    return mActiveSprite->getPosition().x;
+    return mActiveSprite.getPosition().x;
 }
 
 float Entity::getY() const
 {
-    return mActiveSprite->getPosition().y;
+    return mActiveSprite.getPosition().y;
 }
 
 float Entity::getHeight() const
@@ -349,7 +350,7 @@ float Entity::getWidth() const
 
 void Entity::setPosition(float x, float y)
 {
-    mActiveSprite->setPosition(x, y);
+    mActiveSprite.setPosition(x, y);
 }
 
 void Entity::setCleanupFlag()

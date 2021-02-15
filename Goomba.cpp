@@ -1,11 +1,8 @@
 #include "Goomba.h"
 #include "Timer.h"
 
-#include <utility>
-
-Goomba::Goomba(std::shared_ptr<sf::Sprite> sprite,
-               const sf::Vector2f& position) :
-    Entity(std::move(sprite),
+Goomba::Goomba(const sf::Sprite& sprite, const sf::Vector2f& position) :
+    Entity(sprite,
            16,
            16,
            Hitbox(*this, {8, 5}, {4, 7}),

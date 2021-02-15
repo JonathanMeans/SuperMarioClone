@@ -7,8 +7,7 @@
 #include <iostream>
 #include <memory>
 
-Mario::Mario(std::shared_ptr<sf::Sprite>& sprite,
-             const sf::Vector2f& position) :
+Mario::Mario(const sf::Sprite& sprite, const sf::Vector2f& position) :
     Entity(sprite,
            16,
            16,
@@ -56,7 +55,7 @@ void Mario::setAnimationFromState()
 
     if (mChangingDirection)
     {
-        mActiveSprite->scale(-1.f, 1.f);
+        mActiveSprite.scale(-1.f, 1.f);
         mChangingDirection = false;
     }
 }
@@ -81,18 +80,18 @@ void Mario::setForm(MarioForm form)
     {
         if (form == MarioForm::BIG_MARIO)
         {
-            const auto currentY = mActiveSprite->getPosition().y;
+            const auto currentY = mActiveSprite.getPosition().y;
             const auto newY = currentY - GRIDBOX_SIZE;
-            mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
+            mActiveSprite.setPosition(mActiveSprite.getPosition().x, newY);
             mActiveAnimation = &bigStandingAnimation;
             mSpriteHeight *= 2;
             mHitbox = largeHitbox;
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
-            const auto currentY = mActiveSprite->getPosition().y;
+            const auto currentY = mActiveSprite.getPosition().y;
             const auto newY = currentY + GRIDBOX_SIZE;
-            mActiveSprite->setPosition(mActiveSprite->getPosition().x, newY);
+            mActiveSprite.setPosition(mActiveSprite.getPosition().x, newY);
             mActiveAnimation = &standingAnimation;
             mSpriteHeight /= 2;
             mHitbox = smallHitbox;
@@ -144,7 +143,7 @@ bool Mario::collideWithGround(float groundY)
 
 void Mario::onCollision(const Collision& collision)
 {
-    //collision's side is referring to the side of Mario that collided
+    // collision's side is referring to the side of Mario that collided
     if (isEnemy(collision.entityType))
     {
         std::cout << convertSideToString(collision.side) << std::endl;

@@ -30,7 +30,7 @@ class Entity
 public:
     static const float NO_MAX_VELOCITY_VALUE;
 
-    Entity(std::shared_ptr<sf::Sprite> sprite,
+    Entity(sf::Sprite sprite,
            size_t spriteWidth,
            size_t spriteHeight,
            const Hitbox& hitbox,
@@ -85,11 +85,12 @@ public:
     virtual void setPosition(float x, float y);
 
 protected:
-    [[nodiscard]] std::optional<Collision> detectCollision(const Entity& other) const;
+    [[nodiscard]] std::optional<Collision> detectCollision(
+            const Entity& other) const;
 
     virtual void onCollision(const Collision& collision);
 
-    std::shared_ptr<sf::Sprite> mActiveSprite;
+    sf::Sprite mActiveSprite;
     sf::Vector2f mVelocity;
     sf::Vector2f mAcceleration;
     bool mChangingDirection;

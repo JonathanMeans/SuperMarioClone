@@ -47,10 +47,13 @@ int main(int argc, char* argv[])
             new Goomba(spriteMaker.goombaSprite, {150, 50}));
     std::unique_ptr<Pipe> leftPipe(
             new Pipe(spriteMaker.pipeSprite, {110, 100}));
+    std::unique_ptr<Pipe> rightPipe(
+            new Pipe(spriteMaker.pipeSprite, {-10, 100}));
 
-    std::vector<std::unique_ptr<Entity>> entities(2);
+    std::vector<std::unique_ptr<Entity>> entities(3);
     entities[0] = std::move(goomba);
     entities[1] = std::move(leftPipe);
+    entities[2] = std::move(rightPipe);
 
     float groundHeight = mario->getTop() + 20;
     Level level(std::move(mario), std::move(entities), groundHeight);

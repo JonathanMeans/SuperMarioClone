@@ -4,13 +4,12 @@
 
 Animation::Animation() = default;
 
-void Animation::load(AnimationType type,
-                     const std::shared_ptr<sf::Sprite>& activeSprite)
+void Animation::load(AnimationType type, sf::Sprite& activeSprite)
 {
     mSpriteIndex = 0;
     mTicsPerFrame = 2;
     mRemainingTicsThisFrame = 2;
-    mActiveSprite = activeSprite;
+    mActiveSprite = &activeSprite;
     repeat = true;
 
     switch (type)
