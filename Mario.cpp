@@ -179,22 +179,20 @@ void Mario::onCollision(const Collision& collision)
             auto spriteRight = getRight();
             auto newSpriteRight = collision.xIntersection;
             const auto delta = newSpriteRight - spriteRight;
-            addPositionDelta(0, delta);
+            addPositionDelta(delta, 0);
             setVelocity(sf::Vector2f(0, getVelocity().y));
         }
         else if (collision.side == EntitySide::LEFT)
         {
-            auto spriteLeft= getLeft();
-            auto newSpriteLeft= collision.xIntersection;
+            auto spriteLeft = getLeft();
+            auto newSpriteLeft = collision.xIntersection;
             const auto delta = newSpriteLeft - spriteLeft;
-            addPositionDelta(0, delta);
+            addPositionDelta(delta, 0);
             setVelocity(sf::Vector2f(0, getVelocity().y));
             mDeltaP.x = 0;
         }
     }
 }
-
-
 
 void Mario::die()
 {
