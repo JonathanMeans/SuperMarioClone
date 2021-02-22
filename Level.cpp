@@ -84,12 +84,12 @@ void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
         velocity.y = -5;
     }
 
-    if (currentInput.right.pressedThisFrame())
+    if (currentInput.right.keyIsDown)
     {
         if (!currentInput.left.keyIsDown)
             acceleration.x = 1;
     }
-    if (currentInput.left.pressedThisFrame())
+    if (currentInput.left.keyIsDown)
     {
         if (!currentInput.right.keyIsDown)
             acceleration.x = -1;
