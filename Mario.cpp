@@ -182,6 +182,7 @@ void Mario::onCollision(const Collision& collision)
             const auto delta = newSpriteRight - spriteRight;
             addPositionDelta(delta, 0);
             setVelocity(sf::Vector2f(0, getVelocity().y));
+            mAcceleration.x = 0;
         }
         else if (collision.side == EntitySide::LEFT)
         {
@@ -190,7 +191,7 @@ void Mario::onCollision(const Collision& collision)
             const auto delta = newSpriteLeft - spriteLeft;
             addPositionDelta(delta, 0);
             setVelocity(sf::Vector2f(0, getVelocity().y));
-            mDeltaP.x = 0;
+            mAcceleration.x = 0;
         }
     }
 }
