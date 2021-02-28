@@ -12,7 +12,8 @@ enum class EntityType
 {
     GOOMBA,
     MARIO,
-    PIPE
+    PIPE,
+    BLOCK
 };
 
 std::string convertSideToString(EntitySide side);
@@ -58,7 +59,6 @@ public:
     void setAcceleration(const sf::Vector2f& newAcceleration);
     void updatePosition();
     void addPositionDelta(float deltaX, float deltaY);
-    virtual bool collideWithGround(float groundY);
 
     void updateAnimation();
     void draw(sf::RenderWindow& window) const;
@@ -81,7 +81,7 @@ public:
 
     [[nodiscard]] EntityType getType() const;
 
-    bool collideWithEnemy(std::vector<std::unique_ptr<Entity>>& enemies);
+    bool collideWithEntity(std::vector<std::unique_ptr<Entity>>& enemies);
 
     virtual void setPosition(float x, float y);
 

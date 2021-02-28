@@ -1,8 +1,5 @@
 #include "SpriteMaker.h"
-#include "Mario.h"
-#include "Pipe.h"
 
-#include <cassert>
 #include <iostream>
 
 SpriteMaker::SpriteMaker(const std::string& resourcesDir)
@@ -30,4 +27,12 @@ SpriteMaker::SpriteMaker(const std::string& resourcesDir)
     }
     pipeTexture.setSmooth(false);
     pipeSprite.setTexture(pipeTexture);
+
+    if (!blockTexture.loadFromFile(resourcesDir + "inanimate objects.png"))
+    {
+        std::cerr << "Error Loading Texture";
+        throw std::runtime_error("Unable to load objects texture");
+    }
+    blockTexture.setSmooth(false);
+    blockSprite.setTexture(blockTexture);
 }

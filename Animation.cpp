@@ -53,6 +53,9 @@ void Animation::load(AnimationType type, sf::Sprite& activeSprite)
     case AnimationType::PIPE:
         generateRectangles(1, 0, 129, 32, 32, 32);
         break;
+
+    case AnimationType::BLOCK:
+        generateRectangles(1, 0, 0, 16, 0, 16);
     }
 }
 

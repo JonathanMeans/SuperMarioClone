@@ -22,6 +22,7 @@ enum class AnimationType
 
     MARIO_DEATH,
     PIPE,
+    BLOCK
 };
 
 class Animation

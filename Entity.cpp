@@ -182,7 +182,7 @@ void Entity::onCollision(const Collision& collision)
     (void)collision;
 }
 
-bool Entity::collideWithEnemy(std::vector<std::unique_ptr<Entity>>& enemies)
+bool Entity::collideWithEntity(std::vector<std::unique_ptr<Entity>>& enemies)
 {
     for (auto& enemy : enemies)
     {
@@ -282,21 +282,6 @@ void Entity::setAcceleration(const sf::Vector2f& acceleration)
 
         mAcceleration = acceleration;
     }
-}
-
-bool Entity::collideWithGround(float groundY)
-{
-    auto spriteBottom = getBottom();
-    if (spriteBottom <= groundY)
-        return false;
-    while (spriteBottom > groundY)
-    {
-        addPositionDelta(0, -1);
-        const auto currentVelocity = getVelocity();
-        setVelocity(sf::Vector2f(currentVelocity.x, 0));
-        spriteBottom = getBottom();
-    }
-    return true;
 }
 
 const Hitbox& Entity::getHitbox() const

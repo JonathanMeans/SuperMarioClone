@@ -19,6 +19,9 @@ public:
 
     sf::Texture pipeTexture;
     sf::Sprite pipeSprite;
+
+    sf::Texture blockTexture;
+    sf::Sprite blockSprite;
 };
 
 #endif  // SUPERMARIOBROS_SPRITEMAKER_H

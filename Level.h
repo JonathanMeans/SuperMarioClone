@@ -15,8 +15,7 @@ public:
      * Current, the Level has ownership of Mario and the entities
      */
     Level(std::unique_ptr<Mario> mario,
-          std::vector<std::unique_ptr<Entity>>&& entities,
-          float groundHeight);
+          std::vector<std::unique_ptr<Entity>>&& entities);
 
     void setMarioMovementFromController(const KeyboardInput& currentInput);
 
@@ -34,7 +33,7 @@ private:
      * Ground height is a large arbitrary number so that Mario and all other
      * entities on the screen are considered above the ground
      * */
-    float mGroundHeight;
+//    float mGroundHeight;
 };
 
 #endif  // SUPERMARIOBROS_LEVEL_H

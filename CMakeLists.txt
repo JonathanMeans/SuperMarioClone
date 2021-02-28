@@ -24,7 +24,7 @@ endif ()
 enable_testing()
 
 add_library(MarioLib Animation.cpp file_util.cpp Entity.cpp Entity.h SpriteMaker.cpp SpriteMaker.h Utils.cpp Utils.h Hitbox.cpp Hitbox.h Timer.cpp Timer.h Pipe.cpp Pipe.h
-        Mario.cpp Goomba.cpp Level.cpp Level.h)
+        Mario.cpp Goomba.cpp Level.cpp Level.h Block.cpp Block.h)
 target_include_directories(MarioLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(MarioLib PRIVATE -Wall -Wextra -Werror)
 target_link_libraries(MarioLib sfml-window sfml-graphics)

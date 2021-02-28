@@ -1,12 +1,10 @@
 #include "Level.h"
 
-#include <utility>
 #include <cmath>
 
-Level::Level(std::unique_ptr<Mario> mario, std::vector<std::unique_ptr<Entity>>&& entities, float groundHeight) :
+Level::Level(std::unique_ptr<Mario> mario, std::vector<std::unique_ptr<Entity>>&& entities) :
     mMario(std::move(mario)),
-    mEntities(std::move(entities)),
-    mGroundHeight(groundHeight)
+    mEntities(std::move(entities))
 {
 }
 
@@ -22,22 +20,16 @@ void Level::executeFrame(const KeyboardInput& input)
         entity->mDeltaP.y = 0;
     }
 
-    (void) input;
     setMarioMovementFromController(input);
     mMario->updatePosition();
-    mMario->collideWithGround(mGroundHeight);
 
 
     for (auto& entity : mEntities)
     {
         entity->updatePosition();
     }
-    for (auto& entity : mEntities)
-    {
-        entity->collideWithGround(mGroundHeight);
-    }
 
-    mMario->collideWithEnemy(mEntities);
+    mMario->collideWithEntity(mEntities);
 
     mMario->updateAnimation();
 
@@ -79,7 +71,7 @@ void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
 
     sf::Vector2f acceleration = mMario->getAcceleration();
     sf::Vector2f velocity = mMario->getVelocity();
-    if (currentInput.A.pressedThisFrame()) {
+    if (currentInput.A.pressedThisFrame() && velocity.y == 0) {
         if (std::fabs(velocity.x) < 37.0/16.0) {
             velocity.y = -4.0;
         } else {

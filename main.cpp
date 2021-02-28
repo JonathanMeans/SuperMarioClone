@@ -1,5 +1,6 @@
 #include <file_util.h>
 
+#include "Block.h"
 #include "Goomba.h"
 #include "Input.h"
 #include "Level.h"
@@ -42,6 +43,8 @@ int main(int argc, char* argv[])
     window.clear();
 
     SpriteMaker spriteMaker(resourceDir);
+    std::vector<std::unique_ptr<Entity>> entities(23);
+
     std::unique_ptr<Mario> mario(new Mario(spriteMaker.marioSprite, {30, 100}));
     std::unique_ptr<Goomba> goomba(
             new Goomba(spriteMaker.goombaSprite, {150, 50}));
@@ -50,13 +53,15 @@ int main(int argc, char* argv[])
     std::unique_ptr<Pipe> rightPipe(
             new Pipe(spriteMaker.pipeSprite, {-10, 100}));
 
-    std::vector<std::unique_ptr<Entity>> entities(3);
     entities[0] = std::move(leftPipe);
     entities[1] = std::move(rightPipe);
     entities[2] = std::move(goomba);
 
-    float groundHeight = mario->getTop() + 20;
-    Level level(std::move(mario), std::move(entities), groundHeight);
+    for (int i = 0; i < 20; i++) {
+        entities[3 + i] = std::make_unique<Block>(spriteMaker.blockSprite, sf::Vector2f(i * 16, 132));
+    }
+
+    Level level(std::move(mario), std::move(entities));
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};

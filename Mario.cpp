@@ -128,20 +128,6 @@ void Mario::jump()
     }
 }
 
-bool Mario::collideWithGround(float groundY)
-{
-    if (!mIsDead)
-    {
-        bool atGround = Entity::collideWithGround(groundY);
-        if (atGround)
-        {
-            setJumping(false);
-        }
-        return atGround;
-    }
-    return false;
-}
-
 void Mario::onCollision(const Collision& collision)
 {
     // collision's side is referring to the side of Mario that collided
