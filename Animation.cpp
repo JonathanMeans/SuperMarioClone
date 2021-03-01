@@ -73,16 +73,16 @@ void Animation::generateStaticAnimation(size_t xOffset,
 }
 
 void Animation::generateRectangles(size_t numRectangles,
-                                   size_t initialOffset,
+                                   size_t xOffset,
                                    size_t yOffset,
                                    size_t rectHeight,
-                                   size_t rectXOffset,
+                                   size_t pixelsBetweenFrames,
                                    size_t rectWidth)
 {
     mActionRectangles.resize(numRectangles);
     for (size_t ii = 0; ii < numRectangles; ++ii)
     {
-        mActionRectangles[ii] = sf::IntRect(initialOffset + (rectXOffset * ii),
+        mActionRectangles[ii] = sf::IntRect(xOffset + (pixelsBetweenFrames* ii),
                                             yOffset,
                                             rectWidth,
                                             rectHeight);
