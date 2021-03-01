@@ -31,6 +31,7 @@ class Entity
 {
 public:
     static const float NO_MAX_VELOCITY_VALUE;
+    static const float MAX_FALLING_VELOCITY;
 
     Entity(sf::Sprite sprite,
            size_t spriteWidth,

@@ -79,6 +79,7 @@ bool isEnemy(EntityType type)
 }
 
 const float Entity::NO_MAX_VELOCITY_VALUE = -1;
+const float Entity::MAX_FALLING_VELOCITY = 4.5;
 
 Entity::Entity(sf::Sprite sprite,
                size_t spriteWidth,
@@ -324,7 +325,7 @@ void Entity::updatePosition()
             mVelocity.x = -mMaxVelocity;
     }
 
-    if (mVelocity.y > 4.5) mVelocity.y = 4.5;
+    if (mVelocity.y > MAX_FALLING_VELOCITY) mVelocity.y = MAX_FALLING_VELOCITY;
 
     addPositionDelta(mVelocity.x, mVelocity.y);
 }
