@@ -1,15 +1,15 @@
 #include <file_util.h>
 
-#include "Block.h"
-#include "Goomba.h"
+#include "entities/Goomba.h"
 #include "Input.h"
 #include "Level.h"
-#include "Mario.h"
-#include "Pipe.h"
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "SpriteMaker.h"
 #include "Timer.h"
+#include "entities/Block.h"
+#include "entities/Mario.h"
+#include "entities/Pipe.h"
 
 void updateInputState(KeyboardInputState& currentState,
                       const KeyboardInputState& previousState,

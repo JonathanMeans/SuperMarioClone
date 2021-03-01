@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
-#include "Goomba.h"
+#include "entities/Goomba.h"
 #include "Level.h"
-#include "Mario.h"
-#include "Pipe.h"
 #include "SpriteMaker.h"
+#include "entities/Mario.h"
+#include "entities/Pipe.h"
 #include "file_util.h"
 
 SpriteMaker* gSpriteMaker;
@@ -31,18 +31,6 @@ protected:
 };
 }
 
-TEST_F(EntityCollisionTest, MarioFallsToGround)
-{
-    std::unique_ptr<Mario> mario(
-            new Mario(gSpriteMaker->marioSprite, {0, 100}));
-    Level level(std::move(mario), {}, 500.0);
-    for (int i = 0; i < 100; ++i)
-    {
-        level.executeFrame({});
-    }
-    EXPECT_EQ(500.f, level.getMario().getBottom());
-}
-
 TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 {
     // TODO: Better interface
@@ -54,7 +42,7 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 
     EXPECT_EQ(116.f, mario->getBottom());
 
-    Level level(std::move(mario), std::move(pipes), 500.0);
+    Level level(std::move(mario), std::move(pipes));
     for (int i = 0; i < 100; ++i)
     {
         level.executeFrame({});
@@ -72,7 +60,6 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     // verify we're still on top of pipe
     EXPECT_EQ(200.f, level.getMario().getBottom());
     EXPECT_GT(level.getMario().getRight(), 0.f);
-
 }
 
 int main(int argc, char** argv)

@@ -1,9 +1,9 @@
-#include <Goomba.h>
-#include <Pipe.h>
 #include <SpriteMaker.h>
+#include <entities/Goomba.h>
+#include <entities/Pipe.h>
 #include <file_util.h>
 #include <gtest/gtest.h>
-#include "Mario.h"
+#include "entities/Mario.h"
 
 extern SpriteMaker* gSpriteMaker;
 
@@ -40,9 +40,8 @@ TEST(EntityTest, CanGetPositionOfHitboxBoundaries)
     std::unique_ptr<Mario> mario(
             new Mario(gSpriteMaker->marioSprite, {20, 50}));
     const auto hitbox = mario->getHitbox();
-    EXPECT_EQ(hitbox.getLeft(), 24);
-    EXPECT_EQ(hitbox.getRight(), 32);
-    EXPECT_EQ(hitbox.getTop(), 55);
+    EXPECT_EQ(hitbox.getLeft(), 20);
+    EXPECT_EQ(hitbox.getRight(), 36);
+    EXPECT_EQ(hitbox.getTop(), 50);
     EXPECT_EQ(hitbox.getBottom(), 66);
-
 }

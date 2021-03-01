@@ -2,7 +2,7 @@
 #define SUPERMARIOBROS_LEVEL_H
 
 #include "Input.h"
-#include "Mario.h"
+#include "entities/Mario.h"
 
 /*
  * Encapsulates the game logic and entities for a single level.
