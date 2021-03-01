@@ -43,16 +43,11 @@ private:
     std::vector<sf::IntRect> mActionRectangles;
     sf::Sprite* mActiveSprite = nullptr;
 
-    /*
-     * pixelsBetweenFrames can be different than rectWidth
-     * because in some spritesheets there is a 1-pixel border
-     * between frames
-     */
     void generateRectangles(size_t numRectangles,
                             size_t xOffset,
                             size_t yOffset,
                             size_t rectHeight,
-                            size_t pixelsBetweenFrames,
+                            size_t frameBorder,
                             size_t rectWidth);
 
     void generateStaticAnimation(size_t xOffset, size_t yOffset, size_t width, size_t height);

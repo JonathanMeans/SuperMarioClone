@@ -20,10 +20,10 @@ void Animation::load(AnimationType type, sf::Sprite& activeSprite)
     switch (type)
     {
     case AnimationType::WALKING:
-        generateRectangles(4, 80, 34, 16, 17, 16);
+        generateRectangles(4, 80, 34, 16, 1, 16);
         break;
     case AnimationType::JUMPING:
-        generateRectangles(2, 148, 34, 16, 17, 16);
+        generateRectangles(2, 148, 34, 16, 1, 16);
         repeat = false;
         break;
     case AnimationType::STANDING:
@@ -31,10 +31,10 @@ void Animation::load(AnimationType type, sf::Sprite& activeSprite)
         break;
 
     case AnimationType::BIG_WALKING:
-        generateRectangles(4, 80, 1, 32, 17, 16);
+        generateRectangles(4, 80, 1, 32, 1, 16);
         break;
     case AnimationType ::BIG_JUMPING:
-        generateRectangles(2, 148, 1, 32, 17, 16);
+        generateRectangles(2, 148, 1, 32, 1, 16);
         repeat = false;
         break;
     case AnimationType::BIG_STANDING:
@@ -42,17 +42,17 @@ void Animation::load(AnimationType type, sf::Sprite& activeSprite)
         break;
 
     case AnimationType::GOOMBA_WALKING:
-        generateRectangles(2, 0, 16, 16, 16, 16);
+        generateRectangles(2, 0, 16, 16, 0, 16);
         mTicsPerFrame = 4;
         mRemainingTicsThisFrame = 4;
         break;
 
     case AnimationType::GOOMBA_DEATH:
-        generateRectangles(1, 32, 16, 16, 16, 16);
+        generateRectangles(1, 32, 16, 16, 0, 16);
         break;
 
     case AnimationType::MARIO_DEATH:
-        generateRectangles(1, 182, 34, 16, 16, 16);
+        generateRectangles(1, 182, 34, 16, 0, 16);
         break;
 
     case AnimationType::PIPE:
@@ -76,16 +76,17 @@ void Animation::generateRectangles(size_t numRectangles,
                                    size_t xOffset,
                                    size_t yOffset,
                                    size_t rectHeight,
-                                   size_t pixelsBetweenFrames,
+                                   size_t frameBorder,
                                    size_t rectWidth)
 {
     mActionRectangles.resize(numRectangles);
     for (size_t ii = 0; ii < numRectangles; ++ii)
     {
-        mActionRectangles[ii] = sf::IntRect(xOffset + (pixelsBetweenFrames* ii),
-                                            yOffset,
-                                            rectWidth,
-                                            rectHeight);
+        mActionRectangles[ii] =
+                sf::IntRect(xOffset + ((rectWidth + frameBorder) * ii),
+                            yOffset,
+                            rectWidth,
+                            rectHeight);
     }
 
     mActiveSprite->setTextureRect(mActionRectangles[0]);
