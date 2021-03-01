@@ -82,7 +82,7 @@ public:
 
     [[nodiscard]] EntityType getType() const;
 
-    bool collideWithEntity(std::vector<std::unique_ptr<Entity>>& enemies);
+    bool collideWithEntity(std::vector<std::unique_ptr<Entity>>& entities);
 
     virtual void setPosition(float x, float y);
 

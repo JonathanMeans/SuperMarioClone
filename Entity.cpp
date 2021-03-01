@@ -137,7 +137,7 @@ std::optional<Collision> Entity::detectCollision(const Entity& other) const
     if (lhsLeftEdge < eRightEdge && lhsRightEdge > eLeftEdge &&
         lhsTopEdge < eBottomEdge && lhsBottomEdge > eTopEdge)
     {
-        sf::Vector2f enemyEdge1, enemyEdge2;
+        sf::Vector2f entityEdge1, entityEdge2;
         for (const auto& corner : CORNERS)
         {
             sf::Vector2f marioPathEnd;
@@ -148,13 +148,13 @@ std::optional<Collision> Entity::detectCollision(const Entity& other) const
 
             for (const auto& side : SIDES)
             {
-                other.getHitboxSide(side, true, enemyEdge1, enemyEdge2);
+                other.getHitboxSide(side, true, entityEdge1, entityEdge2);
                 if (Utils::IsIntersecting(marioPathStart,
                                           marioPathEnd,
-                                          enemyEdge1,
-                                          enemyEdge2))
+                                          entityEdge1,
+                                          entityEdge2))
                 {
-                    // We've detected which side of the enemy we're hitting
+                    // We've detected which side of the entity we're hitting
                     // Invert it to get which side of Mario is colliding
                     float xIntersection = 0.f;
                     if (side == EntitySide::LEFT)
@@ -183,11 +183,11 @@ void Entity::onCollision(const Collision& collision)
     (void)collision;
 }
 
-bool Entity::collideWithEntity(std::vector<std::unique_ptr<Entity>>& enemies)
+bool Entity::collideWithEntity(std::vector<std::unique_ptr<Entity>>& entities)
 {
-    for (auto& enemy : enemies)
+    for (auto& entity : entities)
     {
-        const auto possibleCollision = detectCollision(*enemy);
+        const auto possibleCollision = detectCollision(*entity);
         if (possibleCollision.has_value())
         {
             const auto collision = possibleCollision.value();
@@ -195,10 +195,10 @@ bool Entity::collideWithEntity(std::vector<std::unique_ptr<Entity>>& enemies)
                                   collision.entityType,
                                   collision.yIntersection,
                                   collision.xIntersection});
-            enemy->onCollision(Collision{oppositeSide(collision.side),
-                                         this->getType(),
-                                         collision.yIntersection,
-                                         collision.xIntersection});
+            entity->onCollision(Collision{oppositeSide(collision.side),
+                                          this->getType(),
+                                          collision.yIntersection,
+                                          collision.xIntersection});
 
             return true;
         }
@@ -325,7 +325,8 @@ void Entity::updatePosition()
             mVelocity.x = -mMaxVelocity;
     }
 
-    if (mVelocity.y > MAX_FALLING_VELOCITY) mVelocity.y = MAX_FALLING_VELOCITY;
+    if (mVelocity.y > MAX_FALLING_VELOCITY)
+        mVelocity.y = MAX_FALLING_VELOCITY;
 
     addPositionDelta(mVelocity.x, mVelocity.y);
 }
