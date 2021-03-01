@@ -324,6 +324,8 @@ void Entity::updatePosition()
             mVelocity.x = -mMaxVelocity;
     }
 
+    if (mVelocity.y > 4.5) mVelocity.y = 4.5;
+
     addPositionDelta(mVelocity.x, mVelocity.y);
 }
 

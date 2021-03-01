@@ -33,9 +33,8 @@ protected:
 
 TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 {
-    // TODO: Better interface
     std::unique_ptr<Mario> mario(
-            new Mario(gSpriteMaker->marioSprite, {0, 100}));
+            new Mario(gSpriteMaker->marioSprite, {5, 100}));
     std::unique_ptr<Entity> pipe(new Pipe(gSpriteMaker->pipeSprite, {0, 200}));
     std::vector<std::unique_ptr<Entity>> pipes(1);
     pipes[0] = std::move(pipe);
@@ -60,6 +59,25 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
     // verify we're still on top of pipe
     EXPECT_EQ(200.f, level.getMario().getBottom());
     EXPECT_GT(level.getMario().getRight(), 0.f);
+}
+
+// Known failure
+TEST_F(EntityCollisionTest, MarioCanStandOnEdgeOfPipe)
+{
+    std::unique_ptr<Mario> mario(
+            new Mario(gSpriteMaker->marioSprite, {0, 100}));
+    std::unique_ptr<Entity> pipe(new Pipe(gSpriteMaker->pipeSprite, {0, 200}));
+    std::vector<std::unique_ptr<Entity>> pipes(1);
+    pipes[0] = std::move(pipe);
+
+    EXPECT_EQ(116.f, mario->getBottom());
+
+    Level level(std::move(mario), std::move(pipes));
+    for (int i = 0; i < 100; ++i)
+    {
+        level.executeFrame({});
+    }
+    EXPECT_EQ(200.f, level.getMario().getBottom());
 }
 
 int main(int argc, char** argv)
