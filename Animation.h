@@ -49,6 +49,7 @@ private:
                             size_t rectHeight,
                             size_t rectXOffset,
                             size_t rectWidth);
+    void generateStaticAnimation(size_t xOffset, size_t yOffset, size_t width, size_t height);
 };
 
 #endif  // SUPERMARIOBROS_ANIMATION_H

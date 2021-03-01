@@ -4,6 +4,11 @@
 
 Animation::Animation() = default;
 
+/*
+ * TODO: Consider builder pattern, e.g.
+ * AnimationBuilder().repeatingAnimation(num_frames=4).withOffset(xOffset,
+ * yOffset).withRectWidth(16).build(sprite);
+ */
 void Animation::load(AnimationType type, sf::Sprite& activeSprite)
 {
     mSpriteIndex = 0;
@@ -22,7 +27,7 @@ void Animation::load(AnimationType type, sf::Sprite& activeSprite)
         repeat = false;
         break;
     case AnimationType::STANDING:
-        generateRectangles(1, 80, 34, 16, 17, 16);
+        generateStaticAnimation(80, 34, 16, 16);
         break;
 
     case AnimationType::BIG_WALKING:
@@ -33,7 +38,7 @@ void Animation::load(AnimationType type, sf::Sprite& activeSprite)
         repeat = false;
         break;
     case AnimationType::BIG_STANDING:
-        generateRectangles(1, 80, 1, 32, 17, 16);
+        generateStaticAnimation(80, 1, 16, 32);
         break;
 
     case AnimationType::GOOMBA_WALKING:
@@ -51,12 +56,20 @@ void Animation::load(AnimationType type, sf::Sprite& activeSprite)
         break;
 
     case AnimationType::PIPE:
-        generateRectangles(1, 0, 129, 32, 32, 32);
+        generateStaticAnimation(0, 129, 32, 32);
         break;
 
     case AnimationType::BLOCK:
-        generateRectangles(1, 0, 0, 16, 0, 16);
+        generateStaticAnimation(0, 0, 16, 16);
     }
+}
+
+void Animation::generateStaticAnimation(size_t xOffset,
+                                        size_t yOffset,
+                                        size_t width,
+                                        size_t height)
+{
+    generateRectangles(1, xOffset, yOffset, height, 0, width);
 }
 
 void Animation::generateRectangles(size_t numRectangles,
