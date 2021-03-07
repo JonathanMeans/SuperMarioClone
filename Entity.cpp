@@ -3,7 +3,6 @@
 #include <utility>
 
 #include "SFML/Graphics.hpp"
-#include "Utils.h"
 
 namespace
 {
@@ -125,55 +124,41 @@ EntityType Entity::getType() const
 
 std::optional<Collision> Entity::detectCollision(const Entity& other) const
 {
-    float lhsTopEdge = getTop() + mHitbox.mUpperLeftOffset.y;
-    float lhsBottomEdge = lhsTopEdge + mHitbox.mSize.y;
-    float lhsLeftEdge = getLeft() + mHitbox.mUpperLeftOffset.x;
-    float lhsRightEdge = lhsLeftEdge + mHitbox.mSize.x;
+    const auto currentPosition = this->mActiveSprite.getPosition();
+    const auto originalPosition = currentPosition - this->mDeltaP;
+    const auto newXPosition =
+            originalPosition + sf::Vector2f{this->mDeltaP.x, 0};
+    const auto newYPosition =
+            originalPosition + sf::Vector2f{0, this->mDeltaP.y};
 
     float eTopEdge = other.getTop();
     float eLeftEdge = other.getLeft();
     float eRightEdge = eLeftEdge + other.getWidth();
     float eBottomEdge = eTopEdge + other.getHeight();
-    if (lhsLeftEdge < eRightEdge && lhsRightEdge > eLeftEdge &&
-        lhsTopEdge < eBottomEdge && lhsBottomEdge > eTopEdge)
+
+    if (mHitbox.collidesWith(newXPosition,
+                             other.getHitbox(),
+                             {other.getLeft(), other.getTop()}))
     {
-        sf::Vector2f entityEdge1, entityEdge2;
-        for (const auto& corner : CORNERS)
-        {
-            sf::Vector2f marioPathEnd;
-            getHitboxCorner(corner, marioPathEnd);
-
-            // Subtract the recorded mDeltaP to get original position this frame
-            const auto marioPathStart = marioPathEnd - mDeltaP;
-
-            for (const auto& side : SIDES)
-            {
-                other.getHitboxSide(side, true, entityEdge1, entityEdge2);
-                if (Utils::IsIntersecting(marioPathStart,
-                                          marioPathEnd,
-                                          entityEdge1,
-                                          entityEdge2))
-                {
-                    // We've detected which side of the entity we're hitting
-                    // Invert it to get which side of Mario is colliding
-                    float xIntersection = 0.f;
-                    if (side == EntitySide::LEFT)
-                    {
-                        xIntersection = eLeftEdge;
-                    }
-                    else if (side == EntitySide ::RIGHT)
-                    {
-                        xIntersection = eRightEdge;
-                    }
-                    return std::optional<Collision>{
-                            Collision{oppositeSide(side),
-                                      other.getType(),
-                                      eTopEdge,
-                                      xIntersection}};
-                }
-            }
-        }
+        return std::optional<Collision>{Collision{
+                mDeltaP.x > 0 ? EntitySide::RIGHT : EntitySide::LEFT,
+                other.getType(),
+                0,
+                mDeltaP.x > 0 ? eLeftEdge : eRightEdge,
+        }};
     }
+    if (mHitbox.collidesWith(newYPosition,
+                             other.getHitbox(),
+                             {other.getLeft(), other.getTop()}))
+    {
+        return std::optional<Collision>{Collision{
+                mDeltaP.y > 0 ? EntitySide::BOTTOM : EntitySide::TOP,
+                other.getType(),
+                mDeltaP.y > 0 ? eTopEdge : eBottomEdge,
+                0,
+        }};
+    }
+
     return {};
 }
 

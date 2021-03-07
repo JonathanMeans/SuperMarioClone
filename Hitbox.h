@@ -36,6 +36,10 @@ public:
     [[nodiscard]] float getLeft(const sf::Vector2f& entityPosition) const;
     [[nodiscard]] float getRight(const sf::Vector2f& entityPosition) const;
 
+    [[nodiscard]] bool collidesWith(const sf::Vector2f& thisPosition,
+                                    const Hitbox& other,
+                                    const sf::Vector2f& otherPosition) const;
+
     void getCorner(const EntityCorner& corner,
                    const sf::Vector2f& entityPosition,
                    sf::Vector2f& point) const;
@@ -44,7 +48,8 @@ public:
                  const sf::Vector2f& entityPosition,
                  sf::Vector2f& p1,
                  sf::Vector2f& p2) const;
-    void draw(sf::RenderWindow& window, const sf::Vector2f& entityPosition) const;
+    void draw(sf::RenderWindow& window,
+              const sf::Vector2f& entityPosition) const;
 
     sf::Vector2f mSize;
     sf::Vector2f mUpperLeftOffset;

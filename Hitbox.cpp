@@ -2,8 +2,7 @@
 #include "Entity.h"
 #include "SFML/Graphics.hpp"
 
-Hitbox::Hitbox(sf::Vector2f size,
-               sf::Vector2f upperLeftOffset) :
+Hitbox::Hitbox(sf::Vector2f size, sf::Vector2f upperLeftOffset) :
     mSize(size),
     mUpperLeftOffset(upperLeftOffset)
 {
@@ -16,6 +15,24 @@ Hitbox& Hitbox::operator=(const Hitbox& other)
     mUpperLeftOffset = other.mUpperLeftOffset;
     mSize = other.mSize;
     return *this;
+}
+
+bool Hitbox::collidesWith(const sf::Vector2f& thisPosition,
+                          const Hitbox& other,
+                          const sf::Vector2f& otherPosition) const
+{
+    const auto thisLeft = this->getLeft(thisPosition);
+    const auto thisRight = this->getRight(thisPosition);
+    const auto thisTop = this->getTop(thisPosition);
+    const auto thisBottom = this->getBottom(thisPosition);
+
+    const auto otherRight = other.getRight(otherPosition);
+    const auto otherLeft = other.getLeft(otherPosition);
+    const auto otherTop = other.getTop(otherPosition);
+    const auto otherBottom = other.getBottom(otherPosition);
+
+    return (thisLeft < otherRight && thisRight > otherLeft &&
+            thisTop < otherBottom && thisBottom > otherTop);
 }
 
 Hitbox::Hitbox(const Hitbox& copy) = default;
@@ -92,7 +109,8 @@ void Hitbox::getSide(const EntitySide& side,
         p1.y = getTop(entityPosition);
         p2.y = getTop(entityPosition);
 
-        if (extendEdges) {
+        if (extendEdges)
+        {
             p1.x -= 1000;
             p2.x += 1000;
         }
@@ -142,7 +160,8 @@ void Hitbox::getSide(const EntitySide& side,
     }
 }
 
-void Hitbox::draw(sf::RenderWindow& window, const sf::Vector2f& entityPosition) const
+void Hitbox::draw(sf::RenderWindow& window,
+                  const sf::Vector2f& entityPosition) const
 {
     sf::RectangleShape rectangle(sf::Vector2f(mSize.x, mSize.y));
     rectangle.setFillColor(sf::Color(150, 50, 250));

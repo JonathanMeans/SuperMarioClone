@@ -2,10 +2,6 @@
 #include "Animation.h"
 #include "Hitbox.h"
 #include "Timer.h"
-#include "Utils.h"
-
-#include <iostream>
-#include <memory>
 
 Mario::Mario(const sf::Sprite& sprite, const sf::Vector2f& position) :
     Entity(sprite,
