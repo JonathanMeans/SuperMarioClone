@@ -24,30 +24,30 @@ enum class EntityCorner
 class Hitbox
 {
 public:
-    Hitbox(Entity& entity, sf::Vector2f size, sf::Vector2f upperLeftOffset);
+    Hitbox(sf::Vector2f size, sf::Vector2f upperLeftOffset);
     Hitbox(const Hitbox& copy);
 
     Hitbox& operator=(const Hitbox& other);
 
     void invalidate();
 
-    [[nodiscard]] float getBottom() const;
-    [[nodiscard]] float getTop() const;
-    [[nodiscard]] float getLeft() const;
-    [[nodiscard]] float getRight() const;
+    [[nodiscard]] float getBottom(const sf::Vector2f& entityPosition) const;
+    [[nodiscard]] float getTop(const sf::Vector2f& entityPosition) const;
+    [[nodiscard]] float getLeft(const sf::Vector2f& entityPosition) const;
+    [[nodiscard]] float getRight(const sf::Vector2f& entityPosition) const;
 
     void getCorner(const EntityCorner& corner,
+                   const sf::Vector2f& entityPosition,
                    sf::Vector2f& point) const;
     void getSide(const EntitySide& side,
                  bool extendEdges,
+                 const sf::Vector2f& entityPosition,
                  sf::Vector2f& p1,
                  sf::Vector2f& p2) const;
-    void draw(sf::RenderWindow& window) const;
+    void draw(sf::RenderWindow& window, const sf::Vector2f& entityPosition) const;
 
     sf::Vector2f mSize;
     sf::Vector2f mUpperLeftOffset;
-    Entity& mEntity;
-
 };
 
 #endif  // SUPERMARIOBROS_HITBOX_H

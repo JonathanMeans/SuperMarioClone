@@ -5,7 +5,7 @@ Goomba::Goomba(const sf::Sprite& sprite, const sf::Vector2f& position) :
     Entity(sprite,
            16,
            16,
-           Hitbox(*this, {8, 5}, {4, 7}),
+           Hitbox({8, 5}, {4, 7}),
            EntityType::GOOMBA,
            position)
 {
