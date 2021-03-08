@@ -43,16 +43,17 @@ TEST_F(HitboxTest, InvalidateHitbox)
 TEST_F(HitboxTest, GetCorner)
 {
     sf::Vector2f points = {};
-    hitbox->getCorner(EntityCorner::UPPER_RIGHT, points);
+    const auto entityPosition = sf::Vector2f(mario->getLeft(), mario->getTop());
+    hitbox->getCorner(EntityCorner::UPPER_RIGHT, entityPosition, points);
     EXPECT_EQ(points.x, 36);
     EXPECT_EQ(points.y, 50);
-    hitbox->getCorner(EntityCorner::UPPER_LEFT, points);
+    hitbox->getCorner(EntityCorner::UPPER_LEFT, entityPosition, points);
     EXPECT_EQ(points.x, 20);
     EXPECT_EQ(points.y, 50);
-    hitbox->getCorner(EntityCorner::LOWER_LEFT, points);
+    hitbox->getCorner(EntityCorner::LOWER_LEFT, entityPosition, points);
     EXPECT_EQ(points.x, 20);
     EXPECT_EQ(points.y, 66);
-    hitbox->getCorner(EntityCorner::LOWER_RIGHT, points);
+    hitbox->getCorner(EntityCorner::LOWER_RIGHT, entityPosition, points);
     EXPECT_EQ(points.x, 36);
     EXPECT_EQ(points.y, 66);
 }
@@ -61,22 +62,23 @@ TEST_F(HitboxTest, getSide)
 {
     sf::Vector2f p1 = {};
     sf::Vector2f p2 = {};
-    hitbox->getSide(EntitySide::LEFT, false, p1, p2);
+    const auto entityPosition = sf::Vector2f(mario->getLeft(), mario->getTop());
+    hitbox->getSide(EntitySide::LEFT, false, entityPosition, p1, p2);
     EXPECT_EQ(p1.x, 20);
     EXPECT_EQ(p1.y, 50);
     EXPECT_EQ(p2.x, 20);
     EXPECT_EQ(p2.y, 66);
-    hitbox->getSide(EntitySide::RIGHT, false, p1, p2);
+    hitbox->getSide(EntitySide::RIGHT, false, entityPosition, p1, p2);
     EXPECT_EQ(p1.x, 36);
     EXPECT_EQ(p1.y, 50);
     EXPECT_EQ(p2.x, 36);
     EXPECT_EQ(p2.y, 66);
-    hitbox->getSide(EntitySide::TOP, false, p1, p2);
+    hitbox->getSide(EntitySide::TOP, false, entityPosition, p1, p2);
     EXPECT_EQ(p1.x, 20);
     EXPECT_EQ(p1.y, 50);
     EXPECT_EQ(p2.x, 36);
     EXPECT_EQ(p2.y, 50);
-    hitbox->getSide(EntitySide::BOTTOM, false, p1, p2);
+    hitbox->getSide(EntitySide::BOTTOM, false, entityPosition, p1, p2);
     EXPECT_EQ(p1.x, 20);
     EXPECT_EQ(p1.y, 66);
     EXPECT_EQ(p2.x, 36);
