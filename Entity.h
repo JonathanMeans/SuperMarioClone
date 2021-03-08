@@ -87,10 +87,11 @@ public:
     virtual void setPosition(float x, float y);
 
 protected:
-    [[nodiscard]] std::optional<Collision> detectCollision(
-            const Entity& other) const;
+    bool detectCollision(Entity& other);
 
     virtual void onCollision(const Collision& collision);
+
+    void handleCollision(Collision collision, Entity& entity);
 
     sf::Sprite mActiveSprite;
     sf::Vector2f mVelocity;
