@@ -124,7 +124,7 @@ EntityType Entity::getType() const
 
 bool Entity::detectCollision(Entity& other)
 {
-    const auto currentPosition = this->mActiveSprite.getPosition();
+    const auto currentPosition = sf::Vector2f(getLeft(), getTop());
     const auto originalPosition = currentPosition - this->mDeltaP;
     const auto newXPosition =
             originalPosition + sf::Vector2f{this->mDeltaP.x, 0};
