@@ -3,8 +3,14 @@
 
 Hitbox::Hitbox(sf::Vector2f size, sf::Vector2f upperLeftOffset) :
     mSize(size),
-    mUpperLeftOffset(upperLeftOffset)
+    mUpperLeftOffset(upperLeftOffset),
+    mEntityPosition({-1000, -1000})
 {
+}
+
+void Hitbox::setEntityPosition(const sf::Vector2f& newEntityPosition)
+{
+    mEntityPosition = newEntityPosition;
 }
 
 Hitbox& Hitbox::operator=(const Hitbox& other)
@@ -16,19 +22,17 @@ Hitbox& Hitbox::operator=(const Hitbox& other)
     return *this;
 }
 
-bool Hitbox::collidesWith(const sf::Vector2f& thisPosition,
-                          const Hitbox& other,
-                          const sf::Vector2f& otherPosition) const
+bool Hitbox::collidesWith(const Hitbox& other) const
 {
-    const auto thisLeft = this->getLeft(thisPosition);
-    const auto thisRight = this->getRight(thisPosition);
-    const auto thisTop = this->getTop(thisPosition);
-    const auto thisBottom = this->getBottom(thisPosition);
+    const auto thisLeft = this->getLeft();
+    const auto thisRight = this->getRight();
+    const auto thisTop = this->getTop();
+    const auto thisBottom = this->getBottom();
 
-    const auto otherRight = other.getRight(otherPosition);
-    const auto otherLeft = other.getLeft(otherPosition);
-    const auto otherTop = other.getTop(otherPosition);
-    const auto otherBottom = other.getBottom(otherPosition);
+    const auto otherRight = other.getRight();
+    const auto otherLeft = other.getLeft();
+    const auto otherTop = other.getTop();
+    const auto otherBottom = other.getBottom();
 
     return (thisLeft < otherRight && thisRight > otherLeft &&
             thisTop < otherBottom && thisBottom > otherTop);
@@ -42,54 +46,51 @@ void Hitbox::invalidate()
     mUpperLeftOffset = {-10000.f, -10000.f};
 }
 
-float Hitbox::getBottom(const sf::Vector2f& entityPosition) const
+float Hitbox::getBottom() const
 {
-    return getTop(entityPosition) + mSize.y;
+    return getTop() + mSize.y;
 }
 
-float Hitbox::getTop(const sf::Vector2f& entityPosition) const
+float Hitbox::getTop() const
 {
-    return entityPosition.y + mUpperLeftOffset.y;
+    return mEntityPosition.y + mUpperLeftOffset.y;
 }
 
-float Hitbox::getLeft(const sf::Vector2f& entityPosition) const
+float Hitbox::getLeft() const
 {
-    return entityPosition.x + mUpperLeftOffset.x;
+    return mEntityPosition.x + mUpperLeftOffset.x;
 }
 
-float Hitbox::getRight(const sf::Vector2f& entityPosition) const
+float Hitbox::getRight() const
 {
-    return getLeft(entityPosition) + mSize.x;
+    return getLeft() + mSize.x;
 }
 
-void Hitbox::getCorner(const EntityCorner& corner,
-                       const sf::Vector2f& entityPosition,
-                       sf::Vector2f& point) const
+void Hitbox::getCorner(const EntityCorner& corner, sf::Vector2f& point) const
 {
     switch (corner)
     {
     case EntityCorner::UPPER_LEFT:
-        point.x = getLeft(entityPosition);
-        point.y = getTop(entityPosition);
+        point.x = getLeft();
+        point.y = getTop();
         break;
     case EntityCorner::UPPER_RIGHT:
-        point.x = getRight(entityPosition);
-        point.y = getTop(entityPosition);
+        point.x = getRight();
+        point.y = getTop();
         break;
     case EntityCorner::LOWER_RIGHT:
-        point.x = getRight(entityPosition);
-        point.y = getBottom(entityPosition);
+        point.x = getRight();
+        point.y = getBottom();
         break;
     case EntityCorner::LOWER_LEFT:
-        point.x = getLeft(entityPosition);
-        point.y = getBottom(entityPosition);
+        point.x = getLeft();
+        point.y = getBottom();
         break;
     }
 }
 
 void Hitbox::getSide(const EntitySide& side,
                      bool extendEdges,
-                     const sf::Vector2f& entityPosition,
                      sf::Vector2f& p1,
                      sf::Vector2f& p2) const
 {
@@ -103,10 +104,10 @@ void Hitbox::getSide(const EntitySide& side,
     {
     case EntitySide::TOP:
     {
-        p1.x = getLeft(entityPosition);
-        p2.x = getRight(entityPosition);
-        p1.y = getTop(entityPosition);
-        p2.y = getTop(entityPosition);
+        p1.x = getLeft();
+        p2.x = getRight();
+        p1.y = getTop();
+        p2.y = getTop();
 
         if (extendEdges)
         {
@@ -117,10 +118,10 @@ void Hitbox::getSide(const EntitySide& side,
     }
     case EntitySide::RIGHT:
     {
-        p1.x = getRight(entityPosition);
-        p2.x = getRight(entityPosition);
-        p1.y = getTop(entityPosition);
-        p2.y = getBottom(entityPosition);
+        p1.x = getRight();
+        p2.x = getRight();
+        p1.y = getTop();
+        p2.y = getBottom();
 
         if (extendEdges)
         {
@@ -131,10 +132,10 @@ void Hitbox::getSide(const EntitySide& side,
     break;
     case EntitySide ::BOTTOM:
     {
-        p1.x = getLeft(entityPosition);
-        p2.x = getRight(entityPosition);
-        p1.y = getBottom(entityPosition);
-        p2.y = getBottom(entityPosition);
+        p1.x = getLeft();
+        p2.x = getRight();
+        p1.y = getBottom();
+        p2.y = getBottom();
 
         if (extendEdges)
         {
@@ -145,10 +146,10 @@ void Hitbox::getSide(const EntitySide& side,
     break;
     case EntitySide ::LEFT:
     {
-        p1.x = getLeft(entityPosition);
-        p2.x = getLeft(entityPosition);
-        p1.y = getTop(entityPosition);
-        p2.y = getBottom(entityPosition);
+        p1.x = getLeft();
+        p2.x = getLeft();
+        p1.y = getTop();
+        p2.y = getBottom();
         if (extendEdges)
         {
             p1.y -= 1000;
@@ -159,11 +160,10 @@ void Hitbox::getSide(const EntitySide& side,
     }
 }
 
-void Hitbox::draw(sf::RenderWindow& window,
-                  const sf::Vector2f& entityPosition) const
+void Hitbox::draw(sf::RenderWindow& window) const
 {
     sf::RectangleShape rectangle(sf::Vector2f(mSize.x, mSize.y));
     rectangle.setFillColor(sf::Color(150, 50, 250));
-    rectangle.setPosition(getLeft(entityPosition), getTop(entityPosition));
+    rectangle.setPosition(getLeft(), getTop());
     window.draw(rectangle);
 }

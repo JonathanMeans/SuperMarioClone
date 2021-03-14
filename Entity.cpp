@@ -106,6 +106,8 @@ Entity::Entity(sf::Sprite sprite,
     // So that scaling by -1 works properly
     const auto horizontalMidpoint = spriteWidth / 2;
     mActiveSprite.setOrigin(horizontalMidpoint, 0);
+
+    mHitbox.setEntityPosition({getLeft(), getTop()});
 }
 
 sf::Vector2f Entity::upperCenterToUpperLeft(
@@ -138,28 +140,34 @@ bool Entity::detectCollision(Entity& other)
 
     bool collided = false;
 
-    if (mHitbox.collidesWith(newXPosition,
-                             other.getHitbox(),
-                             {other.getLeft(), other.getTop()}))
+    Hitbox xHitbox(mHitbox);
+    xHitbox.setEntityPosition(newXPosition);
+    if (xHitbox.collidesWith(other.getHitbox()))
+
     {
-        handleCollision(Collision{
-                mDeltaP.x > 0 ? EntitySide::RIGHT : EntitySide::LEFT,
-                other.getType(),
-                0,
-                mDeltaP.x > 0 ? eLeftEdge : eRightEdge,
-        }, other);
+        handleCollision(
+                Collision{
+                        mDeltaP.x > 0 ? EntitySide::RIGHT : EntitySide::LEFT,
+                        other.getType(),
+                        0,
+                        mDeltaP.x > 0 ? eLeftEdge : eRightEdge,
+                },
+                other);
         collided = true;
     }
-    if (mHitbox.collidesWith(newYPosition,
-                             other.getHitbox(),
-                             {other.getLeft(), other.getTop()}))
+
+    Hitbox yHitbox(mHitbox);
+    yHitbox.setEntityPosition(newYPosition);
+    if (yHitbox.collidesWith(other.getHitbox()))
     {
-        handleCollision(Collision{
-                mDeltaP.y > 0 ? EntitySide::BOTTOM : EntitySide::TOP,
-                other.getType(),
-                mDeltaP.y > 0 ? eTopEdge : eBottomEdge,
-                0,
-        }, other);
+        handleCollision(
+                Collision{
+                        mDeltaP.y > 0 ? EntitySide::BOTTOM : EntitySide::TOP,
+                        other.getType(),
+                        mDeltaP.y > 0 ? eTopEdge : eBottomEdge,
+                        0,
+                },
+                other);
         collided = true;
     }
 
@@ -173,9 +181,9 @@ void Entity::handleCollision(Collision collision, Entity& entity)
                           collision.yIntersection,
                           collision.xIntersection});
     entity.onCollision(Collision{oppositeSide(collision.side),
-                                  this->getType(),
-                                  collision.yIntersection,
-                                  collision.xIntersection});
+                                 this->getType(),
+                                 collision.yIntersection,
+                                 collision.xIntersection});
 }
 
 void Entity::onCollision(const Collision& collision)
@@ -189,22 +197,7 @@ bool Entity::collideWithEntity(std::vector<std::unique_ptr<Entity>>& entities)
     bool collided = false;
     for (auto& entity : entities)
     {
-
         collided |= detectCollision(*entity);
-//        if (possibleCollision.has_value())
-//        {
-//            const auto collision = possibleCollision.value();
-//            onCollision(Collision{collision.side,
-//                                  collision.entityType,
-//                                  collision.yIntersection,
-//                                  collision.xIntersection});
-//            entity->onCollision(Collision{oppositeSide(collision.side),
-//                                          this->getType(),
-//                                          collision.yIntersection,
-//                                          collision.xIntersection});
-//
-//            return true;
-//        }
     }
     return collided;
 }
@@ -224,7 +217,7 @@ void Entity::draw(sf::RenderWindow& window) const
 {
     window.draw(mActiveSprite);
 #ifdef DRAW_HITBOX
-    mHitbox.draw(window, sf::Vector2f{getLeft(), getTop()});
+    mHitbox.draw(window);
 #endif
 }
 
@@ -298,13 +291,13 @@ void Entity::getHitboxSide(const EntitySide& side,
                            sf::Vector2f& p1,
                            sf::Vector2f& p2) const
 {
-    mHitbox.getSide(side, extendEdges, {getLeft(), getTop()}, p1, p2);
+    mHitbox.getSide(side, extendEdges, p1, p2);
 }
 
 void Entity::getHitboxCorner(const EntityCorner& corner,
                              sf::Vector2f& point) const
 {
-    mHitbox.getCorner(corner, {getLeft(), getTop()}, point);
+    mHitbox.getCorner(corner, point);
 }
 
 void Entity::addPositionDelta(float deltaX, float deltaY)
@@ -357,6 +350,7 @@ float Entity::getWidth() const
 void Entity::setPosition(float x, float y)
 {
     mActiveSprite.setPosition(x, y);
+    mHitbox.setEntityPosition({getLeft(), getTop()});
 }
 
 void Entity::setCleanupFlag()

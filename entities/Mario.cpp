@@ -8,8 +8,7 @@ Mario::Mario(const sf::Sprite& sprite, const sf::Vector2f& position) :
     Entity(sprite,
            16,
            16,
-           // Hitbox(*this, {8, 11}, {4, 5}),
-           Hitbox({16, 16}, {0, 0}),
+           Hitbox({8, 11}, {4, 5}),
            EntityType::MARIO,
            position,
            2.f),
@@ -171,7 +170,7 @@ void Mario::onCollision(const Collision& collision)
     {
         if (collision.side == EntitySide::BOTTOM)
         {
-            auto spriteBottom = mHitbox.getBottom({getLeft(), getTop()});
+            auto spriteBottom = mHitbox.getBottom();
             auto newSpriteBottom = collision.yIntersection;
             const auto delta = newSpriteBottom - spriteBottom;
             addPositionDelta(0, delta);
@@ -188,7 +187,7 @@ void Mario::onCollision(const Collision& collision)
         }
         else if (collision.side == EntitySide::RIGHT)
         {
-            auto spriteRight = mHitbox.getRight({getLeft(), getTop()});
+            auto spriteRight = mHitbox.getRight();
             auto newSpriteRight = collision.xIntersection;
             const auto delta = newSpriteRight - spriteRight;
             addPositionDelta(delta, 0);
@@ -197,7 +196,7 @@ void Mario::onCollision(const Collision& collision)
         }
         else if (collision.side == EntitySide::LEFT)
         {
-            auto spriteLeft = mHitbox.getLeft({getLeft(), getTop()});
+            auto spriteLeft = mHitbox.getLeft();
             auto newSpriteLeft = collision.xIntersection;
             const auto delta = newSpriteLeft - spriteLeft;
             addPositionDelta(delta, 0);
