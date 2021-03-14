@@ -27,6 +27,35 @@ void Goomba::onCollision(const Collision& collision)
     if (collision.entityType == EntityType::MARIO &&
         collision.side == EntitySide::TOP)
         die();
+    else
+    {
+        if (collision.side == EntitySide::BOTTOM)
+        {
+            auto spriteBottom = mHitbox.getBottom();
+            auto newSpriteBottom = collision.yIntersection;
+            const auto delta = newSpriteBottom - spriteBottom;
+            addPositionDelta(0, delta);
+
+            const auto currentVelocity = getVelocity();
+            setVelocity(sf::Vector2f(currentVelocity.x, 0));
+        }
+        else if (collision.side == EntitySide::RIGHT)
+        {
+            auto spriteRight = mHitbox.getRight();
+            auto newSpriteRight = collision.xIntersection;
+            const auto delta = newSpriteRight - spriteRight;
+            addPositionDelta(delta, 0);
+            setVelocity(sf::Vector2f(0, getVelocity().y));
+        }
+        else if (collision.side == EntitySide::LEFT)
+        {
+            auto spriteLeft = mHitbox.getLeft();
+            auto newSpriteLeft = collision.xIntersection;
+            const auto delta = newSpriteLeft - spriteLeft;
+            addPositionDelta(delta, 0);
+            setVelocity(sf::Vector2f(0, getVelocity().y));
+        }
+    }
 }
 
 void Goomba::die()

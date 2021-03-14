@@ -197,9 +197,14 @@ bool Entity::collideWithEntity(std::vector<std::unique_ptr<Entity>>& entities)
     bool collided = false;
     for (auto& entity : entities)
     {
-        collided |= detectCollision(*entity);
+        collided |= collideWithEntity(entity);
     }
     return collided;
+}
+
+bool Entity::collideWithEntity(std::unique_ptr<Entity>& entity)
+{
+    return detectCollision(*entity);
 }
 
 void Entity::updateAnimation()

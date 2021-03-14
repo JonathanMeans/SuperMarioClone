@@ -2,7 +2,8 @@
 
 #include <cmath>
 
-Level::Level(std::unique_ptr<Mario> mario, std::vector<std::unique_ptr<Entity>>&& entities) :
+Level::Level(std::unique_ptr<Mario> mario,
+             std::vector<std::unique_ptr<Entity>>&& entities) :
     mMario(std::move(mario)),
     mEntities(std::move(entities))
 {
@@ -23,13 +24,15 @@ void Level::executeFrame(const KeyboardInput& input)
     setMarioMovementFromController(input);
     mMario->updatePosition();
 
-
     for (auto& entity : mEntities)
     {
         entity->updatePosition();
     }
 
     mMario->collideWithEntity(mEntities);
+    for (size_t ii = 0; ii < mEntities.size(); ++ii)
+        for (size_t jj = ii + 1; jj < mEntities.size(); ++jj)
+            mEntities[ii]->collideWithEntity(mEntities[jj]);
 
     mMario->updateAnimation();
 
@@ -39,12 +42,11 @@ void Level::executeFrame(const KeyboardInput& input)
     }
 
     mEntities.erase(std::remove_if(mEntities.begin(),
-                                 mEntities.end(),
-                                 [](std::unique_ptr<Entity>& entity) {
-                                   return entity->needsCleanup();
-                                 }),
-                  mEntities.end());
-
+                                   mEntities.end(),
+                                   [](std::unique_ptr<Entity>& entity) {
+                                       return entity->needsCleanup();
+                                   }),
+                    mEntities.end());
 }
 
 void Level::drawFrame(sf::RenderWindow& window)
@@ -55,7 +57,6 @@ void Level::drawFrame(sf::RenderWindow& window)
     {
         entity->draw(window);
     }
-
 }
 
 void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
@@ -71,30 +72,46 @@ void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
 
     sf::Vector2f acceleration = mMario->getAcceleration();
     sf::Vector2f velocity = mMario->getVelocity();
-    if (currentInput.A.pressedThisFrame() && velocity.y == 0) {
-        if (std::fabs(velocity.x) < 37.0/16.0) {
+    if (currentInput.A.pressedThisFrame() && velocity.y == 0)
+    {
+        if (std::fabs(velocity.x) < 37.0 / 16.0)
+        {
             velocity.y = -4.0;
-        } else {
+        }
+        else
+        {
             velocity.y = -5.0;
         }
     }
     if (currentInput.A.keyIsDown)
     {
-        if (std::fabs(velocity.x) < 1.0) {
-            acceleration.y = 1.0/8.0;
-        } else if (std::fabs(velocity.x) < 37.0/16.0) {
+        if (std::fabs(velocity.x) < 1.0)
+        {
+            acceleration.y = 1.0 / 8.0;
+        }
+        else if (std::fabs(velocity.x) < 37.0 / 16.0)
+        {
             acceleration.y = 0.1172;
-        } else {
+        }
+        else
+        {
             acceleration.y = 0.15625;
         }
         mMario->setJumping(true);
-    } else {
-        if (std::fabs(velocity.x) < 1.0) {
-            acceleration.y = 7.0/16.0;
-        } else if (std::fabs(velocity.x) < 37.0/16.0) {
-            acceleration.y = 6.0/16.0;
-        } else {
-            acceleration.y = 9.0/16.0;
+    }
+    else
+    {
+        if (std::fabs(velocity.x) < 1.0)
+        {
+            acceleration.y = 7.0 / 16.0;
+        }
+        else if (std::fabs(velocity.x) < 37.0 / 16.0)
+        {
+            acceleration.y = 6.0 / 16.0;
+        }
+        else
+        {
+            acceleration.y = 9.0 / 16.0;
         }
     }
 
