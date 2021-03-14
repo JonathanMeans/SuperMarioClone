@@ -1,6 +1,5 @@
 #include <file_util.h>
 
-#include "entities/Goomba.h"
 #include "Input.h"
 #include "Level.h"
 #include "SFML/Graphics.hpp"
@@ -8,6 +7,7 @@
 #include "SpriteMaker.h"
 #include "Timer.h"
 #include "entities/Block.h"
+#include "entities/Goomba.h"
 #include "entities/Mario.h"
 #include "entities/Pipe.h"
 
@@ -57,8 +57,10 @@ int main(int argc, char* argv[])
     entities[1] = std::move(rightPipe);
     entities[2] = std::move(goomba);
 
-    for (int i = 0; i < 20; i++) {
-        entities[3 + i] = std::make_unique<Block>(spriteMaker.blockSprite, sf::Vector2f(i * 16, 132));
+    for (int i = 0; i < 20; i++)
+    {
+        entities[3 + i] = std::make_unique<Block>(spriteMaker.blockSprite,
+                                                  sf::Vector2f(i * 16, 132));
     }
 
     Level level(std::move(mario), std::move(entities));

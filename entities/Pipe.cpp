@@ -4,7 +4,7 @@ Pipe::Pipe(const sf::Sprite& sprite, const sf::Vector2f& position) :
     Entity(sprite,
            32,
            32,
-           Hitbox(*this, {32, 32}, {0, 0}),
+           Hitbox({32, 32}, {0, 0}),
            EntityType::PIPE,
            position)
 {

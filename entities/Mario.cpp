@@ -2,22 +2,18 @@
 #include "Animation.h"
 #include "Hitbox.h"
 #include "Timer.h"
-#include "Utils.h"
-
-#include <iostream>
-#include <memory>
 
 Mario::Mario(const sf::Sprite& sprite, const sf::Vector2f& position) :
     Entity(sprite,
            16,
            16,
            // Hitbox(*this, {8, 11}, {4, 5}),
-           Hitbox(*this, {16, 16}, {0, 0}),
+           Hitbox({16, 16}, {0, 0}),
            EntityType::MARIO,
            position,
            2.f),
     smallHitbox(this->mHitbox),
-    largeHitbox(*this, {12, 23}, {2, 8}),
+    largeHitbox({12, 23}, {2, 8}),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false),
     mIsDead(false)
