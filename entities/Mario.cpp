@@ -171,7 +171,7 @@ void Mario::onCollision(const Collision& collision)
     {
         if (collision.side == EntitySide::BOTTOM)
         {
-            auto spriteBottom = getBottom();
+            auto spriteBottom = mHitbox.getBottom({getLeft(), getTop()});
             auto newSpriteBottom = collision.yIntersection;
             const auto delta = newSpriteBottom - spriteBottom;
             addPositionDelta(0, delta);
@@ -188,7 +188,7 @@ void Mario::onCollision(const Collision& collision)
         }
         else if (collision.side == EntitySide::RIGHT)
         {
-            auto spriteRight = getRight();
+            auto spriteRight = mHitbox.getRight({getLeft(), getTop()});
             auto newSpriteRight = collision.xIntersection;
             const auto delta = newSpriteRight - spriteRight;
             addPositionDelta(delta, 0);
@@ -197,7 +197,7 @@ void Mario::onCollision(const Collision& collision)
         }
         else if (collision.side == EntitySide::LEFT)
         {
-            auto spriteLeft = getLeft();
+            auto spriteLeft = mHitbox.getLeft({getLeft(), getTop()});
             auto newSpriteLeft = collision.xIntersection;
             const auto delta = newSpriteLeft - spriteLeft;
             addPositionDelta(delta, 0);
