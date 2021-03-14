@@ -1,4 +1,5 @@
 #include "Mario.h"
+#include <AnimationBuilder.h>
 #include "Animation.h"
 #include "Hitbox.h"
 #include "Timer.h"
@@ -18,14 +19,42 @@ Mario::Mario(const sf::Sprite& sprite, const sf::Vector2f& position) :
     mJumping(false),
     mIsDead(false)
 {
-    walkingAnimation.load(AnimationType::WALKING, mActiveSprite);
-    jumpingAnimation.load(AnimationType::JUMPING, mActiveSprite);
-    standingAnimation.load(AnimationType::STANDING, mActiveSprite);
-    deathAnimation.load(AnimationType::MARIO_DEATH, mActiveSprite);
+    walkingAnimation = AnimationBuilder()
+                               .withOffset(80, 34)
+                               .withRectSize(16, 16)
+                               .andRepeat()
+                               .withNumRect(4)
+                               .withFrameBorder(1)
+                               .build(mActiveSprite);
+    jumpingAnimation = AnimationBuilder()
+                               .withOffset(148, 34)
+                               .withRectSize(16, 16)
+                               .withNumRect(2)
+                               .withFrameBorder(1)
+                               .build(mActiveSprite);
+    standingAnimation =
+            AnimationBuilder().withOffset(80, 34).withRectSize(16, 16).build(
+                    mActiveSprite);
+    deathAnimation =
+            AnimationBuilder().withOffset(182, 34).withRectSize(16, 16).build(
+                    mActiveSprite);
 
-    bigWalkingAnimation.load(AnimationType::BIG_WALKING, mActiveSprite);
-    bigStandingAnimation.load(AnimationType::BIG_STANDING, mActiveSprite);
-    bigJumpingAnimation.load(AnimationType::BIG_JUMPING, mActiveSprite);
+    bigWalkingAnimation = AnimationBuilder()
+                                  .withOffset(80, 1)
+                                  .withRectSize(16, 32)
+                                  .withNumRect(4)
+                                  .withFrameBorder(1)
+                                  .andRepeat()
+                                  .build(mActiveSprite);
+    bigStandingAnimation =
+            AnimationBuilder().withOffset(80, 1).withRectSize(16, 32).build(
+                    mActiveSprite);
+    bigJumpingAnimation = AnimationBuilder()
+                                  .withOffset(148, 1)
+                                  .withRectSize(16, 32)
+                                  .withNumRect(2)
+                                  .withFrameBorder(1)
+                                  .build(mActiveSprite);
 
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();

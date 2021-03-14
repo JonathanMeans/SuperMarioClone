@@ -7,31 +7,15 @@
 
 #include <cstdlib>
 #include <memory>
-enum class AnimationType
-{
-    WALKING,
-    JUMPING,
-    STANDING,
-
-    BIG_WALKING,
-    BIG_JUMPING,
-    BIG_STANDING,
-
-    GOOMBA_WALKING,
-    GOOMBA_DEATH,
-
-    MARIO_DEATH,
-    PIPE,
-    BLOCK
-};
 
 class Animation
 {
 public:
     Animation();
-    Animation(sf::Sprite& activeSprite, std::vector<sf::IntRect> actionRectangles,
-              bool repeat);
-    void load(AnimationType type, sf::Sprite& activeSprite);
+    Animation(sf::Sprite& activeSprite,
+              std::vector<sf::IntRect> actionRectangles,
+              bool repeat,
+              size_t ticsPerFrame);
     void processAction();
 
     [[nodiscard]] size_t getSpriteIndex() const;
@@ -44,15 +28,6 @@ private:
 
     std::vector<sf::IntRect> mActionRectangles;
     sf::Sprite* mActiveSprite = nullptr;
-
-    void generateRectangles(size_t numRectangles,
-                            size_t xOffset,
-                            size_t yOffset,
-                            size_t rectHeight,
-                            size_t frameBorder,
-                            size_t rectWidth);
-
-    void generateStaticAnimation(size_t xOffset, size_t yOffset, size_t width, size_t height);
 };
 
 #endif  // SUPERMARIOBROS_ANIMATION_H

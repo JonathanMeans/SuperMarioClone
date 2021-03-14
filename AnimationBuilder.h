@@ -13,6 +13,7 @@ public:
     AnimationBuilder withNumRect(size_t numRect);
     AnimationBuilder withFrameBorder(size_t borderSize);
     AnimationBuilder andRepeat();
+    AnimationBuilder withTicsPerFrame(size_t ticsPerFrame);
 
 private:
     size_t mXOffset;
@@ -22,6 +23,7 @@ private:
     size_t mNumRect;
     size_t mBorderSize;
     bool mRepeat;
+    size_t mTicsPerFrame;
 
 };
 

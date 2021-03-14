@@ -7,7 +7,8 @@ AnimationBuilder::AnimationBuilder() :
     mHeight(-1),
     mNumRect(1),
     mBorderSize(0),
-    mRepeat(false)
+    mRepeat(false),
+    mTicsPerFrame(2)
 {
 }
 
@@ -40,6 +41,12 @@ AnimationBuilder AnimationBuilder::andRepeat()
     return *this;
 }
 
+AnimationBuilder AnimationBuilder::withTicsPerFrame(size_t ticsPerFrame)
+{
+    mTicsPerFrame = ticsPerFrame;
+    return *this;
+}
+
 Animation AnimationBuilder::build(sf::Sprite& sprite)
 {
     std::vector<sf::IntRect> mActionRectangles;
@@ -55,5 +62,5 @@ Animation AnimationBuilder::build(sf::Sprite& sprite)
 
     sprite.setTextureRect(mActionRectangles[0]);
 
-    return Animation(sprite, mActionRectangles, mRepeat);
+    return Animation(sprite, mActionRectangles, mRepeat, mTicsPerFrame);
 }
