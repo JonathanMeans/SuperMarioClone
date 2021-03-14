@@ -29,6 +29,8 @@ class Animation
 {
 public:
     Animation();
+    Animation(sf::Sprite& activeSprite, std::vector<sf::IntRect> actionRectangles,
+              bool repeat);
     void load(AnimationType type, sf::Sprite& activeSprite);
     void processAction();
 
@@ -38,7 +40,7 @@ private:
     size_t mRemainingTicsThisFrame{};
     size_t mTicsPerFrame{};
     size_t mSpriteIndex{};
-    bool repeat{};
+    bool mRepeat{};
 
     std::vector<sf::IntRect> mActionRectangles;
     sf::Sprite* mActiveSprite = nullptr;

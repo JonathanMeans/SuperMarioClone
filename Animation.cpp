@@ -1,13 +1,24 @@
 #include "Animation.h"
 
-#include <iostream>
+#include <utility>
 
 Animation::Animation() = default;
+
+Animation::Animation(sf::Sprite& activeSprite, std::vector<sf::IntRect> actionRectangles,
+                     bool repeat) :
+    mRemainingTicsThisFrame(2),
+    mTicsPerFrame(2),
+    mSpriteIndex(0),
+    mRepeat(repeat),
+    mActionRectangles(std::move(actionRectangles)),
+    mActiveSprite(&activeSprite)
+{
+};
 
 /*
  * TODO: Consider builder pattern, e.g.
  * AnimationBuilder().repeatingAnimation(num_frames=4).withOffset(xOffset,
- * yOffset).withRectWidth(16).build(sprite);
+ * yOffset).withRectWidth(16).andRepeat().build(sprite);
  */
 void Animation::load(AnimationType type, sf::Sprite& activeSprite)
 {
@@ -15,7 +26,7 @@ void Animation::load(AnimationType type, sf::Sprite& activeSprite)
     mTicsPerFrame = 2;
     mRemainingTicsThisFrame = 2;
     mActiveSprite = &activeSprite;
-    repeat = true;
+    mRepeat = true;
 
     switch (type)
     {
@@ -24,7 +35,7 @@ void Animation::load(AnimationType type, sf::Sprite& activeSprite)
         break;
     case AnimationType::JUMPING:
         generateRectangles(2, 148, 34, 16, 1, 16);
-        repeat = false;
+        mRepeat = false;
         break;
     case AnimationType::STANDING:
         generateStaticAnimation(80, 34, 16, 16);
@@ -35,7 +46,7 @@ void Animation::load(AnimationType type, sf::Sprite& activeSprite)
         break;
     case AnimationType ::BIG_JUMPING:
         generateRectangles(2, 148, 1, 32, 1, 16);
-        repeat = false;
+        mRepeat = false;
         break;
     case AnimationType::BIG_STANDING:
         generateStaticAnimation(80, 1, 16, 32);
@@ -79,6 +90,7 @@ void Animation::generateRectangles(size_t numRectangles,
                                    size_t frameBorder,
                                    size_t rectWidth)
 {
+
     mActionRectangles.resize(numRectangles);
     for (size_t ii = 0; ii < numRectangles; ++ii)
     {
@@ -100,7 +112,7 @@ void Animation::processAction()
         ++mSpriteIndex;
         if (mSpriteIndex >= mActionRectangles.size())
         {
-            if (repeat)
+            if (mRepeat)
             {
                 mSpriteIndex = 0;
             }
