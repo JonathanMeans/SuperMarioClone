@@ -94,7 +94,10 @@ Entity::Entity(sf::Sprite sprite,
     mActiveAnimation(nullptr),
     mSpriteWidth(spriteWidth),
     mSpriteHeight(spriteHeight),
-    mHitbox(hitbox),
+    mMarioCollisionHitbox(hitbox),
+    mSpriteBoundsHitbox({{static_cast<float>(mSpriteWidth),
+                          static_cast<float>(mSpriteHeight)},
+                         {0, 0}}),
     mInputEnabled(true),
     mLookDirection(1),
     mMaxVelocity(maxVelocity),
@@ -107,7 +110,7 @@ Entity::Entity(sf::Sprite sprite,
     const auto horizontalMidpoint = spriteWidth / 2;
     mActiveSprite.setOrigin(horizontalMidpoint, 0);
 
-    mHitbox.setEntityPosition({getLeft(), getTop()});
+    mMarioCollisionHitbox.setEntityPosition({getLeft(), getTop()});
 }
 
 sf::Vector2f Entity::upperCenterToUpperLeft(
@@ -124,6 +127,17 @@ EntityType Entity::getType() const
     return mType;
 }
 
+const Hitbox& Entity::getHitbox(EntityType type) const
+{
+    switch (type)
+    {
+    case EntityType ::MARIO:
+        return mMarioCollisionHitbox;
+    default:
+        return mSpriteBoundsHitbox;
+    }
+}
+
 bool Entity::detectCollision(Entity& other)
 {
     const auto currentPosition = sf::Vector2f(getLeft(), getTop());
@@ -135,9 +149,9 @@ bool Entity::detectCollision(Entity& other)
 
     bool collided = false;
 
-    Hitbox xHitbox(mHitbox);
+    Hitbox xHitbox(getHitbox(other.getType()));
     xHitbox.setEntityPosition(newXPosition);
-    if (xHitbox.collidesWith(other.getHitbox()))
+    if (xHitbox.collidesWith(other.getHitbox(mType)))
 
     {
         handleCollision(
@@ -145,23 +159,23 @@ bool Entity::detectCollision(Entity& other)
                         mDeltaP.x > 0 ? EntitySide::RIGHT : EntitySide::LEFT,
                         other.getType(),
                         0,
-                        mDeltaP.x > 0 ? other.getHitbox().getLeft()
-                                      : other.getHitbox().getRight(),
+                        mDeltaP.x > 0 ? other.getHitbox(mType).getLeft()
+                                      : other.getHitbox(mType).getRight(),
                 },
                 other);
         collided = true;
     }
 
-    Hitbox yHitbox(mHitbox);
+    Hitbox yHitbox(getHitbox(other.getType()));
     yHitbox.setEntityPosition(newYPosition);
-    if (yHitbox.collidesWith(other.getHitbox()))
+    if (yHitbox.collidesWith(other.getHitbox(mType)))
     {
         handleCollision(
                 Collision{
                         mDeltaP.y > 0 ? EntitySide::BOTTOM : EntitySide::TOP,
                         other.getType(),
-                        mDeltaP.y > 0 ? other.getHitbox().getTop()
-                                      : other.getHitbox().getBottom(),
+                        mDeltaP.y > 0 ? other.getHitbox(mType).getTop()
+                                      : other.getHitbox(mType).getBottom(),
                         0,
                 },
                 other);
@@ -219,7 +233,7 @@ void Entity::draw(sf::RenderWindow& window) const
 {
     window.draw(mActiveSprite);
 #ifdef DRAW_HITBOX
-    mHitbox.draw(window);
+    mMarioCollisionHitbox.draw(window);
 #endif
 }
 
@@ -283,11 +297,6 @@ void Entity::setAcceleration(const sf::Vector2f& acceleration)
     }
 }
 
-const Hitbox& Entity::getHitbox() const
-{
-    return mHitbox;
-}
-
 void Entity::addPositionDelta(float deltaX, float deltaY)
 {
     setPosition(getX() + deltaX, getY() + deltaY);
@@ -338,7 +347,8 @@ float Entity::getWidth() const
 void Entity::setPosition(float x, float y)
 {
     mActiveSprite.setPosition(x, y);
-    mHitbox.setEntityPosition({getLeft(), getTop()});
+    mMarioCollisionHitbox.setEntityPosition({getLeft(), getTop()});
+    mSpriteBoundsHitbox.setEntityPosition({getLeft(), getTop()});
 }
 
 void Entity::setCleanupFlag()

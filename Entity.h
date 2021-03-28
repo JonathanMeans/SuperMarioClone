@@ -50,8 +50,6 @@ public:
     [[nodiscard]] float getWidth() const;
     [[nodiscard]] virtual float getHeight() const;
 
-    [[nodiscard]] const Hitbox& getHitbox() const;
-
     virtual void setAnimationFromState();
 
     [[nodiscard]] sf::Vector2f getVelocity() const;
@@ -88,6 +86,8 @@ protected:
 
     void handleCollision(Collision collision, Entity& entity);
 
+    virtual const Hitbox& getHitbox(EntityType type) const;
+
     sf::Sprite mActiveSprite;
     sf::Vector2f mVelocity;
     sf::Vector2f mAcceleration;
@@ -95,7 +95,14 @@ protected:
     Animation* mActiveAnimation;
     size_t mSpriteWidth;
     size_t mSpriteHeight;
-    Hitbox mHitbox;
+
+    // Current theory is that there are two hitboxes
+    // mMarioCollisionHitbox is used to detect collision for Mario against
+    // an enemy. It is typically smaller to make the game feel more "fair"
+    // The other is used for all (??) other collisions.
+    Hitbox mMarioCollisionHitbox;
+    Hitbox mSpriteBoundsHitbox;
+
     bool mCleanupFlag = false;
 
     // TODO: This only applies to Mario subclass, but

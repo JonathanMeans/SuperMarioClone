@@ -18,7 +18,7 @@ protected:
     void SetUp() override
     {
         mario = new Mario(gSpriteMaker->marioSprite, {20, 50});
-        hitbox = new Hitbox(mario->getHitbox());
+        hitbox = new Hitbox(mario->getHitbox(EntityType::GOOMBA));
     }
 
     void TearDown() override

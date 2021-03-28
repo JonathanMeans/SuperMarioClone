@@ -35,6 +35,8 @@ public:
 
     void die() override;
 
+    const Hitbox& getHitbox(EntityType type) const override;
+
 private:
     void onCollision(const Collision& collision) override;
 

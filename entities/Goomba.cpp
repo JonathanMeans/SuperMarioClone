@@ -24,6 +24,8 @@ Goomba::Goomba(const sf::Sprite& sprite, const sf::Vector2f& position) :
 
 void Goomba::onCollision(const Collision& collision)
 {
+    const auto hitbox = getHitbox(collision.entityType);
+
     if (collision.entityType == EntityType::MARIO &&
         collision.side == EntitySide::TOP)
         die();
@@ -31,7 +33,7 @@ void Goomba::onCollision(const Collision& collision)
     {
         if (collision.side == EntitySide::BOTTOM)
         {
-            auto spriteBottom = mHitbox.getBottom();
+            auto spriteBottom = hitbox.getBottom();
             auto newSpriteBottom = collision.yIntersection;
             const auto delta = newSpriteBottom - spriteBottom;
             addPositionDelta(0, delta);
@@ -41,7 +43,7 @@ void Goomba::onCollision(const Collision& collision)
         }
         else if (collision.side == EntitySide::RIGHT)
         {
-            auto spriteRight = mHitbox.getRight();
+            auto spriteRight = hitbox.getRight();
             auto newSpriteRight = collision.xIntersection;
             const auto delta = newSpriteRight - spriteRight;
             addPositionDelta(delta, 0);
@@ -49,7 +51,7 @@ void Goomba::onCollision(const Collision& collision)
         }
         else if (collision.side == EntitySide::LEFT)
         {
-            auto spriteLeft = mHitbox.getLeft();
+            auto spriteLeft = hitbox.getLeft();
             auto newSpriteLeft = collision.xIntersection;
             const auto delta = newSpriteLeft - spriteLeft;
             addPositionDelta(delta, 0);
@@ -64,7 +66,8 @@ void Goomba::die()
     mActiveAnimation->processAction();
     mVelocity.x = 0;
 
-    mHitbox.invalidate();
+    mMarioCollisionHitbox.invalidate();
+    mSpriteBoundsHitbox.invalidate();
 
     getTimer().scheduleSeconds(1, [&]() { this->setCleanupFlag(); });
 }

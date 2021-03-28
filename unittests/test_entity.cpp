@@ -39,10 +39,10 @@ TEST(EntityTest, CanGetPositionOfHitboxBoundaries)
 {
     std::unique_ptr<Mario> mario(
             new Mario(gSpriteMaker->marioSprite, {20, 50}));
-    const auto hitbox = mario->getHitbox();
+    const auto hitbox = mario->getHitbox(EntityType::GOOMBA);
     const auto entityPosition = sf::Vector2f(mario->getLeft(), mario->getTop());
-    EXPECT_EQ(hitbox.getLeft(entityPosition), 20);
-    EXPECT_EQ(hitbox.getRight(entityPosition), 36);
-    EXPECT_EQ(hitbox.getTop(entityPosition), 50);
-    EXPECT_EQ(hitbox.getBottom(entityPosition), 66);
+    EXPECT_EQ(hitbox.getLeft(), 20);
+    EXPECT_EQ(hitbox.getRight(), 36);
+    EXPECT_EQ(hitbox.getTop(), 50);
+    EXPECT_EQ(hitbox.getBottom(), 66);
 }
