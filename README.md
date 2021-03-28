@@ -4,4 +4,4 @@
 * Print out pressed keys while playing the game
 
 ## Bug List
-Holding the "grow" button and then releasing it causes Mario to shift position
+* Goomba falls through ground when jumped on
