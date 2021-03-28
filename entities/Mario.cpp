@@ -13,7 +13,7 @@ Mario::Mario(const sf::Sprite& sprite, const sf::Vector2f& position) :
            position,
            2.f),
     smallHitbox(this->mHitbox),
-    largeHitbox({12, 23}, {2, 8}),
+    largeHitbox({12, 23}, {2, 9}),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false),
     mIsDead(false)
