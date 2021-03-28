@@ -13,22 +13,33 @@
 
 void updateInputState(KeyboardInputState& currentState,
                       const KeyboardInputState& previousState,
-                      const sf::Keyboard::Key key)
+                      bool isPressed)
 {
     currentState.keyWasDown = previousState.keyIsDown;
-    currentState.keyIsDown = sf::Keyboard::isKeyPressed(key);
+    currentState.keyIsDown = isPressed;
 }
 
 void updateKeyboardInputs(KeyboardInput& currentInput,
-                          KeyboardInput& previousInput)
+                          KeyboardInput& previousInput,
+                          sf::Keyboard::Key knownKey,
+                          bool isPressed)
 {
-    updateInputState(currentInput.A, previousInput.A, sf::Keyboard::A);
-    updateInputState(currentInput.B, previousInput.B, sf::Keyboard::S);
-    updateInputState(currentInput.right,
-                     previousInput.right,
-                     sf::Keyboard::Right);
-
-    updateInputState(currentInput.left, previousInput.left, sf::Keyboard::Left);
+    switch(knownKey) {
+        case sf::Keyboard::A:
+            updateInputState(currentInput.A, previousInput.A, isPressed);
+            break;
+        case sf::Keyboard::B:
+            updateInputState(currentInput.B, previousInput.B, isPressed);
+            break;
+        case sf::Keyboard::Right:
+            updateInputState(currentInput.right,previousInput.right, isPressed);
+            break;
+        case sf::Keyboard::Left:
+            updateInputState(currentInput.left, previousInput.left, isPressed);
+            break;
+        default:
+            break;
+    }
     previousInput = currentInput;
 }
 
@@ -73,11 +84,21 @@ int main(int argc, char* argv[])
         sf::Event event = {};
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            switch(event.type)
+            {
+            case sf::Event::Closed:
                 window.close();
+                break;
+            case sf::Event::KeyPressed:
+                updateKeyboardInputs(currentInput, previousInput, event.key.code, true);
+                break;
+            case sf::Event::KeyReleased:
+                updateKeyboardInputs(currentInput, previousInput, event.key.code, false);
+                break;
+            default:
+                break;
+            }
         }
-
-        updateKeyboardInputs(currentInput, previousInput);
 
         level.executeFrame(currentInput);
         level.drawFrame(window);
