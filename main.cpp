@@ -52,16 +52,22 @@ int main(int argc, char* argv[])
         sf::Event event = {};
         while (window.pollEvent(event))
         {
-            switch(event.type)
+            switch (event.type)
             {
             case sf::Event::Closed:
                 window.close();
                 break;
             case sf::Event::KeyPressed:
-                updateKeyboardInputs(currentInput, previousInput, event.key.code, true);
+                updateKeyboardInputs(currentInput,
+                                     previousInput,
+                                     event.key.code,
+                                     true);
                 break;
             case sf::Event::KeyReleased:
-                updateKeyboardInputs(currentInput, previousInput, event.key.code, false);
+                updateKeyboardInputs(currentInput,
+                                     previousInput,
+                                     event.key.code,
+                                     false);
                 break;
             default:
                 break;
