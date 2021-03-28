@@ -133,11 +133,6 @@ bool Entity::detectCollision(Entity& other)
     const auto newYPosition =
             originalPosition + sf::Vector2f{0, this->mDeltaP.y};
 
-    float eTopEdge = other.getTop();
-    float eLeftEdge = other.getLeft();
-    float eRightEdge = eLeftEdge + other.getWidth();
-    float eBottomEdge = eTopEdge + other.getHeight();
-
     bool collided = false;
 
     Hitbox xHitbox(mHitbox);
@@ -150,7 +145,8 @@ bool Entity::detectCollision(Entity& other)
                         mDeltaP.x > 0 ? EntitySide::RIGHT : EntitySide::LEFT,
                         other.getType(),
                         0,
-                        mDeltaP.x > 0 ? eLeftEdge : eRightEdge,
+                        mDeltaP.x > 0 ? other.getHitbox().getLeft()
+                                      : other.getHitbox().getRight(),
                 },
                 other);
         collided = true;
@@ -164,7 +160,8 @@ bool Entity::detectCollision(Entity& other)
                 Collision{
                         mDeltaP.y > 0 ? EntitySide::BOTTOM : EntitySide::TOP,
                         other.getType(),
-                        mDeltaP.y > 0 ? eTopEdge : eBottomEdge,
+                        mDeltaP.y > 0 ? other.getHitbox().getTop()
+                                      : other.getHitbox().getBottom(),
                         0,
                 },
                 other);
