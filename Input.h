@@ -1,6 +1,8 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+#include "Entity.h"
+
 struct KeyboardInputState
 {
     bool keyIsDown;
@@ -29,5 +31,10 @@ struct KeyboardInput
     KeyboardInputState select;
     KeyboardInputState start;
 };
+
+void updateKeyboardInputs(KeyboardInput& currentInput,
+                          KeyboardInput& previousInput,
+                          sf::Keyboard::Key knownKey,
+                          bool isPressed);
 
 #endif
