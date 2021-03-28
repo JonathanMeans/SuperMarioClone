@@ -64,12 +64,6 @@ public:
     void updateAnimation();
     void draw(sf::RenderWindow& window) const;
 
-    void getHitboxSide(const EntitySide& side,
-                       bool extendEdges,
-                       sf::Vector2f& p1,
-                       sf::Vector2f& p2) const;
-    void getHitboxCorner(const EntityCorner& corner, sf::Vector2f& point) const;
-
     virtual void die();
 
     void setCleanupFlag();

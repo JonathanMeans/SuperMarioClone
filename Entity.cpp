@@ -288,20 +288,6 @@ const Hitbox& Entity::getHitbox() const
     return mHitbox;
 }
 
-void Entity::getHitboxSide(const EntitySide& side,
-                           bool extendEdges,
-                           sf::Vector2f& p1,
-                           sf::Vector2f& p2) const
-{
-    mHitbox.getSide(side, extendEdges, p1, p2);
-}
-
-void Entity::getHitboxCorner(const EntityCorner& corner,
-                             sf::Vector2f& point) const
-{
-    mHitbox.getCorner(corner, point);
-}
-
 void Entity::addPositionDelta(float deltaX, float deltaY)
 {
     setPosition(getX() + deltaX, getY() + deltaY);
