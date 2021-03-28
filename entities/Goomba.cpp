@@ -64,7 +64,8 @@ void Goomba::die()
 {
     mActiveAnimation = &deathAnimation;
     mActiveAnimation->processAction();
-    mVelocity.x = 0;
+    mVelocity = {};
+    mAcceleration = {};
 
     mMarioCollisionHitbox.invalidate();
     mSpriteBoundsHitbox.invalidate();

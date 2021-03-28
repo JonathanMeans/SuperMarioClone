@@ -4,4 +4,4 @@
 * Print out pressed keys while playing the game
 
 ## Bug List
-* Goomba falls through ground when jumped on
+* There are absolutely zero bugs in this game!!
