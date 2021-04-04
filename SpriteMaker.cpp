@@ -4,37 +4,30 @@
 
 SpriteMaker::SpriteMaker(const std::string& resourcesDir)
 {
-    if (!goombaTexture.loadFromFile(resourcesDir + "enemies.png"))
+
+    if (!enemiesTexture.loadFromFile(resourcesDir + "enemies.png"))
     {
         std::cerr << "Error Loading Texture";
         throw std::runtime_error("Unable to load Enemies texture");
     }
-    goombaTexture.setSmooth(false);
-    goombaSprite.setTexture(goombaTexture);
+    enemiesTexture.setSmooth(false);
+    goombaSprite.setTexture(enemiesTexture);
 
-    if (!marioTexture.loadFromFile(resourcesDir + "Mario & Luigi.png"))
+    if (!playerTexture.loadFromFile(resourcesDir + "Mario & Luigi.png"))
     {
         std::cerr << "Error Loading Texture";
         throw std::runtime_error("Unable to load Mario texture");
     }
-    marioTexture.setSmooth(false);
-    marioSprite.setTexture(marioTexture);
+    playerTexture.setSmooth(false);
+    marioSprite.setTexture(playerTexture);
 
-    if (!pipeTexture.loadFromFile(resourcesDir + "inanimate objects.png"))
+    if (!inanimateObjectTexture.loadFromFile(resourcesDir + "inanimate objects.png"))
     {
         std::cerr << "Error Loading Texture";
         throw std::runtime_error("Unable to load objects texture");
     }
-    pipeTexture.setSmooth(false);
-    pipeSprite.setTexture(pipeTexture);
-
-    if (!groundTexture.loadFromFile(resourcesDir + "inanimate objects.png"))
-    {
-        std::cerr << "Error Loading Texture";
-        throw std::runtime_error("Unable to load objects texture");
-    }
-    groundTexture.setSmooth(false);
-    groundSprite.setTexture(groundTexture);
-
-    blockSprite.setTexture(groundTexture);
+    inanimateObjectTexture.setSmooth(false);
+    pipeSprite.setTexture(inanimateObjectTexture);
+    groundSprite.setTexture(inanimateObjectTexture);
+    blockSprite.setTexture(inanimateObjectTexture);
 }
