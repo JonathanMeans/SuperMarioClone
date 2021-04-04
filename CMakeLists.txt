@@ -23,7 +23,7 @@ endif ()
 
 enable_testing()
 
-add_library(MarioLib Animation.cpp file_util.cpp Entity.cpp Entity.h SpriteMaker.cpp SpriteMaker.h Hitbox.cpp Hitbox.h Timer.cpp Timer.h entities/Pipe.cpp entities/Pipe.h
+add_library(MarioLib Animation.cpp file_util.cpp Entity.cpp Entity.h SpriteMaker.cpp SpriteMaker.h entities/Block.cpp Hitbox.cpp Hitbox.h Timer.cpp Timer.h entities/Pipe.cpp entities/Pipe.h
         entities/Mario.cpp entities/Goomba.cpp Level.cpp Level.h entities/Ground.cpp entities/Ground.h AnimationBuilder.cpp AnimationBuilder.h Input.cpp)
 target_include_directories(MarioLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(MarioLib PRIVATE -Wall -Wextra -Werror)

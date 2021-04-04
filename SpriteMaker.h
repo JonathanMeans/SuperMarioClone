@@ -20,8 +20,10 @@ public:
     sf::Texture pipeTexture;
     sf::Sprite pipeSprite;
 
-    sf::Texture blockTexture;
+    sf::Texture groundTexture;
     sf::Sprite groundSprite;
+
+    sf::Sprite blockSprite;
 };
 
 #endif  // SUPERMARIOBROS_SPRITEMAKER_H

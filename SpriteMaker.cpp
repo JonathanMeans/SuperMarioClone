@@ -28,11 +28,13 @@ SpriteMaker::SpriteMaker(const std::string& resourcesDir)
     pipeTexture.setSmooth(false);
     pipeSprite.setTexture(pipeTexture);
 
-    if (!blockTexture.loadFromFile(resourcesDir + "inanimate objects.png"))
+    if (!groundTexture.loadFromFile(resourcesDir + "inanimate objects.png"))
     {
         std::cerr << "Error Loading Texture";
         throw std::runtime_error("Unable to load objects texture");
     }
-    blockTexture.setSmooth(false);
-    groundSprite.setTexture(blockTexture);
+    groundTexture.setSmooth(false);
+    groundSprite.setTexture(groundTexture);
+
+    blockSprite.setTexture(groundTexture);
 }

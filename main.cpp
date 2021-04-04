@@ -6,6 +6,7 @@
 #include "SFML/Window.hpp"
 #include "SpriteMaker.h"
 #include "Timer.h"
+#include "entities/Block.h"
 #include "entities/Goomba.h"
 #include "entities/Ground.h"
 #include "entities/Mario.h"
@@ -22,7 +23,8 @@ int main(int argc, char* argv[])
     window.clear();
 
     SpriteMaker spriteMaker(resourceDir);
-    std::vector<std::unique_ptr<Entity>> entities(23);
+    std::vector<std::unique_ptr<Entity>> entities;
+    entities.reserve(100);
 
     std::unique_ptr<Mario> mario(new Mario(spriteMaker.marioSprite, {30, 100}));
     std::unique_ptr<Goomba> goomba(
@@ -32,15 +34,18 @@ int main(int argc, char* argv[])
     std::unique_ptr<Pipe> rightPipe(
             new Pipe(spriteMaker.pipeSprite, {-10, 100}));
 
-    entities[0] = std::move(leftPipe);
-    entities[1] = std::move(rightPipe);
-    entities[2] = std::move(goomba);
+    entities.push_back(std::move(leftPipe));
+    entities.push_back(std::move(rightPipe));
+    entities.push_back(std::move(goomba));
 
     for (int i = 0; i < 20; i++)
     {
-        entities[3 + i] = std::make_unique<Ground>(spriteMaker.groundSprite,
-                                                   sf::Vector2f(i * 16, 132));
+        entities.push_back(std::make_unique<Ground>(spriteMaker.groundSprite,
+                                                    sf::Vector2f(i * 16, 132)));
     }
+
+    entities.push_back(std::make_unique<Block>(spriteMaker.blockSprite,
+                                               sf::Vector2f(40, 70)));
 
     Level level(std::move(mario), std::move(entities));
 
