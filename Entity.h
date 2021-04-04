@@ -88,6 +88,10 @@ protected:
 
     virtual const Hitbox& getHitbox(EntityType type) const;
 
+    Hitbox createSpriteBoundsHitbox() const;
+
+    void updateHitboxPositions();
+
     sf::Sprite mActiveSprite;
     sf::Vector2f mVelocity;
     sf::Vector2f mAcceleration;

@@ -124,12 +124,9 @@ void Mario::setForm(MarioForm form)
             mActiveAnimation = &bigStandingAnimation;
             mSpriteHeight *= 2;
             mMarioCollisionHitbox = largeHitbox;
-            mMarioCollisionHitbox.setEntityPosition({getLeft(), getTop()});
+            mSpriteBoundsHitbox = createSpriteBoundsHitbox();
+            updateHitboxPositions();
 
-            mSpriteBoundsHitbox = {{static_cast<float>(mSpriteWidth),
-                                    static_cast<float>(mSpriteHeight)},
-                                   {0, 0}};
-            mSpriteBoundsHitbox.setEntityPosition({getLeft(), getTop()});
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
@@ -139,12 +136,8 @@ void Mario::setForm(MarioForm form)
             mActiveAnimation = &standingAnimation;
             mSpriteHeight /= 2;
             mMarioCollisionHitbox = smallHitbox;
-            mMarioCollisionHitbox.setEntityPosition({getLeft(), getTop()});
-
-            mSpriteBoundsHitbox = {{static_cast<float>(mSpriteWidth),
-                                           static_cast<float>(mSpriteHeight)},
-                                   {0, 0}};
-            mSpriteBoundsHitbox.setEntityPosition({getLeft(), getTop()});
+            mSpriteBoundsHitbox = createSpriteBoundsHitbox();
+            updateHitboxPositions();
         }
     }
 

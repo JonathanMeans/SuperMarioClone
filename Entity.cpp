@@ -95,9 +95,7 @@ Entity::Entity(sf::Sprite sprite,
     mSpriteWidth(spriteWidth),
     mSpriteHeight(spriteHeight),
     mMarioCollisionHitbox(hitbox),
-    mSpriteBoundsHitbox({{static_cast<float>(mSpriteWidth),
-                          static_cast<float>(mSpriteHeight)},
-                         {0, 0}}),
+    mSpriteBoundsHitbox(createSpriteBoundsHitbox()),
     mInputEnabled(true),
     mLookDirection(1),
     mMaxVelocity(maxVelocity),
@@ -110,7 +108,20 @@ Entity::Entity(sf::Sprite sprite,
     const auto horizontalMidpoint = spriteWidth / 2;
     mActiveSprite.setOrigin(horizontalMidpoint, 0);
 
+    updateHitboxPositions();
+}
+
+Hitbox Entity::createSpriteBoundsHitbox() const
+{
+    return {{static_cast<float>(mSpriteWidth),
+             static_cast<float>(mSpriteHeight)},
+            {0, 0}};
+}
+
+void Entity::updateHitboxPositions()
+{
     mMarioCollisionHitbox.setEntityPosition({getLeft(), getTop()});
+    mSpriteBoundsHitbox.setEntityPosition({getLeft(), getTop()});
 }
 
 sf::Vector2f Entity::upperCenterToUpperLeft(
@@ -347,8 +358,7 @@ float Entity::getWidth() const
 void Entity::setPosition(float x, float y)
 {
     mActiveSprite.setPosition(x, y);
-    mMarioCollisionHitbox.setEntityPosition({getLeft(), getTop()});
-    mSpriteBoundsHitbox.setEntityPosition({getLeft(), getTop()});
+    updateHitboxPositions();
 }
 
 void Entity::setCleanupFlag()
