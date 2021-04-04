@@ -13,7 +13,7 @@ enum class EntityType
     GOOMBA,
     MARIO,
     PIPE,
-    BLOCK
+    GROUND
 };
 
 std::string convertSideToString(EntitySide side);

@@ -126,7 +126,6 @@ void Mario::setForm(MarioForm form)
             mMarioCollisionHitbox = largeHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
-
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
@@ -172,7 +171,7 @@ void Mario::jump()
 
 void Mario::onCollision(const Collision& collision)
 {
-    if (collision.entityType != EntityType::BLOCK)
+    if (collision.entityType != EntityType::GROUND)
     {
         int breakpoint = 0;
         (void)breakpoint;

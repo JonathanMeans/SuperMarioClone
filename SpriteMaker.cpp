@@ -34,5 +34,5 @@ SpriteMaker::SpriteMaker(const std::string& resourcesDir)
         throw std::runtime_error("Unable to load objects texture");
     }
     blockTexture.setSmooth(false);
-    blockSprite.setTexture(blockTexture);
+    groundSprite.setTexture(blockTexture);
 }

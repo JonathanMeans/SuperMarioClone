@@ -6,8 +6,8 @@
 #include "SFML/Window.hpp"
 #include "SpriteMaker.h"
 #include "Timer.h"
-#include "entities/Block.h"
 #include "entities/Goomba.h"
+#include "entities/Ground.h"
 #include "entities/Mario.h"
 #include "entities/Pipe.h"
 
@@ -38,8 +38,8 @@ int main(int argc, char* argv[])
 
     for (int i = 0; i < 20; i++)
     {
-        entities[3 + i] = std::make_unique<Block>(spriteMaker.blockSprite,
-                                                  sf::Vector2f(i * 16, 132));
+        entities[3 + i] = std::make_unique<Ground>(spriteMaker.groundSprite,
+                                                   sf::Vector2f(i * 16, 132));
     }
 
     Level level(std::move(mario), std::move(entities));

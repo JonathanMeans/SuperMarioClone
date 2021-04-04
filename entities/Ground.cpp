@@ -1,12 +1,12 @@
-#include "Block.h"
+#include "Ground.h"
 #include <AnimationBuilder.h>
 
-Block::Block(const sf::Sprite& sprite, const sf::Vector2f& position) :
+Ground::Ground(const sf::Sprite& sprite, const sf::Vector2f& position) :
     Entity(sprite,
            16,
            16,
            Hitbox({16, 16}, {0, 0}),
-           EntityType::BLOCK,
+           EntityType::GROUND,
            position)
 {
     mAcceleration = {};
