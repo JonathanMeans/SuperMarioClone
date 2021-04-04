@@ -65,6 +65,8 @@ const Hitbox& Mario::getHitbox(EntityType type) const
     {
     case EntityType ::GOOMBA:
         return mMarioCollisionHitbox;
+    case EntityType ::PIPE:
+        return mMarioCollisionHitbox;
     default:
         return mSpriteBoundsHitbox;
     }
@@ -122,6 +124,12 @@ void Mario::setForm(MarioForm form)
             mActiveAnimation = &bigStandingAnimation;
             mSpriteHeight *= 2;
             mMarioCollisionHitbox = largeHitbox;
+            mMarioCollisionHitbox.setEntityPosition({getLeft(), getTop()});
+
+            mSpriteBoundsHitbox = {{static_cast<float>(mSpriteWidth),
+                                    static_cast<float>(mSpriteHeight)},
+                                   {0, 0}};
+            mSpriteBoundsHitbox.setEntityPosition({getLeft(), getTop()});
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
@@ -131,6 +139,12 @@ void Mario::setForm(MarioForm form)
             mActiveAnimation = &standingAnimation;
             mSpriteHeight /= 2;
             mMarioCollisionHitbox = smallHitbox;
+            mMarioCollisionHitbox.setEntityPosition({getLeft(), getTop()});
+
+            mSpriteBoundsHitbox = {{static_cast<float>(mSpriteWidth),
+                                           static_cast<float>(mSpriteHeight)},
+                                   {0, 0}};
+            mSpriteBoundsHitbox.setEntityPosition({getLeft(), getTop()});
         }
     }
 
@@ -165,6 +179,11 @@ void Mario::jump()
 
 void Mario::onCollision(const Collision& collision)
 {
+    if (collision.entityType != EntityType::BLOCK)
+    {
+        int breakpoint = 0;
+        (void)breakpoint;
+    }
     // collision's side is referring to the side of Mario that collided
     if (isEnemy(collision.entityType))
     {
@@ -179,9 +198,11 @@ void Mario::onCollision(const Collision& collision)
     }
     else
     {
+        // We're not colliding with an enemy, so we want the sprite hitbox
+        const auto& hitbox = getHitbox(collision.entityType);
         if (collision.side == EntitySide::BOTTOM)
         {
-            auto spriteBottom = mMarioCollisionHitbox.getBottom();
+            auto spriteBottom = hitbox.getBottom();
             auto newSpriteBottom = collision.yIntersection;
             const auto delta = newSpriteBottom - spriteBottom;
             addPositionDelta(0, delta);
@@ -198,7 +219,7 @@ void Mario::onCollision(const Collision& collision)
         }
         else if (collision.side == EntitySide::RIGHT)
         {
-            auto spriteRight = mMarioCollisionHitbox.getRight();
+            auto spriteRight = hitbox.getRight();
             auto newSpriteRight = collision.xIntersection;
             const auto delta = newSpriteRight - spriteRight;
             addPositionDelta(delta, 0);
@@ -207,7 +228,7 @@ void Mario::onCollision(const Collision& collision)
         }
         else if (collision.side == EntitySide::LEFT)
         {
-            auto spriteLeft = mMarioCollisionHitbox.getLeft();
+            auto spriteLeft = hitbox.getLeft();
             auto newSpriteLeft = collision.xIntersection;
             const auto delta = newSpriteLeft - spriteLeft;
             addPositionDelta(delta, 0);
