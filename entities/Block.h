@@ -5,7 +5,7 @@
 class Block : public Entity
 {
 public:
-    Block(const sf::Sprite& sprite, const sf::Vector2f& position);
+    Block(const sf::Texture& texture, const sf::Vector2f& position);
 
 private:
     Animation defaultAnimation;

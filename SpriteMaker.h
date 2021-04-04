@@ -11,14 +11,7 @@ class SpriteMaker
 public:
     explicit SpriteMaker(const std::string& resourcesDir);
 
-    sf::Sprite goombaSprite;
-    sf::Sprite marioSprite;
-    sf::Sprite pipeSprite;
-    sf::Sprite groundSprite;
-    sf::Sprite blockSprite;
-
-private:
-    sf::Texture enemiesTexture;
+    sf::Texture enemyTexture;
     sf::Texture playerTexture;
     sf::Texture inanimateObjectTexture;
 };

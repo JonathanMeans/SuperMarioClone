@@ -5,13 +5,12 @@
 SpriteMaker::SpriteMaker(const std::string& resourcesDir)
 {
 
-    if (!enemiesTexture.loadFromFile(resourcesDir + "enemies.png"))
+    if (!enemyTexture.loadFromFile(resourcesDir + "enemies.png"))
     {
         std::cerr << "Error Loading Texture";
         throw std::runtime_error("Unable to load Enemies texture");
     }
-    enemiesTexture.setSmooth(false);
-    goombaSprite.setTexture(enemiesTexture);
+    enemyTexture.setSmooth(false);
 
     if (!playerTexture.loadFromFile(resourcesDir + "Mario & Luigi.png"))
     {
@@ -19,7 +18,6 @@ SpriteMaker::SpriteMaker(const std::string& resourcesDir)
         throw std::runtime_error("Unable to load Mario texture");
     }
     playerTexture.setSmooth(false);
-    marioSprite.setTexture(playerTexture);
 
     if (!inanimateObjectTexture.loadFromFile(resourcesDir + "inanimate objects.png"))
     {
@@ -27,7 +25,4 @@ SpriteMaker::SpriteMaker(const std::string& resourcesDir)
         throw std::runtime_error("Unable to load objects texture");
     }
     inanimateObjectTexture.setSmooth(false);
-    pipeSprite.setTexture(inanimateObjectTexture);
-    groundSprite.setTexture(inanimateObjectTexture);
-    blockSprite.setTexture(inanimateObjectTexture);
 }

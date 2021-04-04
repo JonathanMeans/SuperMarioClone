@@ -34,7 +34,7 @@ public:
     static const float NO_MAX_VELOCITY_VALUE;
     static const float MAX_FALLING_VELOCITY;
 
-    Entity(sf::Sprite sprite,
+    Entity(const sf::Texture& texture,
            size_t spriteWidth,
            size_t spriteHeight,
            const Hitbox& hitbox,

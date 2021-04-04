@@ -80,14 +80,14 @@ bool isEnemy(EntityType type)
 const float Entity::NO_MAX_VELOCITY_VALUE = -1;
 const float Entity::MAX_FALLING_VELOCITY = 4.5;
 
-Entity::Entity(sf::Sprite sprite,
+Entity::Entity(const sf::Texture& texture,
                size_t spriteWidth,
                size_t spriteHeight,
                const Hitbox& hitbox,
                EntityType type,
                const sf::Vector2f& position,
                float maxVelocity) :
-    mActiveSprite(std::move(sprite)),
+    mActiveSprite(texture),
     mVelocity(0, 0),
     mAcceleration(0, GRAVITY_ACCELERATION),
     mChangingDirection(false),

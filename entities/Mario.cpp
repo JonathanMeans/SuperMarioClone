@@ -4,8 +4,8 @@
 #include "Hitbox.h"
 #include "Timer.h"
 
-Mario::Mario(const sf::Sprite& sprite, const sf::Vector2f& position) :
-    Entity(sprite,
+Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
+    Entity(texture,
            16,
            16,
            Hitbox({12, 11}, {2, 5}),

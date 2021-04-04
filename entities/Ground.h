@@ -6,7 +6,7 @@
 class Ground : public Entity
 {
 public:
-    Ground(const sf::Sprite& sprite, const sf::Vector2f& position);
+    Ground(const sf::Texture& texture, const sf::Vector2f& position);
 
 private:
     Animation defaultAnimation;
