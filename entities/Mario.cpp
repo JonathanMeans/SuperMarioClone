@@ -171,11 +171,6 @@ void Mario::jump()
 
 void Mario::onCollision(const Collision& collision)
 {
-    if (collision.entityType != EntityType::GROUND)
-    {
-        int breakpoint = 0;
-        (void)breakpoint;
-    }
     // collision's side is referring to the side of Mario that collided
     if (isEnemy(collision.entityType))
     {
@@ -205,8 +200,12 @@ void Mario::onCollision(const Collision& collision)
         }
         else if (collision.side == EntitySide::TOP)
         {
+            auto spriteTop = hitbox.getTop();
+            auto newSpriteTop = collision.yIntersection;
+            const auto delta = newSpriteTop - spriteTop;
+            addPositionDelta(0, delta);
+
             setVelocity(sf::Vector2f(getVelocity().x, 0));
-            // TODO: Bug: We want to clip to the bottom of the object
             mDeltaP.y = 0;
         }
         else if (collision.side == EntitySide::RIGHT)
