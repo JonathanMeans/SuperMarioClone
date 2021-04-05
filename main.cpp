@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     std::vector<std::unique_ptr<Entity>> entities;
     entities.reserve(100);
 
-    std::unique_ptr<Mario> mario(new Mario(spriteMaker.playerTexture, {30, 100}));
+    std::unique_ptr<Mario> mario(new Mario(spriteMaker.playerTexture, {60, 100}));
     std::unique_ptr<Goomba> goomba(
             new Goomba(spriteMaker.enemyTexture, {150, 50}));
     std::unique_ptr<Pipe> leftPipe(

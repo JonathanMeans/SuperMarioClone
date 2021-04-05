@@ -34,3 +34,19 @@ void updateKeyboardInputs(KeyboardInput& currentInput,
     }
     previousInput = currentInput;
 }
+
+std::vector<KeyboardInput> generateInputs(const std::vector<std::vector<sf::Keyboard::Key>> &keyInputs) {
+    std::vector<KeyboardInput> result;
+    KeyboardInput prevInput = {};
+
+    for (const auto& frameInputs : keyInputs) {
+        KeyboardInput keyboardInput = {};
+        for (const auto& key: frameInputs) {
+            updateKeyboardInputs(keyboardInput, prevInput, key, true);
+        }
+        prevInput = keyboardInput;
+        result.push_back(keyboardInput);
+    }
+    return result;
+
+}

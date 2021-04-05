@@ -37,4 +37,6 @@ void updateKeyboardInputs(KeyboardInput& currentInput,
                           sf::Keyboard::Key knownKey,
                           bool isPressed);
 
+std::vector<KeyboardInput> generateInputs(const std::vector<std::vector<sf::Keyboard::Key>> &keyInputs);
+
 #endif
