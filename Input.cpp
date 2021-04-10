@@ -48,5 +48,8 @@ std::vector<KeyboardInput> generateInputs(const std::vector<std::vector<sf::Keyb
         result.push_back(keyboardInput);
     }
     return result;
+}
 
+KeyboardInput nextInput(std::vector<KeyboardInput> keyboardInputs, size_t idx) {
+    return idx < keyboardInputs.size() ? keyboardInputs[idx] : KeyboardInput{};
 }

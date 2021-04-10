@@ -7,6 +7,10 @@ if (DRAW_HITBOX)
     add_definitions(-DDRAW_HITBOX)
 endif ()
 
+if (MANUAL_INPUT)
+    add_definitions(-DMANUAL_INPUT)
+endif ()
+
 include(FetchContent)
 set(SFML_VERSION "2.5.1")
 FetchContent_Declare(

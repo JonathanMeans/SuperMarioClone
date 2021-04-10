@@ -52,9 +52,16 @@ int main(int argc, char* argv[])
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
 
+    std::vector<KeyboardInput> keyboardInputs;
+    keyboardInputs = generateInputs({{sf::Keyboard::A, sf::Keyboard::Right}, {sf::Keyboard::A, sf::Keyboard::Right}});
+    int idx  = 0;
     while (window.isOpen())
     {
         sf::Event event = {};
+    #ifdef MANUAL_INPUT
+        currentInput = nextInput(keyboardInputs, idx);
+        ++idx;
+    #endif
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -62,6 +69,7 @@ int main(int argc, char* argv[])
             case sf::Event::Closed:
                 window.close();
                 break;
+    #ifndef MANUAL_INPUT
             case sf::Event::KeyPressed:
                 updateKeyboardInputs(currentInput,
                                      previousInput,
@@ -74,6 +82,7 @@ int main(int argc, char* argv[])
                                      event.key.code,
                                      false);
                 break;
+    #endif
             default:
                 break;
             }
@@ -85,6 +94,5 @@ int main(int argc, char* argv[])
 
         getTimer().incrementNumFrames();
     }
-
     return 0;
 }

@@ -39,4 +39,6 @@ void updateKeyboardInputs(KeyboardInput& currentInput,
 
 std::vector<KeyboardInput> generateInputs(const std::vector<std::vector<sf::Keyboard::Key>> &keyInputs);
 
+KeyboardInput nextInput(std::vector<KeyboardInput> keyboardInputs, size_t idx);
+
 #endif
