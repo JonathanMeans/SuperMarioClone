@@ -2,6 +2,7 @@
 #define INPUT_H
 
 #include "Entity.h"
+#include <vector>
 
 struct KeyboardInputState
 {
@@ -31,6 +32,8 @@ struct KeyboardInput
     KeyboardInputState select;
     KeyboardInputState start;
 };
+
+extern const std::vector<sf::Keyboard::Key> ALL_KEYS;
 
 void updateKeyboardInputs(KeyboardInput& currentInput,
                           KeyboardInput& previousInput,

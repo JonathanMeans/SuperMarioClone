@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     KeyboardInput previousInput = {};
 
     std::vector<KeyboardInput> keyboardInputs;
-    keyboardInputs = generateInputs({{sf::Keyboard::A, sf::Keyboard::Right}, {sf::Keyboard::A, sf::Keyboard::Right}});
+    keyboardInputs = generateInputs({{sf::Keyboard::Left}});
     int idx  = 0;
     while (window.isOpen())
     {
