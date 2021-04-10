@@ -8,3 +8,8 @@
 
 ## Bug List
 * Mario can get stuck in the corner of floating blocks
+
+# CMake Flags
+-DDRAW_HITBOX: Set to 1 to enable debug hitboxes, 0 to turn off
+-DMANUAL_INPUT: Set to 1 to get hardcoded input from a vector instead of
+from the keyboard
