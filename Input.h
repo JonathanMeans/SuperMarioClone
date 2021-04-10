@@ -1,8 +1,8 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include "Entity.h"
 #include <vector>
+#include "Entity.h"
 
 struct KeyboardInputState
 {
@@ -40,7 +40,8 @@ void updateKeyboardInputs(KeyboardInput& currentInput,
                           sf::Keyboard::Key knownKey,
                           bool isPressed);
 
-std::vector<KeyboardInput> generateInputs(const std::vector<std::vector<sf::Keyboard::Key>> &keyInputs);
+std::vector<KeyboardInput> generateInputs(
+        const std::vector<std::vector<sf::Keyboard::Key>>& keyInputs);
 
 KeyboardInput nextInput(std::vector<KeyboardInput> keyboardInputs, size_t idx);
 
