@@ -33,6 +33,11 @@ public:
         mJumping = isJumping;
     }
 
+    inline bool isFalling() const
+    {
+        return mFalling;
+    }
+
     void die() override;
 
     const Hitbox& getHitbox(EntityType type) const override;
@@ -55,6 +60,7 @@ private:
     Animation bigStandingAnimation;
 
     bool mJumping;
+    bool mFalling;
     bool mIsDead;
 };
 

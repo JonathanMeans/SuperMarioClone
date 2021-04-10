@@ -16,6 +16,7 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
     largeHitbox({12, 23}, {2, 9}),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false),
+    mFalling(true),
     mIsDead(false)
 {
     walkingAnimation = AnimationBuilder()
@@ -172,6 +173,11 @@ void Mario::jump()
 void Mario::onCollision(const Collision& collision)
 {
     // collision's side is referring to the side of Mario that collided
+    if (collision.entityType == EntityType::BLOCK)
+    {
+        int debug = true;
+        (void)debug;
+    }
     if (isEnemy(collision.entityType))
     {
         if (collision.side != EntitySide::BOTTOM)
@@ -197,6 +203,7 @@ void Mario::onCollision(const Collision& collision)
             const auto currentVelocity = getVelocity();
             setVelocity(sf::Vector2f(currentVelocity.x, 0));
             setJumping(false);
+            mFalling = false;
         }
         else if (collision.side == EntitySide::TOP)
         {
@@ -206,6 +213,8 @@ void Mario::onCollision(const Collision& collision)
             addPositionDelta(0, delta);
 
             setVelocity(sf::Vector2f(getVelocity().x, 0));
+            mFalling = true;
+            mAcceleration.y = GRAVITY_ACCELERATION;
             mDeltaP.y = 0;
         }
         else if (collision.side == EntitySide::RIGHT)

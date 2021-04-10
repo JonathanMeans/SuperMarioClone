@@ -69,7 +69,7 @@ public:
     bool needsCleanup();
 
     const size_t GRIDBOX_SIZE = 16;
-    const size_t GRAVITY_ACCELERATION = 1;
+    const float GRAVITY_ACCELERATION = 1;
 
     sf::Vector2f mDeltaP;
 

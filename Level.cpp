@@ -61,6 +61,10 @@ void Level::drawFrame(sf::RenderWindow& window)
 
 void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
 {
+    if (mMario->isFalling())
+    {
+        return;
+    }
     if (currentInput.B.pressedThisFrame())
     {
         mMario->setForm(MarioForm::BIG_MARIO);
