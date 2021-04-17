@@ -27,6 +27,7 @@ void Level::executeFrame(const KeyboardInput& input)
     for (auto& entity : mEntities)
     {
         entity->updatePosition();
+        entity->doInternalCalculations();
     }
 
     mMario->collideWithEntity(mEntities);

@@ -58,6 +58,7 @@ public:
     void setVelocity(const sf::Vector2f& newVelocity);
     void setAcceleration(const sf::Vector2f& newAcceleration);
     void updatePosition();
+    virtual void doInternalCalculations();
     void addPositionDelta(float deltaX, float deltaY);
 
     void updateAnimation();

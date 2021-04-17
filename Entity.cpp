@@ -315,6 +315,10 @@ void Entity::addPositionDelta(float deltaX, float deltaY)
     mDeltaP.y += deltaY;
 }
 
+void Entity::doInternalCalculations()
+{
+}
+
 void Entity::updatePosition()
 {
     mVelocity.x += mAcceleration.x;
