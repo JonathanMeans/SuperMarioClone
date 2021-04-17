@@ -1,3 +1,4 @@
+#include <AnimationBuilder.h>
 #include <gtest/gtest.h>
 #include "Animation.h"
 
@@ -9,9 +10,9 @@ TEST(Animation, InitializeSpriteIndex)
 
 TEST(Animation, JumpingSpriteIndexIncreasesWithStep)
 {
-    Animation animation;
     sf::Sprite sprite;
-    animation.load(AnimationType::JUMPING, sprite);
+    auto animation =
+            AnimationBuilder().withTicsPerFrame(2).withNumRect(2).build(sprite);
 
     animation.processAction();
     animation.processAction();
@@ -24,9 +25,12 @@ TEST(Animation, JumpingSpriteIndexIncreasesWithStep)
 
 TEST(Animation, WalkingSpriteIndexIncreasesWithStep)
 {
-    Animation animation;
     sf::Sprite sprite;
-    animation.load(AnimationType::WALKING, sprite);
+    auto animation = AnimationBuilder()
+                             .withTicsPerFrame(2)
+                             .withNumRect(4)
+                             .andRepeat()
+                             .build(sprite);
 
     animation.processAction();
     animation.processAction();

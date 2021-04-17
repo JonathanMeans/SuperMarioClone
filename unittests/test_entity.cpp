@@ -10,16 +10,17 @@ extern SpriteMaker* gSpriteMaker;
 TEST(EntityTest, CanConstructEntitiesWithPosition)
 {
     std::unique_ptr<Mario> mario(
-            new Mario(gSpriteMaker->marioSprite, {10, 50}));
+            new Mario(gSpriteMaker->playerTexture, {10, 50}));
     EXPECT_EQ(mario->getLeft(), 10);
     EXPECT_EQ(mario->getTop(), 50);
 
-    std::unique_ptr<Pipe> pipe(new Pipe(gSpriteMaker->pipeSprite, {15, 70}));
+    std::unique_ptr<Pipe> pipe(
+            new Pipe(gSpriteMaker->inanimateObjectTexture, {15, 70}));
     EXPECT_EQ(pipe->getLeft(), 15);
     EXPECT_EQ(pipe->getTop(), 70);
 
     std::unique_ptr<Goomba> goomba(
-            new Goomba(gSpriteMaker->goombaSprite, {10, 50}));
+            new Goomba(gSpriteMaker->enemyTexture, {10, 50}));
     EXPECT_EQ(goomba->getLeft(), 10);
     EXPECT_EQ(goomba->getTop(), 50);
 }
@@ -28,7 +29,7 @@ TEST(EntityTest, CanGetPositionsOfEntityBoundaries)
 {
     // Mario is 16x16 pixels
     std::unique_ptr<Mario> mario(
-            new Mario(gSpriteMaker->marioSprite, {20, 50}));
+            new Mario(gSpriteMaker->playerTexture, {20, 50}));
     EXPECT_EQ(mario->getTop(), 50);
     EXPECT_EQ(mario->getBottom(), 66);
     EXPECT_EQ(mario->getLeft(), 20);
@@ -38,9 +39,8 @@ TEST(EntityTest, CanGetPositionsOfEntityBoundaries)
 TEST(EntityTest, CanGetPositionOfHitboxBoundaries)
 {
     std::unique_ptr<Mario> mario(
-            new Mario(gSpriteMaker->marioSprite, {20, 50}));
-    const auto hitbox = mario->getHitbox(EntityType::GOOMBA);
-    const auto entityPosition = sf::Vector2f(mario->getLeft(), mario->getTop());
+            new Mario(gSpriteMaker->playerTexture, {20, 50}));
+    const auto hitbox = mario->getHitbox(EntityType::GROUND);
     EXPECT_EQ(hitbox.getLeft(), 20);
     EXPECT_EQ(hitbox.getRight(), 36);
     EXPECT_EQ(hitbox.getTop(), 50);

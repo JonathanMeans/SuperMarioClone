@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include "entities/Goomba.h"
 #include "Level.h"
 #include "SpriteMaker.h"
+#include "entities/Goomba.h"
 #include "entities/Mario.h"
 #include "entities/Pipe.h"
 #include "file_util.h"
@@ -19,7 +19,7 @@ protected:
 
     void SetUp() override
     {
-        mario = new Mario(gSpriteMaker->marioSprite, {30, 100});
+        mario = new Mario(gSpriteMaker->playerTexture, {30, 100});
     }
 
     void TearDown() override
@@ -34,8 +34,9 @@ protected:
 TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 {
     std::unique_ptr<Mario> mario(
-            new Mario(gSpriteMaker->marioSprite, {5, 100}));
-    std::unique_ptr<Entity> pipe(new Pipe(gSpriteMaker->pipeSprite, {0, 200}));
+            new Mario(gSpriteMaker->playerTexture, {5, 100}));
+    std::unique_ptr<Entity> pipe(
+            new Pipe(gSpriteMaker->inanimateObjectTexture, {0, 200}));
     std::vector<std::unique_ptr<Entity>> pipes(1);
     pipes[0] = std::move(pipe);
 
@@ -65,8 +66,9 @@ TEST_F(EntityCollisionTest, MarioCanWalkOnPipe)
 TEST_F(EntityCollisionTest, MarioCanStandOnEdgeOfPipe)
 {
     std::unique_ptr<Mario> mario(
-            new Mario(gSpriteMaker->marioSprite, {0, 100}));
-    std::unique_ptr<Entity> pipe(new Pipe(gSpriteMaker->pipeSprite, {0, 200}));
+            new Mario(gSpriteMaker->playerTexture, {0, 100}));
+    std::unique_ptr<Entity> pipe(
+            new Pipe(gSpriteMaker->inanimateObjectTexture, {0, 200}));
     std::vector<std::unique_ptr<Entity>> pipes(1);
     pipes[0] = std::move(pipe);
 

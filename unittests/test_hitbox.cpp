@@ -17,8 +17,8 @@ protected:
 
     void SetUp() override
     {
-        mario = new Mario(gSpriteMaker->marioSprite, {20, 50});
-        hitbox = new Hitbox(mario->getHitbox(EntityType::GOOMBA));
+        mario = new Mario(gSpriteMaker->playerTexture, {20, 50});
+        hitbox = new Hitbox(mario->getHitbox(EntityType::GROUND));
     }
 
     void TearDown() override
@@ -44,16 +44,17 @@ TEST_F(HitboxTest, GetCorner)
 {
     sf::Vector2f points = {};
     const auto entityPosition = sf::Vector2f(mario->getLeft(), mario->getTop());
-    hitbox->getCorner(EntityCorner::UPPER_RIGHT, entityPosition, points);
+    hitbox->setEntityPosition(entityPosition);
+    hitbox->getCorner(EntityCorner::UPPER_RIGHT, points);
     EXPECT_EQ(points.x, 36);
     EXPECT_EQ(points.y, 50);
-    hitbox->getCorner(EntityCorner::UPPER_LEFT, entityPosition, points);
+    hitbox->getCorner(EntityCorner::UPPER_LEFT, points);
     EXPECT_EQ(points.x, 20);
     EXPECT_EQ(points.y, 50);
-    hitbox->getCorner(EntityCorner::LOWER_LEFT, entityPosition, points);
+    hitbox->getCorner(EntityCorner::LOWER_LEFT, points);
     EXPECT_EQ(points.x, 20);
     EXPECT_EQ(points.y, 66);
-    hitbox->getCorner(EntityCorner::LOWER_RIGHT, entityPosition, points);
+    hitbox->getCorner(EntityCorner::LOWER_RIGHT, points);
     EXPECT_EQ(points.x, 36);
     EXPECT_EQ(points.y, 66);
 }
@@ -63,22 +64,23 @@ TEST_F(HitboxTest, getSide)
     sf::Vector2f p1 = {};
     sf::Vector2f p2 = {};
     const auto entityPosition = sf::Vector2f(mario->getLeft(), mario->getTop());
-    hitbox->getSide(EntitySide::LEFT, false, entityPosition, p1, p2);
+    hitbox->setEntityPosition(entityPosition);
+    hitbox->getSide(EntitySide::LEFT, false, p1, p2);
     EXPECT_EQ(p1.x, 20);
     EXPECT_EQ(p1.y, 50);
     EXPECT_EQ(p2.x, 20);
     EXPECT_EQ(p2.y, 66);
-    hitbox->getSide(EntitySide::RIGHT, false, entityPosition, p1, p2);
+    hitbox->getSide(EntitySide::RIGHT, false, p1, p2);
     EXPECT_EQ(p1.x, 36);
     EXPECT_EQ(p1.y, 50);
     EXPECT_EQ(p2.x, 36);
     EXPECT_EQ(p2.y, 66);
-    hitbox->getSide(EntitySide::TOP, false, entityPosition, p1, p2);
+    hitbox->getSide(EntitySide::TOP, false, p1, p2);
     EXPECT_EQ(p1.x, 20);
     EXPECT_EQ(p1.y, 50);
     EXPECT_EQ(p2.x, 36);
     EXPECT_EQ(p2.y, 50);
-    hitbox->getSide(EntitySide::BOTTOM, false, entityPosition, p1, p2);
+    hitbox->getSide(EntitySide::BOTTOM, false, p1, p2);
     EXPECT_EQ(p1.x, 20);
     EXPECT_EQ(p1.y, 66);
     EXPECT_EQ(p2.x, 36);
