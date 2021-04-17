@@ -65,59 +65,18 @@ void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
     {
         return;
     }
-    if (currentInput.B.pressedThisFrame())
-    {
-        mMario->setForm(MarioForm::BIG_MARIO);
-    }
-    else if (currentInput.B.releasedThisFrame())
-    {
-        mMario->setForm(MarioForm::SMALL_MARIO);
-    }
+    setMarioFormFromController(currentInput);
 
     sf::Vector2f acceleration = mMario->getAcceleration();
     sf::Vector2f velocity = mMario->getVelocity();
-    if (currentInput.A.pressedThisFrame() && velocity.y == 0)
+
+    velocity.y = setVerticalVelocityDueToJumpStart(currentInput, velocity);
+    if (currentInput.A.pressedThisFrame())
     {
-        if (std::fabs(velocity.x) < 37.0 / 16.0)
-        {
-            velocity.y = -4.0;
-        }
-        else
-        {
-            velocity.y = -5.0;
-        }
-    }
-    if (currentInput.A.keyIsDown)
-    {
-        if (std::fabs(velocity.x) < 1.0)
-        {
-            acceleration.y = 1.0 / 8.0;
-        }
-        else if (std::fabs(velocity.x) < 37.0 / 16.0)
-        {
-            acceleration.y = 0.1172;
-        }
-        else
-        {
-            acceleration.y = 0.15625;
-        }
         mMario->setJumping(true);
     }
-    else
-    {
-        if (std::fabs(velocity.x) < 1.0)
-        {
-            acceleration.y = 7.0 / 16.0;
-        }
-        else if (std::fabs(velocity.x) < 37.0 / 16.0)
-        {
-            acceleration.y = 6.0 / 16.0;
-        }
-        else
-        {
-            acceleration.y = 9.0 / 16.0;
-        }
-    }
+
+    acceleration.y = calculateVerticalAcceleration(currentInput, velocity.x);
 
     if (currentInput.right.keyIsDown)
     {
@@ -141,6 +100,74 @@ void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
 
     mMario->setAcceleration(acceleration);
     mMario->setVelocity(velocity);
+}
+
+float Level::calculateVerticalAcceleration(const KeyboardInput& currentInput,
+                                           float xVelocity) const
+{
+    float result = 0;
+    const auto xSpeed = std::fabs(xVelocity);
+    if (currentInput.A.keyIsDown)
+    {
+        if (xSpeed < 1.0)
+        {
+            result = 1.0 / 8.0;
+        }
+        else if (xSpeed < 37.0 / 16.0)
+        {
+            result = 0.1172;
+        }
+        else
+        {
+            result = 0.15625;
+        }
+    }
+    else
+    {
+        if (xSpeed < 1.0)
+        {
+            result = 7.0 / 16.0;
+        }
+        else if (xSpeed < 37.0 / 16.0)
+        {
+            result = 6.0 / 16.0;
+        }
+        else
+        {
+            result = 9.0 / 16.0;
+        }
+    }
+    return result;
+}
+
+float Level::setVerticalVelocityDueToJumpStart(
+        const KeyboardInput& currentInput, const sf::Vector2f& velocity) const
+{
+    float result = velocity.y;
+    if (currentInput.A.pressedThisFrame() && velocity.y == 0)
+    {
+        if (std::fabs(velocity.x) < 37.0 / 16.0)
+        {
+            result = -4.0;
+        }
+        else
+        {
+            result = -5.0;
+        }
+    }
+    return result;
+}
+
+void Level::setMarioFormFromController(const KeyboardInput& currentInput) const
+{
+    if (currentInput.B.pressedThisFrame())
+    {
+        mMario->setForm(MarioForm::BIG_MARIO);
+    }
+    else if (currentInput.B.releasedThisFrame())
+    {
+        mMario->setForm(MarioForm::SMALL_MARIO);
+    }
 }
 
 const Mario& Level::getMario() const

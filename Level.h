@@ -29,11 +29,11 @@ private:
     std::unique_ptr<Mario> mMario;
     std::vector<std::unique_ptr<Entity>> mEntities;
 
-    /*
-     * Ground height is a large arbitrary number so that Mario and all other
-     * entities on the screen are considered above the ground
-     * */
-//    float mGroundHeight;
+    void setMarioFormFromController(const KeyboardInput& currentInput) const;
+    float setVerticalVelocityDueToJumpStart(const KeyboardInput& currentInput,
+                                            const sf::Vector2f& velocity) const;
+    float calculateVerticalAcceleration(const KeyboardInput& currentInput,
+                                        float xVelocity) const;
 };
 
 #endif  // SUPERMARIOBROS_LEVEL_H

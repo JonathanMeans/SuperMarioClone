@@ -56,7 +56,6 @@ int main(int argc, char* argv[])
     KeyboardInput previousInput = {};
 
     std::vector<KeyboardInput> keyboardInputs;
-    int idx = 0;
     while (window.isOpen())
     {
         sf::Event event = {};

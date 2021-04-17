@@ -173,11 +173,6 @@ void Mario::jump()
 void Mario::onCollision(const Collision& collision)
 {
     // collision's side is referring to the side of Mario that collided
-    if (collision.entityType == EntityType::BLOCK)
-    {
-        int debug = true;
-        (void)debug;
-    }
     if (isEnemy(collision.entityType))
     {
         if (collision.side != EntitySide::BOTTOM)
