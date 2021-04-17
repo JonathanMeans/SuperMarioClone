@@ -40,12 +40,6 @@ public:
 
     [[nodiscard]] bool collidesWith(const Hitbox& other) const;
 
-    void getCorner(const EntityCorner& corner, sf::Vector2f& point) const;
-
-    void getSide(const EntitySide& side,
-                 bool extendEdges,
-                 sf::Vector2f& p1,
-                 sf::Vector2f& p2) const;
     void draw(sf::RenderWindow& window) const;
 
     sf::Vector2f mSize;
