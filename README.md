@@ -1,7 +1,6 @@
 # Super Mario Bros Clone
 
 ## To Do
-* Print out pressed keys while playing the game
 * Hitbox outlines instead of filled rectangles
 * Tweak Mario's velocity/acceleration when hitting a block from the bottom
 * When falling and not pressing A, should Mario be jumping or not?

@@ -1,5 +1,6 @@
 #include <file_util.h>
 
+#include "ControllerOverlay.h"
 #include "Input.h"
 #include "Level.h"
 #include "SFML/Graphics.hpp"
@@ -91,6 +92,7 @@ int main(int argc, char* argv[])
 
         level.executeFrame(currentInput);
         level.drawFrame(window);
+        ControllerOverlay::draw(currentInput, window);
         window.display();
 
         getTimer().incrementNumFrames();
