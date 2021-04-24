@@ -26,7 +26,7 @@ void Goomba::onCollision(const Collision& collision)
 {
     const auto hitbox = getHitbox(collision.entityType);
 
-    if (collision.entityType == EntityType::MARIO &&
+    if (isMario(collision.entityType) &&
         collision.side == EntitySide::TOP)
         die();
     else

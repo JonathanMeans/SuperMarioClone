@@ -11,7 +11,8 @@
 enum class EntityType
 {
     GOOMBA,
-    MARIO,
+    SMALL_MARIO,
+    BIG_MARIO,
     PIPE,
     GROUND,
     BLOCK
@@ -19,6 +20,7 @@ enum class EntityType
 
 std::string convertSideToString(EntitySide side);
 bool isEnemy(EntityType type);
+bool isMario(EntityType entityType);
 
 struct Collision
 {
@@ -101,6 +103,7 @@ protected:
     Animation* mActiveAnimation;
     size_t mSpriteWidth;
     size_t mSpriteHeight;
+    EntityType mType;
 
     // Current theory is that there are two hitboxes
     // mMarioCollisionHitbox is used to detect collision for Mario against
@@ -126,7 +129,6 @@ private:
 
     int mLookDirection;
     float mMaxVelocity;
-    EntityType mType;
 };
 
 #endif  // SUPERMARIOBROS_ENTITY_H

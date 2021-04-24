@@ -31,11 +31,14 @@ void Block::doInternalCalculations()
 
 void Block::onCollision(const Collision& collision)
 {
-    if (collision.entityType != EntityType::MARIO)
+    if (!isMario(collision.entityType))
         return;
     if (collision.side != EntitySide::BOTTOM)
         return;
-
-    this->mVelocity.y = -4;
-    this->mAcceleration.y = GRAVITY_ACCELERATION;
+    if (collision.entityType == EntityType::SMALL_MARIO) {
+        this->mVelocity.y = -4;
+        this->mAcceleration.y = GRAVITY_ACCELERATION;
+    } else {
+        this->setCleanupFlag();
+    }
 }

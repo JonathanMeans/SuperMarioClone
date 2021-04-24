@@ -9,7 +9,7 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
            16,
            16,
            Hitbox({12, 11}, {2, 5}),
-           EntityType::MARIO,
+           EntityType::SMALL_MARIO,
            position,
            2.f),
     smallHitbox(this->mMarioCollisionHitbox),
@@ -126,6 +126,7 @@ void Mario::setForm(MarioForm form)
             mMarioCollisionHitbox = largeHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
+            mType = EntityType::BIG_MARIO;
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
@@ -137,6 +138,7 @@ void Mario::setForm(MarioForm form)
             mMarioCollisionHitbox = smallHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
+            mType = EntityType::SMALL_MARIO;
         }
     }
 
