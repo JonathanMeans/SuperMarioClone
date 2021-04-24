@@ -126,7 +126,6 @@ void Mario::setForm(MarioForm form)
             mMarioCollisionHitbox = largeHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
-            mType = EntityType::BIG_MARIO;
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
@@ -138,11 +137,22 @@ void Mario::setForm(MarioForm form)
             mMarioCollisionHitbox = smallHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
-            mType = EntityType::SMALL_MARIO;
         }
     }
 
     mForm = form;
+}
+
+EntityType Mario::getType() const
+{
+    switch (mForm)
+    {
+    case MarioForm::BIG_MARIO:
+        return EntityType::BIG_MARIO;
+    case MarioForm::SMALL_MARIO:
+        return EntityType::SMALL_MARIO;
+    }
+    throw std::runtime_error("Unhandled form in Mario::getType()");
 }
 
 void Mario::stopWalking()
@@ -245,6 +255,7 @@ void Mario::die()
     });
 }
 
-bool Mario::isJumping() const {
+bool Mario::isJumping() const
+{
     return mJumping;
 }

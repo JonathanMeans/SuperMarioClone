@@ -26,6 +26,8 @@ public:
     void jump();
     void setForm(MarioForm form);
 
+    [[nodiscard]] EntityType getType() const override;
+
     void setAnimationFromState() override;
 
     inline void setJumping(bool isJumping)

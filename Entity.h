@@ -76,7 +76,7 @@ public:
 
     sf::Vector2f mDeltaP;
 
-    [[nodiscard]] EntityType getType() const;
+    [[nodiscard]] virtual EntityType getType() const;
 
     bool collideWithEntity(std::vector<std::unique_ptr<Entity>>& entities);
     bool collideWithEntity(std::unique_ptr<Entity>& entity);
@@ -103,7 +103,6 @@ protected:
     Animation* mActiveAnimation;
     size_t mSpriteWidth;
     size_t mSpriteHeight;
-    EntityType mType;
 
     // Current theory is that there are two hitboxes
     // mMarioCollisionHitbox is used to detect collision for Mario against
@@ -129,6 +128,7 @@ private:
 
     int mLookDirection;
     float mMaxVelocity;
+    EntityType mType;
 };
 
 #endif  // SUPERMARIOBROS_ENTITY_H

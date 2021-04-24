@@ -79,7 +79,8 @@ bool isEnemy(EntityType type)
 
 bool isMario(EntityType entityType)
 {
-    return entityType == EntityType::SMALL_MARIO || entityType == EntityType::BIG_MARIO;
+    return entityType == EntityType::SMALL_MARIO ||
+            entityType == EntityType::BIG_MARIO;
 }
 
 const float Entity::NO_MAX_VELOCITY_VALUE = -1;
@@ -99,12 +100,12 @@ Entity::Entity(const sf::Texture& texture,
     mActiveAnimation(nullptr),
     mSpriteWidth(spriteWidth),
     mSpriteHeight(spriteHeight),
-    mType(type),
     mMarioCollisionHitbox(hitbox),
     mSpriteBoundsHitbox(createSpriteBoundsHitbox()),
     mInputEnabled(true),
     mLookDirection(1),
-    mMaxVelocity(maxVelocity)
+    mMaxVelocity(maxVelocity),
+    mType(type)
 {
     mActiveSprite.setPosition(upperCenterToUpperLeft(position));
 
@@ -380,4 +381,3 @@ bool Entity::needsCleanup()
 {
     return mCleanupFlag;
 }
-
