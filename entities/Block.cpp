@@ -3,7 +3,6 @@
 #include <AnimationBuilder.h>
 #include <SpriteMaker.h>
 #include <Timer.h>
-#include "Goomba.h"
 
 Block::Block(const sf::Texture& texture, const sf::Vector2f& position) :
     Entity(texture,
@@ -46,9 +45,58 @@ void Block::onCollision(const Collision& collision)
     {
         this->setCleanupFlag();
 
-        getTimer().scheduleSeconds(1, [&]() {
-            addEntity(std::make_unique<Goomba>(getSpriteMaker()->enemyTexture,
-                                               sf::Vector2f(150, 50)));
-        });
+        // Spawn block shards after destruction
+        // Upper left
+        addEntity(std::make_unique<BlockShard>(
+                getSpriteMaker()->itemAndBlockTexture,
+                sf::Vector2f{getLeft(), getTop()},
+                sf::Vector2f(0, 0),
+                sf::Vector2f(-1, -5)));
+
+        // Upper right
+        addEntity(std::make_unique<BlockShard>(
+                getSpriteMaker()->itemAndBlockTexture,
+                sf::Vector2f{getLeft() + 8, getTop()},
+                sf::Vector2f(8, 0),
+                sf::Vector2f(1, -5)));
+
+        // Lower right
+        addEntity(std::make_unique<BlockShard>(
+                getSpriteMaker()->itemAndBlockTexture,
+                sf::Vector2f{getLeft() + 8, getTop() + 8},
+                sf::Vector2f(8, 8),
+                sf::Vector2f(1, -5)));
+
+        // Lower left
+        addEntity(std::make_unique<BlockShard>(
+                getSpriteMaker()->itemAndBlockTexture,
+                sf::Vector2f{getLeft(), getTop() + 8},
+                sf::Vector2f(0, 8),
+                sf::Vector2f(-1, -5)));
     }
+}
+
+BlockShard::BlockShard(const sf::Texture& texture,
+                       const sf::Vector2f& position,
+                       const sf::Vector2f& fragmentOffset,
+                       const sf::Vector2f& initialVelocity) :
+    Entity(texture,
+           8,
+           8,
+           Hitbox({0, 0}, {-1000, -1000}),
+           EntityType::BLOCK_SHARD,
+           position)
+
+{
+    mAcceleration = {0, GRAVITY_ACCELERATION};
+    mVelocity = initialVelocity;
+    const auto xOffset = 304 + fragmentOffset.x;
+    const auto yOffset = 112 + fragmentOffset.y;
+    defaultAnimation = AnimationBuilder()
+                               .withOffset(xOffset, yOffset)
+                               .withRectSize(8, 8)
+                               .build(mActiveSprite);
+    mActiveAnimation = &defaultAnimation;
+
+    getTimer().scheduleSeconds(10, [&]() { this->setCleanupFlag(); });
 }

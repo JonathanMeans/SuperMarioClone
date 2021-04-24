@@ -19,4 +19,15 @@ private:
     Animation defaultAnimation;
 };
 
+class BlockShard : public Entity
+{
+public:
+    BlockShard(const sf::Texture& texture,
+               const sf::Vector2f& position,
+               const sf::Vector2f& fragmentOffset,
+               const sf::Vector2f& initialVelocity);
+
+    Animation defaultAnimation;
+};
+
 #endif  // SUPERMARIOBROS_BLOCK_H

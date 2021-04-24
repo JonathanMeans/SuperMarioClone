@@ -15,7 +15,8 @@ enum class EntityType
     BIG_MARIO,
     PIPE,
     GROUND,
-    BLOCK
+    BLOCK,
+    BLOCK_SHARD
 };
 
 std::string convertSideToString(EntitySide side);

@@ -18,6 +18,14 @@ SpriteMaker::SpriteMaker(const std::string& resourcesDir)
     }
     playerTexture.setSmooth(false);
 
+    if (!itemAndBlockTexture.loadFromFile(resourcesDir +
+                                             "Item and Brick Blocks.png"))
+    {
+        std::cerr << "Error Loading Texture";
+        throw std::runtime_error("Unable to load objects texture");
+    }
+    itemAndBlockTexture.setSmooth(false);
+
     if (!inanimateObjectTexture.loadFromFile(resourcesDir +
                                              "inanimate objects.png"))
     {
