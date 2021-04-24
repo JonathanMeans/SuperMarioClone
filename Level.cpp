@@ -62,10 +62,6 @@ void Level::drawFrame(sf::RenderWindow& window)
 
 void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
 {
-    if (mMario->isFalling())
-    {
-        return;
-    }
     setMarioFormFromController(currentInput);
 
     sf::Vector2f acceleration = mMario->getAcceleration();
@@ -145,7 +141,7 @@ float Level::setVerticalVelocityDueToJumpStart(
         const KeyboardInput& currentInput, const sf::Vector2f& velocity) const
 {
     float result = velocity.y;
-    if (currentInput.A.pressedThisFrame() && velocity.y == 0)
+    if (!mMario->isJumping() && currentInput.A.pressedThisFrame())
     {
         if (std::fabs(velocity.x) < 37.0 / 16.0)
         {
