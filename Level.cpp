@@ -16,7 +16,8 @@ void Level::executeFrame(const KeyboardInput& input)
     mMario->mDeltaP.x = 0;
     mMario->mDeltaP.y = 0;
 
-    for (auto& entity : getEntities())
+    auto& entities = getEntities();
+    for (auto& entity : entities)
     {
         entity->mDeltaP.x = 0;
         entity->mDeltaP.y = 0;
@@ -25,30 +26,30 @@ void Level::executeFrame(const KeyboardInput& input)
     setMarioMovementFromController(input);
     mMario->updatePosition();
 
-    for (auto& entity : getEntities())
+    for (auto& entity : entities)
     {
         entity->updatePosition();
         entity->doInternalCalculations();
     }
 
-    mMario->collideWithEntity(getEntities());
-    for (size_t ii = 0; ii < getEntities().size(); ++ii)
-        for (size_t jj = ii + 1; jj < getEntities().size(); ++jj)
-            getEntities()[ii]->collideWithEntity(getEntities()[jj]);
+    mMario->collideWithEntity(entities);
+    for (size_t ii = 0; ii < entities.size(); ++ii)
+        for (size_t jj = ii + 1; jj < entities.size(); ++jj)
+            entities[ii]->collideWithEntity(entities[jj]);
 
     mMario->updateAnimation();
 
-    for (auto& entity : getEntities())
+    for (auto& entity : entities)
     {
         entity->updateAnimation();
     }
 
-    getEntities().erase(std::remove_if(getEntities().begin(),
-                                       getEntities().end(),
-                                       [](std::unique_ptr<Entity>& entity) {
-                                           return entity->needsCleanup();
-                                       }),
-                        getEntities().end());
+    entities.erase(std::remove_if(entities.begin(),
+                                  entities.end(),
+                                  [](std::unique_ptr<Entity>& entity) {
+                                      return entity->needsCleanup();
+                                  }),
+                   entities.end());
 }
 
 void Level::drawFrame(sf::RenderWindow& window)
