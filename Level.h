@@ -27,7 +27,6 @@ public:
 
 private:
     std::unique_ptr<Mario> mMario;
-    std::vector<std::unique_ptr<Entity>> mEntities;
 
     void setMarioFormFromController(const KeyboardInput& currentInput) const;
     float setVerticalVelocityDueToJumpStart(const KeyboardInput& currentInput,

@@ -4,9 +4,10 @@
 
 Level::Level(std::unique_ptr<Mario> mario,
              std::vector<std::unique_ptr<Entity>>&& entities) :
-    mMario(std::move(mario)),
-    mEntities(std::move(entities))
+    mMario(std::move(mario))
 {
+    for (auto& entity : entities)
+        addEntity(std::move(entity));
 }
 
 void Level::executeFrame(const KeyboardInput& input)
@@ -15,7 +16,7 @@ void Level::executeFrame(const KeyboardInput& input)
     mMario->mDeltaP.x = 0;
     mMario->mDeltaP.y = 0;
 
-    for (auto& entity : mEntities)
+    for (auto& entity : getEntities())
     {
         entity->mDeltaP.x = 0;
         entity->mDeltaP.y = 0;
@@ -24,37 +25,37 @@ void Level::executeFrame(const KeyboardInput& input)
     setMarioMovementFromController(input);
     mMario->updatePosition();
 
-    for (auto& entity : mEntities)
+    for (auto& entity : getEntities())
     {
         entity->updatePosition();
         entity->doInternalCalculations();
     }
 
-    mMario->collideWithEntity(mEntities);
-    for (size_t ii = 0; ii < mEntities.size(); ++ii)
-        for (size_t jj = ii + 1; jj < mEntities.size(); ++jj)
-            mEntities[ii]->collideWithEntity(mEntities[jj]);
+    mMario->collideWithEntity(getEntities());
+    for (size_t ii = 0; ii < getEntities().size(); ++ii)
+        for (size_t jj = ii + 1; jj < getEntities().size(); ++jj)
+            getEntities()[ii]->collideWithEntity(getEntities()[jj]);
 
     mMario->updateAnimation();
 
-    for (auto& entity : mEntities)
+    for (auto& entity : getEntities())
     {
         entity->updateAnimation();
     }
 
-    mEntities.erase(std::remove_if(mEntities.begin(),
-                                   mEntities.end(),
-                                   [](std::unique_ptr<Entity>& entity) {
-                                       return entity->needsCleanup();
-                                   }),
-                    mEntities.end());
+    getEntities().erase(std::remove_if(getEntities().begin(),
+                                       getEntities().end(),
+                                       [](std::unique_ptr<Entity>& entity) {
+                                           return entity->needsCleanup();
+                                       }),
+                        getEntities().end());
 }
 
 void Level::drawFrame(sf::RenderWindow& window)
 {
     window.clear(sf::Color(0, 0, 255, 255));
     mMario->draw(window);
-    for (auto& entity : mEntities)
+    for (auto& entity : getEntities())
     {
         entity->draw(window);
     }

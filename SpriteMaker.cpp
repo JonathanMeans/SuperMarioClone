@@ -4,7 +4,6 @@
 
 SpriteMaker::SpriteMaker(const std::string& resourcesDir)
 {
-
     if (!enemyTexture.loadFromFile(resourcesDir + "enemies.png"))
     {
         std::cerr << "Error Loading Texture";
@@ -19,10 +18,26 @@ SpriteMaker::SpriteMaker(const std::string& resourcesDir)
     }
     playerTexture.setSmooth(false);
 
-    if (!inanimateObjectTexture.loadFromFile(resourcesDir + "inanimate objects.png"))
+    if (!inanimateObjectTexture.loadFromFile(resourcesDir +
+                                             "inanimate objects.png"))
     {
         std::cerr << "Error Loading Texture";
         throw std::runtime_error("Unable to load objects texture");
     }
     inanimateObjectTexture.setSmooth(false);
 }
+
+std::unique_ptr<SpriteMaker> gSpriteMaker = nullptr;
+
+void initializeSpriteMaker(const std::string& resourceDir)
+{
+    gSpriteMaker = std::make_unique<SpriteMaker>(resourceDir);
+}
+
+std::unique_ptr<SpriteMaker>& getSpriteMaker()
+{
+    if (!gSpriteMaker)
+        throw std::runtime_error("SpriteMaker was never initialized");
+
+    return gSpriteMaker;
+};

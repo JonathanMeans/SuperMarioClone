@@ -1,7 +1,9 @@
 
 #include "Block.h"
 #include <AnimationBuilder.h>
+#include <SpriteMaker.h>
 #include <Timer.h>
+#include "Goomba.h"
 
 Block::Block(const sf::Texture& texture, const sf::Vector2f& position) :
     Entity(texture,
@@ -35,10 +37,18 @@ void Block::onCollision(const Collision& collision)
         return;
     if (collision.side != EntitySide::BOTTOM)
         return;
-    if (collision.entityType == EntityType::SMALL_MARIO) {
+    if (collision.entityType == EntityType::SMALL_MARIO)
+    {
         this->mVelocity.y = -4;
         this->mAcceleration.y = GRAVITY_ACCELERATION;
-    } else {
+    }
+    else
+    {
         this->setCleanupFlag();
+
+        getTimer().scheduleSeconds(1, [&]() {
+            addEntity(std::make_unique<Goomba>(getSpriteMaker()->enemyTexture,
+                                               sf::Vector2f(150, 50)));
+        });
     }
 }

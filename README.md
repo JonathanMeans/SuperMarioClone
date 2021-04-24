@@ -6,7 +6,8 @@
 * When falling and not pressing A, should Mario be jumping or not?
 
 ## Bug List
-* No bugs!
+* Goomba-goomba collision is not considered. In particular, if a Goomba falls
+on another Goomba, one Goomba falls through the ground
 
 # CMake Flags
 -DDRAW_HITBOX: Set to 1 to enable debug hitboxes, 0 to turn off

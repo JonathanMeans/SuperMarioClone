@@ -23,18 +23,20 @@ int main(int argc, char* argv[])
     window.setSize(sf::Vector2u(960, 720));
     window.clear();
 
-    SpriteMaker spriteMaker(resourceDir);
+    initializeSpriteMaker(resourceDir);
+    auto& spriteMaker = getSpriteMaker();
+
     std::vector<std::unique_ptr<Entity>> entities;
     entities.reserve(100);
 
     std::unique_ptr<Mario> mario(
-            new Mario(spriteMaker.playerTexture, {60, 100}));
+            new Mario(spriteMaker->playerTexture, {60, 100}));
     std::unique_ptr<Goomba> goomba(
-            new Goomba(spriteMaker.enemyTexture, {150, 50}));
+            new Goomba(spriteMaker->enemyTexture, {150, 50}));
     std::unique_ptr<Pipe> leftPipe(
-            new Pipe(spriteMaker.inanimateObjectTexture, {110, 100}));
+            new Pipe(spriteMaker->inanimateObjectTexture, {110, 100}));
     std::unique_ptr<Pipe> rightPipe(
-            new Pipe(spriteMaker.inanimateObjectTexture, {-10, 100}));
+            new Pipe(spriteMaker->inanimateObjectTexture, {-10, 100}));
 
     entities.push_back(std::move(leftPipe));
     entities.push_back(std::move(rightPipe));
@@ -43,12 +45,12 @@ int main(int argc, char* argv[])
     for (int i = 0; i < 20; i++)
     {
         entities.push_back(
-                std::make_unique<Ground>(spriteMaker.inanimateObjectTexture,
+                std::make_unique<Ground>(spriteMaker->inanimateObjectTexture,
                                          sf::Vector2f(i * 16, 132)));
     }
 
     entities.push_back(
-            std::make_unique<Block>(spriteMaker.inanimateObjectTexture,
+            std::make_unique<Block>(spriteMaker->inanimateObjectTexture,
                                     sf::Vector2f(40, 70)));
 
     Level level(std::move(mario), std::move(entities));

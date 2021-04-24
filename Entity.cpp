@@ -381,3 +381,16 @@ bool Entity::needsCleanup()
 {
     return mCleanupFlag;
 }
+
+
+std::vector<std::unique_ptr<Entity>> gEntities;
+
+std::vector<std::unique_ptr<Entity>>& getEntities()
+{
+    return gEntities;
+}
+
+void addEntity(std::unique_ptr<Entity> entity)
+{
+    gEntities.push_back(std::move(entity));
+}

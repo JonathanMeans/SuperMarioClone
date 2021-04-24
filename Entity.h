@@ -131,4 +131,7 @@ private:
     EntityType mType;
 };
 
+std::vector<std::unique_ptr<Entity>>& getEntities();
+void addEntity(std::unique_ptr<Entity> entity);
+
 #endif  // SUPERMARIOBROS_ENTITY_H

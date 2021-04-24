@@ -16,4 +16,7 @@ public:
     sf::Texture inanimateObjectTexture;
 };
 
+void initializeSpriteMaker(const std::string& resourceDir);
+std::unique_ptr<SpriteMaker>& getSpriteMaker();
+
 #endif  // SUPERMARIOBROS_SPRITEMAKER_H
