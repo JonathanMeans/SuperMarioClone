@@ -34,7 +34,6 @@ void ControllerOverlay::draw(const KeyboardInput& keyboardInput, sf::RenderWindo
     sf::CircleShape bButton(5);
     sf::CircleShape aButton(5);
 
-
     bButton.setFillColor(keyboardInput.B.keyIsDown ? green : red);
     aButton.setFillColor(keyboardInput.A.keyIsDown ? green : red);
 

@@ -92,6 +92,7 @@ int main(int argc, char* argv[])
 
         level.executeFrame(currentInput);
         level.drawFrame(window);
+        // Comment/uncomment line below to display in-game controller
         ControllerOverlay::draw(currentInput, window);
         window.display();
 
