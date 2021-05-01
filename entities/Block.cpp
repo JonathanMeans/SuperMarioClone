@@ -13,12 +13,6 @@ Block::Block(const sf::Texture& texture, const sf::Vector2f& position) :
            position),
     mOriginalTop(position.y)
 {
-    mAcceleration = {};
-
-    defaultAnimation =
-            AnimationBuilder().withOffset(16, 0).withRectSize(16, 16).build(
-                    mActiveSprite);
-    mActiveAnimation = &defaultAnimation;
 }
 
 void Block::doInternalCalculations()
@@ -30,7 +24,19 @@ void Block::doInternalCalculations()
     }
 }
 
-void Block::onCollision(const Collision& collision)
+BreakableBlock::BreakableBlock(const sf::Texture& texture,
+                               const sf::Vector2f& position) :
+    Block(texture, position)
+{
+    mAcceleration = {};
+
+    defaultAnimation =
+            AnimationBuilder().withOffset(16, 0).withRectSize(16, 16).build(
+                    mActiveSprite);
+    mActiveAnimation = &defaultAnimation;
+}
+
+void BreakableBlock::onCollision(const Collision& collision)
 {
     if (!isMario(collision.entityType))
         return;
@@ -38,8 +44,7 @@ void Block::onCollision(const Collision& collision)
         return;
     if (collision.entityType == EntityType::SMALL_MARIO)
     {
-        this->mVelocity.y = -4;
-        this->mAcceleration.y = GRAVITY_ACCELERATION;
+        bumpUp();
     }
     else
     {
@@ -74,6 +79,45 @@ void Block::onCollision(const Collision& collision)
                 sf::Vector2f(0, 8),
                 sf::Vector2f(-1, -5)));
     }
+}
+
+ItemBlock::ItemBlock(const sf::Texture& texture, const sf::Vector2f& position) :
+    Block(texture, position)
+{
+    mAcceleration = {};
+
+    hasItemAnimation = AnimationBuilder()
+                               .withOffset(240, 0)
+                               .withRectSize(16, 16)
+                               .withNumRect(3)
+                               .withTicsPerFrame(2)
+                               .andRepeat()
+                               .build(mActiveSprite);
+    noItemAnimation =
+            AnimationBuilder().withOffset(288, 0).withRectSize(16, 16).build(
+                    mActiveSprite);
+
+    mActiveAnimation = &hasItemAnimation;
+}
+
+void ItemBlock::onCollision(const Collision& collision)
+{
+    if (!isMario(collision.entityType))
+        return;
+    if (collision.side != EntitySide::BOTTOM)
+        return;
+    if (mActiveAnimation == &noItemAnimation)
+        return;
+
+    bumpUp();
+
+    mActiveAnimation = &noItemAnimation;
+}
+
+void Block::bumpUp()
+{
+    mVelocity.y = -4;
+    mAcceleration.y = GRAVITY_ACCELERATION;
 }
 
 BlockShard::BlockShard(const sf::Texture& texture,
