@@ -54,28 +54,28 @@ void BreakableBlock::onCollision(const Collision& collision)
         // Spawn block shards after destruction
         // Upper left
         addEntity(std::make_unique<BlockShard>(
-                getSpriteMaker()->itemAndBlockTexture,
+                getSpriteMaker()->blockTexture,
                 sf::Vector2f{getLeft(), getTop()},
                 sf::Vector2f(0, 0),
                 sf::Vector2f(-1, -5)));
 
         // Upper right
         addEntity(std::make_unique<BlockShard>(
-                getSpriteMaker()->itemAndBlockTexture,
+                getSpriteMaker()->blockTexture,
                 sf::Vector2f{getLeft() + 8, getTop()},
                 sf::Vector2f(8, 0),
                 sf::Vector2f(1, -5)));
 
         // Lower right
         addEntity(std::make_unique<BlockShard>(
-                getSpriteMaker()->itemAndBlockTexture,
+                getSpriteMaker()->blockTexture,
                 sf::Vector2f{getLeft() + 8, getTop() + 8},
                 sf::Vector2f(8, 8),
                 sf::Vector2f(1, -5)));
 
         // Lower left
         addEntity(std::make_unique<BlockShard>(
-                getSpriteMaker()->itemAndBlockTexture,
+                getSpriteMaker()->blockTexture,
                 sf::Vector2f{getLeft(), getTop() + 8},
                 sf::Vector2f(0, 8),
                 sf::Vector2f(-1, -5)));
