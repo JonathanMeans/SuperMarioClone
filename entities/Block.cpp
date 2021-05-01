@@ -3,6 +3,7 @@
 #include <AnimationBuilder.h>
 #include <SpriteMaker.h>
 #include <Timer.h>
+#include "Items.h"
 
 Block::Block(const sf::Texture& texture, const sf::Vector2f& position) :
     Entity(texture,
@@ -110,6 +111,9 @@ void ItemBlock::onCollision(const Collision& collision)
         return;
 
     bumpUp();
+    addEntity(
+            std::make_unique<Mushroom>(getSpriteMaker()->itemAndObjectTexture,
+                                       sf::Vector2f(getLeft(), getTop() - 16)));
 
     mActiveAnimation = &noItemAnimation;
 }

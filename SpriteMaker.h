@@ -14,6 +14,7 @@ public:
     sf::Texture enemyTexture;
     sf::Texture playerTexture;
     sf::Texture itemAndBlockTexture;
+    sf::Texture itemAndObjectTexture;
     sf::Texture inanimateObjectTexture;
 };
 

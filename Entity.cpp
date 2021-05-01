@@ -77,6 +77,19 @@ bool isEnemy(EntityType type)
     }
 }
 
+bool isObject(EntityType type)
+{
+    switch (type)
+    {
+    case EntityType::BLOCK:
+    case EntityType::PIPE:
+    case EntityType::GROUND:
+        return true;
+    default:
+        return false;
+    }
+}
+
 bool isMario(EntityType entityType)
 {
     return entityType == EntityType::SMALL_MARIO ||
@@ -381,7 +394,6 @@ bool Entity::needsCleanup()
 {
     return mCleanupFlag;
 }
-
 
 std::vector<std::unique_ptr<Entity>> gEntities;
 

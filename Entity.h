@@ -16,12 +16,14 @@ enum class EntityType
     PIPE,
     GROUND,
     BLOCK,
-    BLOCK_SHARD
+    BLOCK_SHARD,
+    MUSHROOM,
 };
 
 std::string convertSideToString(EntitySide side);
 bool isEnemy(EntityType type);
 bool isMario(EntityType entityType);
+bool isObject(EntityType entityType);
 
 struct Collision
 {
