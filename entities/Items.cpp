@@ -35,4 +35,7 @@ void Mushroom::onCollision(const Collision& collision)
             setVelocity(sf::Vector2f(currentVelocity.x, 0));
         }
     }
+
+    int debugPoint;
+    (void) debugPoint;
 }

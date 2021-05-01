@@ -171,6 +171,10 @@ const Hitbox& Entity::getHitbox(EntityType type) const
 
 bool Entity::detectCollision(Entity& other)
 {
+    if (mDeltaP.x == 0 && mDeltaP.y == 0 &&
+        (other.mDeltaP.x != 0 || other.mDeltaP.y != 0)) {
+        return other.detectCollision(*this);
+    }
     const auto currentPosition = sf::Vector2f(getLeft(), getTop());
     const auto originalPosition = currentPosition - this->mDeltaP;
     const auto newXPosition =
