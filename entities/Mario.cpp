@@ -188,12 +188,15 @@ void Mario::onCollision(const Collision& collision)
     {
         if (collision.side != EntitySide::BOTTOM)
         {
-            die();
+            terminate();
         }
         else
         {
             addPositionDelta(0, -5);
         }
+    } else if (collision.entityType == EntityType::MUSHROOM)
+    {
+        return;
     }
     else
     {
@@ -201,48 +204,34 @@ void Mario::onCollision(const Collision& collision)
         const auto& hitbox = getHitbox(collision.entityType);
         if (collision.side == EntitySide::BOTTOM)
         {
-            auto spriteBottom = hitbox.getBottom();
-            auto newSpriteBottom = collision.yIntersection;
-            const auto delta = newSpriteBottom - spriteBottom;
-            addPositionDelta(0, delta);
-
+            clampY(hitbox.getBottom(), collision.yIntersection);
             const auto currentVelocity = getVelocity();
             setVelocity(sf::Vector2f(currentVelocity.x, 0));
             setJumping(false);
         }
         else if (collision.side == EntitySide::TOP)
         {
-            auto spriteTop = hitbox.getTop();
-            auto newSpriteTop = collision.yIntersection;
-            const auto delta = newSpriteTop - spriteTop;
-            addPositionDelta(0, delta);
-
+            clampY(hitbox.getTop(), collision.yIntersection);
             setVelocity(sf::Vector2f(getVelocity().x, 0));
             mAcceleration.y = GRAVITY_ACCELERATION;
             mDeltaP.y = 0;
         }
         else if (collision.side == EntitySide::RIGHT)
         {
-            auto spriteRight = hitbox.getRight();
-            auto newSpriteRight = collision.xIntersection;
-            const auto delta = newSpriteRight - spriteRight;
-            addPositionDelta(delta, 0);
+            clampX(hitbox.getRight(), collision.xIntersection);
             setVelocity(sf::Vector2f(0, getVelocity().y));
             mAcceleration.x = 0;
         }
         else if (collision.side == EntitySide::LEFT)
         {
-            auto spriteLeft = hitbox.getLeft();
-            auto newSpriteLeft = collision.xIntersection;
-            const auto delta = newSpriteLeft - spriteLeft;
-            addPositionDelta(delta, 0);
+            clampX(hitbox.getLeft(), collision.xIntersection);
             setVelocity(sf::Vector2f(0, getVelocity().y));
             mAcceleration.x = 0;
         }
     }
 }
 
-void Mario::die()
+void Mario::terminate()
 {
     mIsDead = true;
     mMarioCollisionHitbox.invalidate();

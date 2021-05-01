@@ -28,39 +28,29 @@ void Goomba::onCollision(const Collision& collision)
 
     if (isMario(collision.entityType) &&
         collision.side == EntitySide::TOP)
-        die();
+        terminate();
     else
     {
         if (collision.side == EntitySide::BOTTOM)
         {
-            auto spriteBottom = hitbox.getBottom();
-            auto newSpriteBottom = collision.yIntersection;
-            const auto delta = newSpriteBottom - spriteBottom;
-            addPositionDelta(0, delta);
-
+            clampY(hitbox.getBottom(), collision.yIntersection);
             const auto currentVelocity = getVelocity();
             setVelocity(sf::Vector2f(currentVelocity.x, 0));
         }
         else if (collision.side == EntitySide::RIGHT)
         {
-            auto spriteRight = hitbox.getRight();
-            auto newSpriteRight = collision.xIntersection;
-            const auto delta = newSpriteRight - spriteRight;
-            addPositionDelta(delta, 0);
+            clampX(hitbox.getRight(), collision.xIntersection);
             setVelocity(sf::Vector2f(0, getVelocity().y));
         }
         else if (collision.side == EntitySide::LEFT)
         {
-            auto spriteLeft = hitbox.getLeft();
-            auto newSpriteLeft = collision.xIntersection;
-            const auto delta = newSpriteLeft - spriteLeft;
-            addPositionDelta(delta, 0);
+            clampX(hitbox.getLeft(), collision.xIntersection);
             setVelocity(sf::Vector2f(0, getVelocity().y));
         }
     }
 }
 
-void Goomba::die()
+void Goomba::terminate()
 {
     mActiveAnimation = &deathAnimation;
     mActiveAnimation->processAction();

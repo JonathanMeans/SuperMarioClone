@@ -69,7 +69,7 @@ public:
     void updateAnimation();
     void draw(sf::RenderWindow& window) const;
 
-    virtual void die();
+    virtual void terminate();
 
     void setCleanupFlag();
     bool needsCleanup();
@@ -90,6 +90,10 @@ protected:
     bool detectCollision(Entity& other);
 
     virtual void onCollision(const Collision& collision);
+
+    void clampX(float spriteX, float newSpriteX);
+
+    void clampY(float spriteY, float newSpriteY);
 
     void handleCollision(Collision collision, Entity& entity);
 

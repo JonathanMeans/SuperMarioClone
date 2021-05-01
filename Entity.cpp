@@ -238,6 +238,18 @@ void Entity::onCollision(const Collision& collision)
     (void)collision;
 }
 
+void Entity::clampX(float spriteX, float newSpriteX)
+{
+    const auto delta = newSpriteX - spriteX;
+    addPositionDelta(delta, 0);
+}
+
+void Entity::clampY(float spriteY, float newSpriteY)
+{
+    const auto delta = newSpriteY - spriteY;
+    addPositionDelta(0, delta);
+}
+
 bool Entity::collideWithEntity(std::vector<std::unique_ptr<Entity>>& entities)
 {
     bool collided = false;
@@ -310,7 +322,7 @@ sf::Vector2f Entity::getAcceleration() const
     return mAcceleration;
 }
 
-void Entity::die()
+void Entity::terminate()
 {
 }
 

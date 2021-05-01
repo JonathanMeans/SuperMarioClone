@@ -35,7 +35,7 @@ public:
         mJumping = isJumping;
     }
 
-    void die() override;
+    void terminate() override;
 
     bool isJumping() const;
 

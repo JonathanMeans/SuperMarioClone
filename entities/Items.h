@@ -11,6 +11,7 @@ public:
 
 protected:
     void onCollision(const Collision& collision) override;
+    void terminate() override;
 
 private:
     Animation defaultAnimation;

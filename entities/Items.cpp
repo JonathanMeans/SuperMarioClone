@@ -24,18 +24,26 @@ void Mushroom::onCollision(const Collision& collision)
 
     if (isObject(collision.entityType))
     {
+        const auto currentVelocity = getVelocity();
         if (collision.side == EntitySide::BOTTOM)
         {
-            auto spriteBottom = hitbox.getBottom();
-            auto newSpriteBottom = collision.yIntersection;
-            const auto delta = newSpriteBottom - spriteBottom;
-            addPositionDelta(0, delta);
-
-            const auto currentVelocity = getVelocity();
+            clampY(hitbox.getBottom(), collision.yIntersection);
             setVelocity(sf::Vector2f(currentVelocity.x, 0));
+        } else if (collision.side == EntitySide::LEFT) {
+            clampX(hitbox.getLeft(), collision.xIntersection);
+            setVelocity(sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
+        } else if (collision.side == EntitySide::RIGHT) {
+            clampX(hitbox.getRight(), collision.xIntersection);
+            setVelocity(sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
         }
     }
 
-    int debugPoint;
-    (void) debugPoint;
+    if (isMario(collision.entityType)) {
+        terminate();
+    }
+
+}
+
+void Mushroom::terminate() {
+    this->setCleanupFlag();
 }

@@ -12,7 +12,7 @@ class Goomba : public Entity
 public:
     Goomba(const sf::Texture& texture, const sf::Vector2f& position);
 
-    void die() override;
+    void terminate() override;
 
 private:
     void onCollision(const Collision& collision) override;
