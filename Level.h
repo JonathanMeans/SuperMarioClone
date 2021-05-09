@@ -28,6 +28,8 @@ public:
 private:
     std::unique_ptr<Mario> mMario;
 
+    [[nodiscard]] bool physicsAreOn() const;
+
     float setVerticalVelocityDueToJumpStart(const KeyboardInput& currentInput,
                                             const sf::Vector2f& velocity) const;
     float calculateVerticalAcceleration(const KeyboardInput& currentInput,

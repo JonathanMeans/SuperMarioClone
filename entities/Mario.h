@@ -39,6 +39,8 @@ public:
 
     bool isJumping() const;
 
+    bool isGrowing() const;
+
     const Hitbox& getHitbox(EntityType type) const override;
 
 private:

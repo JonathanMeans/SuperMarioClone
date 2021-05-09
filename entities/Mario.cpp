@@ -92,13 +92,15 @@ const Hitbox& Mario::getHitbox(EntityType type) const
     }
 }
 
+bool Mario::isGrowing() const
+{
+    return mActiveAnimation == &growingAnimation;
+}
+
 void Mario::setAnimationFromState()
 {
-    if (mActiveAnimation == &growingAnimation)
-    {
-        if (!mActiveAnimation->finished())
-            return;
-    }
+    if (isGrowing() && !mActiveAnimation->finished())
+        return;
 
     if (mIsDead)
     {
