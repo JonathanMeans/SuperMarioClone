@@ -56,7 +56,7 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
                                   .withFrameBorder(1)
                                   .build(mActiveSprite);
     sf::Rect smallRect = sf::IntRect(80, 34, 16, 16);
-    sf::Rect mediumRect = sf::IntRect(34, 1, 16, 32);
+    sf::Rect mediumRect = sf::IntRect(335, 1, 16, 32);
     sf::Rect largeRect = sf::IntRect(80, 1, 16, 32);
     std::vector<sf::IntRect> growingAnimationRectangles = {smallRect,
                                                            mediumRect,
@@ -94,6 +94,11 @@ const Hitbox& Mario::getHitbox(EntityType type) const
 
 void Mario::setAnimationFromState()
 {
+    if (mActiveAnimation == &growingAnimation)
+    {
+        return;
+    }
+
     if (mIsDead)
     {
         mActiveAnimation = &deathAnimation;
