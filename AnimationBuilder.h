@@ -7,7 +7,7 @@ class AnimationBuilder
 {
 public:
     AnimationBuilder();
-    Animation build(sf::Sprite& sprite) const;
+    Animation build(sf::Sprite& sprite);
     AnimationBuilder withOffset(size_t xOffset, size_t yOffset);
     AnimationBuilder withRectSize(size_t width, size_t height);
     AnimationBuilder withNumRect(size_t numRect);

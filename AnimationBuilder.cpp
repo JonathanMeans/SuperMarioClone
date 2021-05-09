@@ -57,26 +57,20 @@ AnimationBuilder AnimationBuilder::withNonContiguousRect(
     return *this;
 }
 
-Animation AnimationBuilder::build(sf::Sprite& sprite) const
+Animation AnimationBuilder::build(sf::Sprite& sprite)
 {
-    if (!mRectangles.empty())
+    if (mRectangles.empty())
     {
-        sprite.setTextureRect(mRectangles[0]);
-        return Animation(sprite, mRectangles, mRepeat, mTicsPerFrame);
+        mRectangles.reserve(mNumRect);
+        for (size_t ii = 0; ii < mNumRect; ++ii)
+        {
+            mRectangles.emplace_back(mXOffset + ((mWidth + mBorderSize) * ii),
+                                     mYOffset,
+                                     mWidth,
+                                     mHeight);
+        }
     }
 
-    std::vector<sf::IntRect> mActionRectangles;
-    mActionRectangles.resize(mNumRect);
-    for (size_t ii = 0; ii < mNumRect; ++ii)
-    {
-        mActionRectangles[ii] =
-                sf::IntRect(mXOffset + ((mWidth + mBorderSize) * ii),
-                            mYOffset,
-                            mWidth,
-                            mHeight);
-    }
-
-    sprite.setTextureRect(mActionRectangles[0]);
-
-    return Animation(sprite, mActionRectangles, mRepeat, mTicsPerFrame);
+    sprite.setTextureRect(mRectangles[0]);
+    return Animation(sprite, mRectangles, mRepeat, mTicsPerFrame);
 }
