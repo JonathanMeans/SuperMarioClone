@@ -1,5 +1,6 @@
 #include "Mario.h"
 #include <AnimationBuilder.h>
+#include <cassert>
 #include "Animation.h"
 #include "Hitbox.h"
 #include "Timer.h"
@@ -57,11 +58,22 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
     sf::Rect smallRect = sf::IntRect(80, 34, 16, 16);
     sf::Rect mediumRect = sf::IntRect(34, 1, 16, 32);
     sf::Rect largeRect = sf::IntRect(80, 1, 16, 32);
-    std::vector<sf::IntRect> growingAnimationRectangles = {
-            smallRect, mediumRect, smallRect, mediumRect, smallRect, mediumRect, largeRect,
-            smallRect, mediumRect, largeRect, smallRect, largeRect
-    };
-    growingAnimation = AnimationBuilder().withNonContiguousRect(growingAnimationRectangles).build(mActiveSprite);
+    std::vector<sf::IntRect> growingAnimationRectangles = {smallRect,
+                                                           mediumRect,
+                                                           smallRect,
+                                                           mediumRect,
+                                                           smallRect,
+                                                           mediumRect,
+                                                           largeRect,
+                                                           smallRect,
+                                                           mediumRect,
+                                                           largeRect,
+                                                           smallRect,
+                                                           largeRect};
+    growingAnimation =
+            AnimationBuilder()
+                    .withNonContiguousRect(growingAnimationRectangles)
+                    .build(mActiveSprite);
 
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
@@ -202,7 +214,8 @@ void Mario::onCollision(const Collision& collision)
         {
             addPositionDelta(0, -5);
         }
-    } else if (collision.entityType == EntityType::MUSHROOM)
+    }
+    else if (collision.entityType == EntityType::MUSHROOM)
     {
         assert(mForm == MarioForm::SMALL_MARIO);
         setForm(MarioForm::BIG_MARIO);
