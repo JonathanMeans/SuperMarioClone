@@ -54,6 +54,14 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
                                   .withNumRect(2)
                                   .withFrameBorder(1)
                                   .build(mActiveSprite);
+    sf::Rect smallRect = sf::IntRect(80, 34, 16, 16);
+    sf::Rect mediumRect = sf::IntRect(34, 1, 16, 32);
+    sf::Rect largeRect = sf::IntRect(80, 1, 16, 32);
+    std::vector<sf::IntRect> growingAnimationRectangles = {
+            smallRect, mediumRect, smallRect, mediumRect, smallRect, mediumRect, largeRect,
+            smallRect, mediumRect, largeRect, smallRect, largeRect
+    };
+    growingAnimation = AnimationBuilder().withNonContiguousRect(growingAnimationRectangles).build(mActiveSprite);
 
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
@@ -121,7 +129,7 @@ void Mario::setForm(MarioForm form)
             const auto currentY = mActiveSprite.getPosition().y;
             const auto newY = currentY - GRIDBOX_SIZE;
             mActiveSprite.setPosition(mActiveSprite.getPosition().x, newY);
-            mActiveAnimation = &bigStandingAnimation;
+            mActiveAnimation = &growingAnimation;
             mSpriteHeight *= 2;
             mMarioCollisionHitbox = largeHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();

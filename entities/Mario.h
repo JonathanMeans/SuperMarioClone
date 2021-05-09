@@ -57,6 +57,7 @@ private:
     Animation bigWalkingAnimation;
     Animation bigJumpingAnimation;
     Animation bigStandingAnimation;
+    Animation growingAnimation;
 
     bool mJumping;
     bool mIsDead;

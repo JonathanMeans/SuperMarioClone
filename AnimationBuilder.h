@@ -7,13 +7,14 @@ class AnimationBuilder
 {
 public:
     AnimationBuilder();
-    Animation build(sf::Sprite& sprite);
+    Animation build(sf::Sprite& sprite) const;
     AnimationBuilder withOffset(size_t xOffset, size_t yOffset);
     AnimationBuilder withRectSize(size_t width, size_t height);
     AnimationBuilder withNumRect(size_t numRect);
     AnimationBuilder withFrameBorder(size_t borderSize);
     AnimationBuilder andRepeat();
     AnimationBuilder withTicsPerFrame(size_t ticsPerFrame);
+    AnimationBuilder withNonContiguousRect(const std::vector<sf::IntRect>& rectangles);
 
 private:
     size_t mXOffset;
@@ -24,6 +25,7 @@ private:
     size_t mBorderSize;
     bool mRepeat;
     size_t mTicsPerFrame;
+    std::vector<sf::IntRect> mRectangles;
 
 };
 

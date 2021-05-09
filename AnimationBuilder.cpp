@@ -47,8 +47,19 @@ AnimationBuilder AnimationBuilder::withTicsPerFrame(size_t ticsPerFrame)
     return *this;
 }
 
-Animation AnimationBuilder::build(sf::Sprite& sprite)
+AnimationBuilder AnimationBuilder::withNonContiguousRect(const std::vector<sf::IntRect>& rectangles)
 {
+    mRectangles = rectangles;
+    return *this;
+}
+
+Animation AnimationBuilder::build(sf::Sprite& sprite) const
+{
+    if (!mRectangles.empty()) {
+        sprite.setTextureRect(mRectangles[0]);
+        return Animation(sprite, mRectangles, mRepeat, mTicsPerFrame);
+    }
+
     std::vector<sf::IntRect> mActionRectangles;
     mActionRectangles.resize(mNumRect);
     for (size_t ii = 0; ii < mNumRect; ++ii)
