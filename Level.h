@@ -28,7 +28,6 @@ public:
 private:
     std::unique_ptr<Mario> mMario;
 
-    void setMarioFormFromController(const KeyboardInput& currentInput) const;
     float setVerticalVelocityDueToJumpStart(const KeyboardInput& currentInput,
                                             const sf::Vector2f& velocity) const;
     float calculateVerticalAcceleration(const KeyboardInput& currentInput,

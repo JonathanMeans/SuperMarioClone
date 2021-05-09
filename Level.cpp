@@ -64,8 +64,6 @@ void Level::drawFrame(sf::RenderWindow& window)
 
 void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
 {
-    setMarioFormFromController(currentInput);
-
     sf::Vector2f acceleration = mMario->getAcceleration();
     sf::Vector2f velocity = mMario->getVelocity();
 
@@ -155,18 +153,6 @@ float Level::setVerticalVelocityDueToJumpStart(
         }
     }
     return result;
-}
-
-void Level::setMarioFormFromController(const KeyboardInput& currentInput) const
-{
-    if (currentInput.B.pressedThisFrame())
-    {
-        mMario->setForm(MarioForm::BIG_MARIO);
-    }
-    else if (currentInput.B.releasedThisFrame())
-    {
-        mMario->setForm(MarioForm::SMALL_MARIO);
-    }
 }
 
 const Mario& Level::getMario() const

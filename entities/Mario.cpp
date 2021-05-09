@@ -196,7 +196,8 @@ void Mario::onCollision(const Collision& collision)
         }
     } else if (collision.entityType == EntityType::MUSHROOM)
     {
-        return;
+        assert(mForm == MarioForm::SMALL_MARIO);
+        setForm(MarioForm::BIG_MARIO);
     }
     else
     {
