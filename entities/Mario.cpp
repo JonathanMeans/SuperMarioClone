@@ -209,6 +209,18 @@ void Mario::jump()
     }
 }
 
+std::string formToString(MarioForm form)
+{
+    switch (form)
+    {
+    case MarioForm::SMALL_MARIO:
+        return "Small Mario";
+    case MarioForm ::BIG_MARIO:
+        return "Big Mario";
+    }
+    return "";
+}
+
 void Mario::onCollision(const Collision& collision)
 {
     // collision's side is referring to the side of Mario that collided
@@ -225,7 +237,7 @@ void Mario::onCollision(const Collision& collision)
     }
     else if (collision.entityType == EntityType::MUSHROOM)
     {
-        assert(mForm == MarioForm::SMALL_MARIO);
+        assert(mForm == MarioForm::SMALL_MARIO && formToString(mForm).c_str());
         setForm(MarioForm::BIG_MARIO);
     }
     else

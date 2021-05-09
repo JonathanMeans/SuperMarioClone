@@ -9,8 +9,11 @@ Mushroom::Mushroom(const sf::Texture& texture, const sf::Vector2f& position) :
            EntityType::MUSHROOM,
            position)
 {
-    mAcceleration = {0, GRAVITY_ACCELERATION};
-    mVelocity = {2, 0};
+    mAcceleration = {0, 0};
+    // mVelocity = {2, 0};
+    mVelocity = {0, -0.5};
+    mSpriteBoundsHitbox.invalidate();
+    mMarioCollisionHitbox.invalidate();
 
     defaultAnimation =
             AnimationBuilder().withOffset(0, 0).withRectSize(16, 16).build(
@@ -29,21 +32,28 @@ void Mushroom::onCollision(const Collision& collision)
         {
             clampY(hitbox.getBottom(), collision.yIntersection);
             setVelocity(sf::Vector2f(currentVelocity.x, 0));
-        } else if (collision.side == EntitySide::LEFT) {
+        }
+        else if (collision.side == EntitySide::LEFT)
+        {
             clampX(hitbox.getLeft(), collision.xIntersection);
-            setVelocity(sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
-        } else if (collision.side == EntitySide::RIGHT) {
+            setVelocity(
+                    sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
+        }
+        else if (collision.side == EntitySide::RIGHT)
+        {
             clampX(hitbox.getRight(), collision.xIntersection);
-            setVelocity(sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
+            setVelocity(
+                    sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
         }
     }
 
-    if (isMario(collision.entityType)) {
+    if (isMario(collision.entityType))
+    {
         terminate();
     }
-
 }
 
-void Mushroom::terminate() {
+void Mushroom::terminate()
+{
     this->setCleanupFlag();
 }

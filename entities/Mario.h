@@ -14,6 +14,8 @@ enum class MarioForm
     SMALL_MARIO
 };
 
+std::string formToString(MarioForm form);
+
 class Mario : public Entity
 {
 public:

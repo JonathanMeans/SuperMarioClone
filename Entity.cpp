@@ -172,7 +172,8 @@ const Hitbox& Entity::getHitbox(EntityType type) const
 bool Entity::detectCollision(Entity& other)
 {
     if (mDeltaP.x == 0 && mDeltaP.y == 0 &&
-        (other.mDeltaP.x != 0 || other.mDeltaP.y != 0)) {
+        (other.mDeltaP.x != 0 || other.mDeltaP.y != 0))
+    {
         return other.detectCollision(*this);
     }
     const auto currentPosition = sf::Vector2f(getLeft(), getTop());
@@ -421,4 +422,9 @@ std::vector<std::unique_ptr<Entity>>& getEntities()
 void addEntity(std::unique_ptr<Entity> entity)
 {
     gEntities.push_back(std::move(entity));
+}
+
+void addEntityToFront(std::unique_ptr<Entity> entity)
+{
+    gEntities.insert(gEntities.begin(), std::move(entity));
 }
