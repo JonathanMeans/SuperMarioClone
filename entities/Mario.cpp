@@ -96,7 +96,8 @@ void Mario::setAnimationFromState()
 {
     if (mActiveAnimation == &growingAnimation)
     {
-        return;
+        if (!mActiveAnimation->finished())
+            return;
     }
 
     if (mIsDead)

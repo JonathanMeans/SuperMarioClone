@@ -22,21 +22,25 @@ void Animation::processAction()
     --mRemainingTicsThisFrame;
     if (mRemainingTicsThisFrame == 0)
     {
-        ++mSpriteIndex;
-        if (mSpriteIndex >= mActionRectangles.size())
+        if (finished())
         {
             if (mRepeat)
             {
                 mSpriteIndex = 0;
             }
-            else
-            {
-                mSpriteIndex = mActionRectangles.size() - 1;
-            }
+        }
+        else
+        {
+            ++mSpriteIndex;
         }
         mRemainingTicsThisFrame = mTicsPerFrame;
     }
     mActiveSprite->setTextureRect(mActionRectangles[mSpriteIndex]);
+}
+
+bool Animation::finished() const
+{
+    return mSpriteIndex == mActionRectangles.size() - 1;
 }
 
 size_t Animation::getSpriteIndex() const

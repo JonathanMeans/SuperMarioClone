@@ -20,6 +20,8 @@ public:
 
     [[nodiscard]] size_t getSpriteIndex() const;
 
+    [[nodiscard]] bool finished() const;
+
 private:
     size_t mRemainingTicsThisFrame{};
     size_t mTicsPerFrame{};
