@@ -1,16 +1,18 @@
 #include "Items.h"
 #include <AnimationBuilder.h>
 
-Mushroom::Mushroom(const sf::Texture& texture, const sf::Vector2f& position) :
+Mushroom::Mushroom(const sf::Texture& texture,
+                   const sf::Vector2f& position,
+                   float blockTop) :
     Entity(texture,
            16,
            16,
            Hitbox({16, 16}, {0, 0}),
            EntityType::MUSHROOM,
-           position)
+           position),
+    mBlockTop(blockTop)
 {
     mAcceleration = {0, 0};
-    // mVelocity = {2, 0};
     mVelocity = {0, -0.5};
     mSpriteBoundsHitbox.invalidate();
     mMarioCollisionHitbox.invalidate();
@@ -19,6 +21,20 @@ Mushroom::Mushroom(const sf::Texture& texture, const sf::Vector2f& position) :
             AnimationBuilder().withOffset(0, 0).withRectSize(16, 16).build(
                     mActiveSprite);
     mActiveAnimation = &defaultAnimation;
+}
+
+void Mushroom::doInternalCalculations()
+{
+    if (mAcceleration.y == 0)
+    {
+        if (getBottom() < mBlockTop)
+        {
+            mAcceleration = {0, GRAVITY_ACCELERATION};
+            mVelocity.x = 2;
+            mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0});
+            mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0});
+        }
+    }
 }
 
 void Mushroom::onCollision(const Collision& collision)

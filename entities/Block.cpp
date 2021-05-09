@@ -116,7 +116,8 @@ void ItemBlock::onCollision(const Collision& collision)
     // i.e. the block obscures the mushroom from view
     addEntityToFront(
             std::make_unique<Mushroom>(getSpriteMaker()->itemAndObjectTexture,
-                                       sf::Vector2f(getLeft(), getTop() - 5)));
+                                       sf::Vector2f(getLeft(), getTop() - 5),
+                                       getTop()));
 
     mActiveAnimation = &noItemAnimation;
 }
