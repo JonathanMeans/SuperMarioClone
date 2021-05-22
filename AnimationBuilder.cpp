@@ -72,5 +72,5 @@ Animation AnimationBuilder::build(sf::Sprite& sprite)
     }
 
     sprite.setTextureRect(mRectangles[0]);
-    return Animation(sprite, mRectangles, mRepeat, mTicsPerFrame);
+    return Animation(sprite, mRectangles, mRepeat, mTicsPerFrame, std::make_shared<AnimationBuilder>(*this));
 }

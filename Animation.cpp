@@ -2,18 +2,22 @@
 
 #include <utility>
 
+#include "AnimationBuilder.h"
+
 Animation::Animation() = default;
 
 Animation::Animation(sf::Sprite& activeSprite,
                      std::vector<sf::IntRect> actionRectangles,
                      bool repeat,
-                     size_t ticsPerFrame) :
+                     size_t ticsPerFrame,
+                     const std::shared_ptr<AnimationBuilder>& animationBuilder) :
     mRemainingTicsThisFrame(ticsPerFrame),
     mTicsPerFrame(ticsPerFrame),
     mSpriteIndex(0),
     mRepeat(repeat),
     mActionRectangles(std::move(actionRectangles)),
-    mActiveSprite(&activeSprite)
+    mActiveSprite(&activeSprite),
+    mAnimationBuilder(std::move(animationBuilder))
 {
 }
 
@@ -46,4 +50,10 @@ bool Animation::finished() const
 size_t Animation::getSpriteIndex() const
 {
     return mSpriteIndex;
+}
+
+Animation Animation::switchPalette(const sf::Vector2f& offset, const sf::Vector2f& size) {
+    mAnimationBuilder->withOffset(offset.x, offset.y);
+    mAnimationBuilder->withRectSize(size.x, size.y);
+    return mAnimationBuilder->build(*mActiveSprite);
 }

@@ -39,59 +39,59 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
             AnimationBuilder().withOffset(182, 34).withRectSize(16, 16).build(
                     mActiveSprite);
 
-    bigWalkingAnimation = AnimationBuilder()
-                                  .withOffset(80, 1)
-                                  .withRectSize(16, 32)
-                                  .withNumRect(4)
-                                  .withFrameBorder(1)
-                                  .andRepeat()
-                                  .build(mActiveSprite);
-    bigStandingAnimation =
-            AnimationBuilder().withOffset(80, 1).withRectSize(16, 32).build(
-                    mActiveSprite);
-    bigJumpingAnimation = AnimationBuilder()
-                                  .withOffset(148, 1)
-                                  .withRectSize(16, 32)
-                                  .withNumRect(2)
-                                  .withFrameBorder(1)
-                                  .build(mActiveSprite);
-    sf::Rect smallRect = sf::IntRect(80, 34, 16, 16);
-    sf::Rect mediumRect = sf::IntRect(335, 1, 16, 32);
-    sf::Rect largeRect = sf::IntRect(80, 1, 16, 32);
-    std::vector<sf::IntRect> growingAnimationRectangles = {smallRect,
-                                                           mediumRect,
-                                                           smallRect,
-                                                           mediumRect,
-                                                           smallRect,
-                                                           mediumRect,
-                                                           largeRect,
-                                                           smallRect,
-                                                           mediumRect,
-                                                           largeRect,
-                                                           smallRect,
-                                                           largeRect};
-    growingAnimation =
-            AnimationBuilder()
-                    .withNonContiguousRect(growingAnimationRectangles)
-                    .build(mActiveSprite);
-
-    fireWalkingAnimation = AnimationBuilder()
-            .withOffset(80, 129)
-            .withRectSize(16, 32)
-            .withNumRect(4)
-            .withFrameBorder(1)
-            .andRepeat()
-            .build(mActiveSprite);
-
-    fireStandingAnimation = AnimationBuilder().withOffset(80, 129).withRectSize(16, 32).build(
-            mActiveSprite);
-
-    fireJumpingAnimation = AnimationBuilder()
-            .withOffset(148, 129)
-            .withRectSize(16, 32)
-            .withNumRect(2)
-            .withFrameBorder(1)
-            .build(mActiveSprite);
+//    bigWalkingAnimation = AnimationBuilder()
+//                                  .withOffset(80, 1)
+//                                  .withRectSize(16, 32)
+//                                  .withNumRect(4)
+//                                  .withFrameBorder(1)
+//                                  .andRepeat()
+//                                  .build(mActiveSprite);
+//    bigStandingAnimation =
+//            AnimationBuilder().withOffset(80, 1).withRectSize(16, 32).build(
+//                    mActiveSprite);
+//    bigJumpingAnimation = AnimationBuilder()
+//                                  .withOffset(148, 1)
+//                                  .withRectSize(16, 32)
+//                                  .withNumRect(2)
+//                                  .withFrameBorder(1)
+//                                  .build(mActiveSprite);
+//    sf::Rect smallRect = sf::IntRect(80, 34, 16, 16);
+//    sf::Rect mediumRect = sf::IntRect(335, 1, 16, 32);
+//    sf::Rect largeRect = sf::IntRect(80, 1, 16, 32);
+//    std::vector<sf::IntRect> growingAnimationRectangles = {smallRect,
+//                                                           mediumRect,
+//                                                           smallRect,
+//                                                           mediumRect,
+//                                                           smallRect,
+//                                                           mediumRect,
+//                                                           largeRect,
+//                                                           smallRect,
+//                                                           mediumRect,
+//                                                           largeRect,
+//                                                           smallRect,
+//                                                           largeRect};
+//    growingAnimation =
+//            AnimationBuilder()
+//                    .withNonContiguousRect(growingAnimationRectangles)
+//                    .build(mActiveSprite);
+//
+//    fireWalkingAnimation = AnimationBuilder()
+//            .withOffset(80, 129)
+//            .withRectSize(16, 32)
+//            .withNumRect(4)
+//            .withFrameBorder(1)
+//            .andRepeat()
+//            .build(mActiveSprite);
+//
+//    fireStandingAnimation = AnimationBuilder().withOffset(80, 129).withRectSize(16, 32).build(
+//            mActiveSprite);
+//
+//    fireJumpingAnimation = AnimationBuilder()
+//            .withOffset(148, 129)
+//            .withRectSize(16, 32)
+//            .withNumRect(2)
+//            .withFrameBorder(1)
+//            .build(mActiveSprite);
 
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
@@ -180,6 +180,21 @@ void Mario::setForm(MarioForm form)
             mMarioCollisionHitbox = largeHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
+//            walkingAnimation = AnimationBuilder()
+//                                  .withOffset(80, 1)
+//                                  .withRectSize(16, 32)
+//                                  .withNumRect(4)
+//                                  .withFrameBorder(1)
+//                                  .andRepeat()
+//                                  .build(mActiveSprite);
+//            standingAnimation = AnimationBuilder().withOffset(80, 1).withRectSize(16, 32).build(
+//                    mActiveSprite);
+//            jumpingAnimation = AnimationBuilder()
+//                                  .withOffset(148, 1)
+//                                  .withRectSize(16, 32)
+//                                  .withNumRect(2)
+//                                  .withFrameBorder(1)
+//                                  .build(mActiveSprite);
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
