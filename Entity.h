@@ -18,6 +18,7 @@ enum class EntityType
     BLOCK,
     BLOCK_SHARD,
     MUSHROOM,
+    FIREFLOWER,
 };
 
 std::string convertSideToString(EntitySide side);
@@ -25,8 +26,11 @@ bool isEnemy(EntityType type);
 bool isMario(EntityType entityType);
 bool isObject(EntityType entityType);
 
+class Entity;
+
 struct Collision
 {
+    Entity* entity;
     EntitySide side;
     EntityType entityType;
     float yIntersection;

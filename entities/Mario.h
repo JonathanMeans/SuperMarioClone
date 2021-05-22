@@ -27,6 +27,7 @@ public:
 
     void jump();
     void setForm(MarioForm form);
+    MarioForm getForm() const;
 
     [[nodiscard]] EntityType getType() const override;
 

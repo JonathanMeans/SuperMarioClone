@@ -139,6 +139,11 @@ void Mario::walk()
     }
 }
 
+MarioForm Mario::getForm() const
+{
+    return mForm;
+}
+
 void Mario::setForm(MarioForm form)
 {
     const bool formIsChanging = form != mForm;

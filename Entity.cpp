@@ -189,6 +189,7 @@ bool Entity::detectCollision(Entity& other)
     {
         handleCollision(
                 Collision{
+                        &other,
                         mDeltaP.y > 0 ? EntitySide::BOTTOM : EntitySide::TOP,
                         other.getType(),
                         mDeltaP.y > 0 ? other.getHitbox(mType).getTop()
@@ -206,6 +207,7 @@ bool Entity::detectCollision(Entity& other)
     {
         handleCollision(
                 Collision{
+                        &other,
                         mDeltaP.x > 0 ? EntitySide::RIGHT : EntitySide::LEFT,
                         other.getType(),
                         0,
@@ -221,11 +223,13 @@ bool Entity::detectCollision(Entity& other)
 
 void Entity::handleCollision(Collision collision, Entity& entity)
 {
-    onCollision(Collision{collision.side,
+    onCollision(Collision{collision.entity,
+                          collision.side,
                           collision.entityType,
                           collision.yIntersection,
                           collision.xIntersection});
-    entity.onCollision(Collision{oppositeSide(collision.side),
+    entity.onCollision(Collision{this,
+                                 oppositeSide(collision.side),
                                  this->getType(),
                                  collision.yIntersection,
                                  collision.xIntersection});

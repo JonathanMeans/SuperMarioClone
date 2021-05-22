@@ -1,6 +1,57 @@
 #include "Items.h"
 #include <AnimationBuilder.h>
 
+Fireflower::Fireflower(const sf::Texture& texture,
+                       const sf::Vector2f& position,
+                       float blockTop) :
+    Entity(texture,
+           16,
+           16,
+           Hitbox({16, 16}, {0, 0}),
+           EntityType::FIREFLOWER,
+           position),
+    mBlockTop(blockTop)
+{
+    mAcceleration = {0, 0};
+    mVelocity = {0, -0.5};
+    mSpriteBoundsHitbox.invalidate();
+    mMarioCollisionHitbox.invalidate();
+
+    defaultAnimation = AnimationBuilder()
+                               .withOffset(0, 32)
+                               .withRectSize(16, 16)
+                               .withNumRect(4)
+                               .withTicsPerFrame(2)
+                               .andRepeat()
+                               .build(mActiveSprite);
+    mActiveAnimation = &defaultAnimation;
+}
+
+void Fireflower::doInternalCalculations()
+{
+    if (mAcceleration.y == 0)
+    {
+        if (getBottom() < mBlockTop)
+        {
+            mAcceleration = {0, 0};
+            mVelocity = {0, 0};
+            mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0});
+            mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0});
+        }
+    }
+}
+
+void Fireflower::onCollision(const Collision& collision)
+{
+    if (isMario(collision.entityType))
+        terminate();
+}
+
+void Fireflower::terminate()
+{
+    this->setCleanupFlag();
+}
+
 Mushroom::Mushroom(const sf::Texture& texture,
                    const sf::Vector2f& position,
                    float blockTop) :

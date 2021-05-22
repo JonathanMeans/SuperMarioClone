@@ -1,9 +1,10 @@
-
 #include "Block.h"
 #include <AnimationBuilder.h>
 #include <SpriteMaker.h>
 #include <Timer.h>
+#include <cassert>
 #include "Items.h"
+#include "Mario.h"
 
 Block::Block(const sf::Texture& texture, const sf::Vector2f& position) :
     Entity(texture,
@@ -114,10 +115,19 @@ void ItemBlock::onCollision(const Collision& collision)
 
     // Adding to front to ensure that mushroom is drawn before the block
     // i.e. the block obscures the mushroom from view
-    addEntityToFront(
-            std::make_unique<Mushroom>(getSpriteMaker()->itemAndObjectTexture,
-                                       sf::Vector2f(getLeft(), getTop() - 5),
-                                       getTop()));
+    auto* mario = reinterpret_cast<Mario*>(collision.entity);
+    assert(mario != nullptr);
+
+    if (mario->getForm() == MarioForm::SMALL_MARIO)
+        addEntityToFront(std::make_unique<Mushroom>(
+                getSpriteMaker()->itemAndObjectTexture,
+                sf::Vector2f(getLeft(), getTop() - 5),
+                getTop()));
+    else
+        addEntityToFront(std::make_unique<Fireflower>(
+                getSpriteMaker()->itemAndObjectTexture,
+                sf::Vector2f(getLeft(), getTop() - 5),
+                getTop()));
 
     mActiveAnimation = &noItemAnimation;
 }

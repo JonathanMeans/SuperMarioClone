@@ -4,6 +4,7 @@
 * Hitbox outlines instead of filled rectangles
 * Tweak Mario's velocity/acceleration when hitting a block from the bottom
 * When falling and not pressing A, should Mario be jumping or not?
+* It's weird that we can jump into a fireflower without any horizontal movement
 
 ## Bug List
 * Goomba-goomba collision is not considered. In particular, if a Goomba falls

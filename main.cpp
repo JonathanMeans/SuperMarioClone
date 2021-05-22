@@ -54,6 +54,9 @@ int main(int argc, char* argv[])
     entities.push_back(
             std::make_unique<ItemBlock>(spriteMaker->inanimateObjectTexture,
                                         sf::Vector2f(56, 70)));
+    entities.push_back(
+            std::make_unique<ItemBlock>(spriteMaker->inanimateObjectTexture,
+                                        sf::Vector2f(72, 70)));
 
     Level level(std::move(mario), std::move(entities));
 
