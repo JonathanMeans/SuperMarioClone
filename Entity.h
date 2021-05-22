@@ -13,6 +13,7 @@ enum class EntityType
     GOOMBA,
     SMALL_MARIO,
     BIG_MARIO,
+    FIRE_MARIO,
     PIPE,
     GROUND,
     BLOCK,

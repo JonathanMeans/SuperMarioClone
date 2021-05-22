@@ -75,6 +75,24 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
                     .withNonContiguousRect(growingAnimationRectangles)
                     .build(mActiveSprite);
 
+    fireWalkingAnimation = AnimationBuilder()
+            .withOffset(80, 129)
+            .withRectSize(16, 32)
+            .withNumRect(4)
+            .withFrameBorder(1)
+            .andRepeat()
+            .build(mActiveSprite);
+
+    fireStandingAnimation = AnimationBuilder().withOffset(80, 129).withRectSize(16, 32).build(
+            mActiveSprite);
+
+    fireJumpingAnimation = AnimationBuilder()
+            .withOffset(148, 129)
+            .withRectSize(16, 32)
+            .withNumRect(2)
+            .withFrameBorder(1)
+            .build(mActiveSprite);
+
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
 }
@@ -136,6 +154,9 @@ void Mario::walk()
     case MarioForm::SMALL_MARIO:
         mActiveAnimation = &walkingAnimation;
         break;
+    case MarioForm::FIRE_MARIO:
+        mActiveAnimation = &fireWalkingAnimation;
+        break;
     }
 }
 
@@ -184,6 +205,8 @@ EntityType Mario::getType() const
         return EntityType::BIG_MARIO;
     case MarioForm::SMALL_MARIO:
         return EntityType::SMALL_MARIO;
+    case MarioForm::FIRE_MARIO:
+        return EntityType::FIRE_MARIO;
     }
     throw std::runtime_error("Unhandled form in Mario::getType()");
 }
@@ -198,6 +221,9 @@ void Mario::stopWalking()
     case MarioForm::SMALL_MARIO:
         mActiveAnimation = &standingAnimation;
         break;
+    case MarioForm::FIRE_MARIO:
+        mActiveAnimation = &fireStandingAnimation;
+        break;
     }
 }
 
@@ -211,6 +237,9 @@ void Mario::jump()
     case MarioForm::SMALL_MARIO:
         mActiveAnimation = &jumpingAnimation;
         break;
+    case MarioForm::FIRE_MARIO:
+        mActiveAnimation = &fireJumpingAnimation;
+        break;
     }
 }
 
@@ -220,8 +249,10 @@ std::string formToString(MarioForm form)
     {
     case MarioForm::SMALL_MARIO:
         return "Small Mario";
-    case MarioForm ::BIG_MARIO:
+    case MarioForm::BIG_MARIO:
         return "Big Mario";
+    case MarioForm::FIRE_MARIO:
+        return "Fire Mario";
     }
     return "";
 }
@@ -244,6 +275,20 @@ void Mario::onCollision(const Collision& collision)
     {
         assert(mForm == MarioForm::SMALL_MARIO && formToString(mForm).c_str());
         setForm(MarioForm::BIG_MARIO);
+    }
+    else if (collision.entity->getType() == EntityType::FIREFLOWER)
+    {
+        switch (mForm) {
+            case MarioForm::SMALL_MARIO:
+                setForm(MarioForm::BIG_MARIO);
+                break;
+            case MarioForm::BIG_MARIO:
+                setForm(MarioForm::FIRE_MARIO);
+                break;
+            case MarioForm::FIRE_MARIO:
+                // TODO: Increase points
+                break;
+        }
     }
     else
     {

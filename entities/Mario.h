@@ -11,7 +11,8 @@
 enum class MarioForm
 {
     BIG_MARIO,
-    SMALL_MARIO
+    SMALL_MARIO,
+    FIRE_MARIO,
 };
 
 std::string formToString(MarioForm form);
@@ -63,6 +64,10 @@ private:
     Animation bigJumpingAnimation;
     Animation bigStandingAnimation;
     Animation growingAnimation;
+
+    Animation fireWalkingAnimation;
+    Animation fireJumpingAnimation;
+    Animation fireStandingAnimation;
 
     bool mJumping;
     bool mIsDead;

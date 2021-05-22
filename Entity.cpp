@@ -93,7 +93,8 @@ bool isObject(EntityType type)
 bool isMario(EntityType entityType)
 {
     return entityType == EntityType::SMALL_MARIO ||
-            entityType == EntityType::BIG_MARIO;
+            entityType == EntityType::BIG_MARIO ||
+            entityType == EntityType::FIRE_MARIO;
 }
 
 const float Entity::NO_MAX_VELOCITY_VALUE = -1;
