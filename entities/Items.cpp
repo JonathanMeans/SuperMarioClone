@@ -95,22 +95,24 @@ void Mushroom::onCollision(const Collision& collision)
     if (isObject(collision.entity->getType()))
     {
         const auto currentVelocity = getVelocity();
-        if (collision.side == EntitySide::BOTTOM)
-        {
-            clampY(hitbox.getBottom(), collision.yIntersection);
-            setVelocity(sf::Vector2f(currentVelocity.x, 0));
-        }
-        else if (collision.side == EntitySide::LEFT)
-        {
-            clampX(hitbox.getLeft(), collision.xIntersection);
+        switch (collision.side) {
+            case EntitySide::BOTTOM:
+                clampY(hitbox.getBottom(), collision.yIntersection);
+                setVelocity(sf::Vector2f(currentVelocity.x, 0));
+                break;
+            case EntitySide::LEFT:
+                clampX(hitbox.getLeft(), collision.xIntersection);
+                setVelocity(
+                        sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
+                break;
+            case EntitySide::RIGHT:
+                clampX(hitbox.getRight(), collision.xIntersection);
             setVelocity(
                     sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
-        }
-        else if (collision.side == EntitySide::RIGHT)
-        {
-            clampX(hitbox.getRight(), collision.xIntersection);
-            setVelocity(
-                    sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
+                break;
+            case EntitySide::TOP:
+                // do nothing
+                break;
         }
     }
 

@@ -249,31 +249,29 @@ void Mario::onCollision(const Collision& collision)
     {
         // We're not colliding with an enemy, so we want the sprite hitbox
         const auto& hitbox = getHitbox(collision.entity->getType());
-        if (collision.side == EntitySide::BOTTOM)
-        {
-            clampY(hitbox.getBottom(), collision.yIntersection);
-            const auto currentVelocity = getVelocity();
-            setVelocity(sf::Vector2f(currentVelocity.x, 0));
-            setJumping(false);
-        }
-        else if (collision.side == EntitySide::TOP)
-        {
-            clampY(hitbox.getTop(), collision.yIntersection);
-            setVelocity(sf::Vector2f(getVelocity().x, 0));
-            mAcceleration.y = GRAVITY_ACCELERATION;
-            mDeltaP.y = 0;
-        }
-        else if (collision.side == EntitySide::RIGHT)
-        {
-            clampX(hitbox.getRight(), collision.xIntersection);
-            setVelocity(sf::Vector2f(0, getVelocity().y));
-            mAcceleration.x = 0;
-        }
-        else if (collision.side == EntitySide::LEFT)
-        {
-            clampX(hitbox.getLeft(), collision.xIntersection);
-            setVelocity(sf::Vector2f(0, getVelocity().y));
-            mAcceleration.x = 0;
+        const auto currentVelocity = getVelocity();
+        switch (collision.side) {
+            case EntitySide::BOTTOM:
+                clampY(hitbox.getBottom(), collision.yIntersection);
+                setVelocity(sf::Vector2f(currentVelocity.x, 0));
+                setJumping(false);
+                break;
+            case EntitySide::TOP:
+                clampY(hitbox.getTop(), collision.yIntersection);
+                setVelocity(sf::Vector2f(currentVelocity.x, 0));
+                mAcceleration.y = GRAVITY_ACCELERATION;
+                mDeltaP.y = 0;
+                break;
+            case EntitySide::RIGHT:
+                clampX(hitbox.getRight(), collision.xIntersection);
+                setVelocity(sf::Vector2f(0, currentVelocity.y));
+                mAcceleration.x = 0;
+                break;
+            case EntitySide::LEFT:
+                clampX(hitbox.getLeft(), collision.xIntersection);
+                setVelocity(sf::Vector2f(0, currentVelocity.y));
+                mAcceleration.x = 0;
+                break;
         }
     }
 }
