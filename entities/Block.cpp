@@ -40,11 +40,11 @@ BreakableBlock::BreakableBlock(const sf::Texture& texture,
 
 void BreakableBlock::onCollision(const Collision& collision)
 {
-    if (!isMario(collision.entityType))
+    if (!isMario(collision.entity->getType()))
         return;
     if (collision.side != EntitySide::BOTTOM)
         return;
-    if (collision.entityType == EntityType::SMALL_MARIO)
+    if (collision.entity->getType() == EntityType::SMALL_MARIO)
     {
         bumpUp();
     }
@@ -104,7 +104,7 @@ ItemBlock::ItemBlock(const sf::Texture& texture, const sf::Vector2f& position) :
 
 void ItemBlock::onCollision(const Collision& collision)
 {
-    if (!isMario(collision.entityType))
+    if (!isMario(collision.entity->getType()))
         return;
     if (collision.side != EntitySide::BOTTOM)
         return;

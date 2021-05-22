@@ -3,7 +3,12 @@
 #include "Timer.h"
 
 Goomba::Goomba(const sf::Texture& texture, const sf::Vector2f& position) :
-    Entity(texture, 16, 16, Hitbox({8, 5}, {4, 7}), EntityType::GOOMBA, position)
+    Entity(texture,
+           16,
+           16,
+           Hitbox({8, 5}, {4, 7}),
+           EntityType::GOOMBA,
+           position)
 {
     mVelocity.x = -.5;
 
@@ -24,9 +29,9 @@ Goomba::Goomba(const sf::Texture& texture, const sf::Vector2f& position) :
 
 void Goomba::onCollision(const Collision& collision)
 {
-    const auto hitbox = getHitbox(collision.entityType);
+    const auto hitbox = getHitbox(collision.entity->getType());
 
-    if (isMario(collision.entityType) &&
+    if (isMario(collision.entity->getType()) &&
         collision.side == EntitySide::TOP)
         terminate();
     else

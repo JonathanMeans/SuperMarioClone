@@ -32,7 +32,6 @@ struct Collision
 {
     Entity* entity;
     EntitySide side;
-    EntityType entityType;
     float yIntersection;
     float xIntersection;
 };

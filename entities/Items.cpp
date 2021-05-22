@@ -43,7 +43,7 @@ void Fireflower::doInternalCalculations()
 
 void Fireflower::onCollision(const Collision& collision)
 {
-    if (isMario(collision.entityType))
+    if (isMario(collision.entity->getType()))
         terminate();
 }
 
@@ -90,9 +90,9 @@ void Mushroom::doInternalCalculations()
 
 void Mushroom::onCollision(const Collision& collision)
 {
-    const auto hitbox = getHitbox(collision.entityType);
+    const auto hitbox = getHitbox(collision.entity->getType());
 
-    if (isObject(collision.entityType))
+    if (isObject(collision.entity->getType()))
     {
         const auto currentVelocity = getVelocity();
         if (collision.side == EntitySide::BOTTOM)
@@ -114,7 +114,7 @@ void Mushroom::onCollision(const Collision& collision)
         }
     }
 
-    if (isMario(collision.entityType))
+    if (isMario(collision.entity->getType()))
     {
         terminate();
     }

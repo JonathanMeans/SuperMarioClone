@@ -229,7 +229,7 @@ std::string formToString(MarioForm form)
 void Mario::onCollision(const Collision& collision)
 {
     // collision's side is referring to the side of Mario that collided
-    if (isEnemy(collision.entityType))
+    if (isEnemy(collision.entity->getType()))
     {
         if (collision.side != EntitySide::BOTTOM)
         {
@@ -240,7 +240,7 @@ void Mario::onCollision(const Collision& collision)
             addPositionDelta(0, -5);
         }
     }
-    else if (collision.entityType == EntityType::MUSHROOM)
+    else if (collision.entity->getType() == EntityType::MUSHROOM)
     {
         assert(mForm == MarioForm::SMALL_MARIO && formToString(mForm).c_str());
         setForm(MarioForm::BIG_MARIO);
@@ -248,7 +248,7 @@ void Mario::onCollision(const Collision& collision)
     else
     {
         // We're not colliding with an enemy, so we want the sprite hitbox
-        const auto& hitbox = getHitbox(collision.entityType);
+        const auto& hitbox = getHitbox(collision.entity->getType());
         if (collision.side == EntitySide::BOTTOM)
         {
             clampY(hitbox.getBottom(), collision.yIntersection);
