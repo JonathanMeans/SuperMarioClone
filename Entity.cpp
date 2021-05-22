@@ -183,7 +183,21 @@ bool Entity::detectCollision(Entity& other)
     const auto newYPosition =
             originalPosition + sf::Vector2f{0, this->mDeltaP.y};
 
-    bool collided = false;
+    Hitbox yHitbox(getHitbox(other.getType()));
+    yHitbox.setEntityPosition(newYPosition);
+    if (yHitbox.collidesWith(other.getHitbox(mType)))
+    {
+        handleCollision(
+                Collision{
+                        mDeltaP.y > 0 ? EntitySide::BOTTOM : EntitySide::TOP,
+                        other.getType(),
+                        mDeltaP.y > 0 ? other.getHitbox(mType).getTop()
+                                      : other.getHitbox(mType).getBottom(),
+                        0,
+                },
+                other);
+        return true;
+    }
 
     Hitbox xHitbox(getHitbox(other.getType()));
     xHitbox.setEntityPosition(newXPosition);
@@ -199,26 +213,10 @@ bool Entity::detectCollision(Entity& other)
                                       : other.getHitbox(mType).getRight(),
                 },
                 other);
-        collided = true;
+        return true;
     }
 
-    Hitbox yHitbox(getHitbox(other.getType()));
-    yHitbox.setEntityPosition(newYPosition);
-    if (yHitbox.collidesWith(other.getHitbox(mType)))
-    {
-        handleCollision(
-                Collision{
-                        mDeltaP.y > 0 ? EntitySide::BOTTOM : EntitySide::TOP,
-                        other.getType(),
-                        mDeltaP.y > 0 ? other.getHitbox(mType).getTop()
-                                      : other.getHitbox(mType).getBottom(),
-                        0,
-                },
-                other);
-        collided = true;
-    }
-
-    return collided;
+    return false;
 }
 
 void Entity::handleCollision(Collision collision, Entity& entity)
