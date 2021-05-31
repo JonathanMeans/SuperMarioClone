@@ -21,7 +21,7 @@ public:
               size_t height,
               size_t borderSize,
               bool repeat,
-              std::vector<sf::IntRect>  actionRectangles,
+              std::vector<sf::IntRect> actionRectangles,
               size_t ticsPerFrame);
     void processAction();
 

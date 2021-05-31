@@ -58,23 +58,24 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
                     .withNonContiguousRect(growingAnimationRectangles)
                     .build(mActiveSprite);
 
-//    fireWalkingAnimation = AnimationBuilder()
-//            .withOffset(80, 129)
-//            .withRectSize(16, 32)
-//            .withNumRect(4)
-//            .withFrameBorder(1)
-//            .andRepeat()
-//            .build(mActiveSprite);
-//
-//    fireStandingAnimation = AnimationBuilder().withOffset(80, 129).withRectSize(16, 32).build(
-//            mActiveSprite);
-//
-//    fireJumpingAnimation = AnimationBuilder()
-//            .withOffset(148, 129)
-//            .withRectSize(16, 32)
-//            .withNumRect(2)
-//            .withFrameBorder(1)
-//            .build(mActiveSprite);
+    //    fireWalkingAnimation = AnimationBuilder()
+    //            .withOffset(80, 129)
+    //            .withRectSize(16, 32)
+    //            .withNumRect(4)
+    //            .withFrameBorder(1)
+    //            .andRepeat()
+    //            .build(mActiveSprite);
+    //
+    //    fireStandingAnimation = AnimationBuilder().withOffset(80,
+    //    129).withRectSize(16, 32).build(
+    //            mActiveSprite);
+    //
+    //    fireJumpingAnimation = AnimationBuilder()
+    //            .withOffset(148, 129)
+    //            .withRectSize(16, 32)
+    //            .withNumRect(2)
+    //            .withFrameBorder(1)
+    //            .build(mActiveSprite);
 
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
@@ -152,9 +153,12 @@ void Mario::setForm(MarioForm form)
             mMarioCollisionHitbox = largeHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
-            standingAnimation.switchPalette(sf::Vector2f(80, 1), sf::Vector2f(16, 32));
-            walkingAnimation.switchPalette(sf::Vector2f(80, 1), sf::Vector2f(16, 32));
-            jumpingAnimation.switchPalette(sf::Vector2f(148, 1), sf::Vector2f(16, 32));
+            standingAnimation.switchPalette(sf::Vector2f(80, 1),
+                                            sf::Vector2f(16, 32));
+            walkingAnimation.switchPalette(sf::Vector2f(80, 1),
+                                           sf::Vector2f(16, 32));
+            jumpingAnimation.switchPalette(sf::Vector2f(148, 1),
+                                           sf::Vector2f(16, 32));
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
@@ -166,9 +170,12 @@ void Mario::setForm(MarioForm form)
             mMarioCollisionHitbox = smallHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
-            standingAnimation.switchPalette(sf::Vector2f(80, 34), sf::Vector2f(16, 16));
-            walkingAnimation.switchPalette(sf::Vector2f(80, 34), sf::Vector2f(16, 16));
-            jumpingAnimation.switchPalette(sf::Vector2f(148, 34), sf::Vector2f(16, 16));
+            standingAnimation.switchPalette(sf::Vector2f(80, 34),
+                                            sf::Vector2f(16, 16));
+            walkingAnimation.switchPalette(sf::Vector2f(80, 34),
+                                           sf::Vector2f(16, 16));
+            jumpingAnimation.switchPalette(sf::Vector2f(148, 34),
+                                           sf::Vector2f(16, 16));
         }
     }
     mForm = form;
@@ -233,16 +240,17 @@ void Mario::onCollision(const Collision& collision)
     }
     else if (collision.entity->getType() == EntityType::FIREFLOWER)
     {
-        switch (mForm) {
-            case MarioForm::SMALL_MARIO:
-                setForm(MarioForm::BIG_MARIO);
-                break;
-            case MarioForm::BIG_MARIO:
-                setForm(MarioForm::FIRE_MARIO);
-                break;
-            case MarioForm::FIRE_MARIO:
-                // TODO: Increase points
-                break;
+        switch (mForm)
+        {
+        case MarioForm::SMALL_MARIO:
+            setForm(MarioForm::BIG_MARIO);
+            break;
+        case MarioForm::BIG_MARIO:
+            setForm(MarioForm::FIRE_MARIO);
+            break;
+        case MarioForm::FIRE_MARIO:
+            // TODO: Increase points
+            break;
         }
     }
     else
@@ -250,28 +258,29 @@ void Mario::onCollision(const Collision& collision)
         // We're not colliding with an enemy, so we want the sprite hitbox
         const auto& hitbox = getHitbox(collision.entity->getType());
         const auto currentVelocity = getVelocity();
-        switch (collision.side) {
-            case EntitySide::BOTTOM:
-                clampY(hitbox.getBottom(), collision.yIntersection);
-                setVelocity(sf::Vector2f(currentVelocity.x, 0));
-                setJumping(false);
-                break;
-            case EntitySide::TOP:
-                clampY(hitbox.getTop(), collision.yIntersection);
-                setVelocity(sf::Vector2f(currentVelocity.x, 0));
-                mAcceleration.y = GRAVITY_ACCELERATION;
-                mDeltaP.y = 0;
-                break;
-            case EntitySide::RIGHT:
-                clampX(hitbox.getRight(), collision.xIntersection);
-                setVelocity(sf::Vector2f(0, currentVelocity.y));
-                mAcceleration.x = 0;
-                break;
-            case EntitySide::LEFT:
-                clampX(hitbox.getLeft(), collision.xIntersection);
-                setVelocity(sf::Vector2f(0, currentVelocity.y));
-                mAcceleration.x = 0;
-                break;
+        switch (collision.side)
+        {
+        case EntitySide::BOTTOM:
+            clampY(hitbox.getBottom(), collision.yIntersection);
+            setVelocity(sf::Vector2f(currentVelocity.x, 0));
+            setJumping(false);
+            break;
+        case EntitySide::TOP:
+            clampY(hitbox.getTop(), collision.yIntersection);
+            setVelocity(sf::Vector2f(currentVelocity.x, 0));
+            mAcceleration.y = GRAVITY_ACCELERATION;
+            mDeltaP.y = 0;
+            break;
+        case EntitySide::RIGHT:
+            clampX(hitbox.getRight(), collision.xIntersection);
+            setVelocity(sf::Vector2f(0, currentVelocity.y));
+            mAcceleration.x = 0;
+            break;
+        case EntitySide::LEFT:
+            clampX(hitbox.getLeft(), collision.xIntersection);
+            setVelocity(sf::Vector2f(0, currentVelocity.y));
+            mAcceleration.x = 0;
+            break;
         }
     }
 }

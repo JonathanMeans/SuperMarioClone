@@ -59,5 +59,14 @@ AnimationBuilder AnimationBuilder::withNonContiguousRect(
 
 Animation AnimationBuilder::build(sf::Sprite& sprite)
 {
-    return Animation(sprite, mNumRect, mXOffset, mYOffset, mWidth, mHeight, mBorderSize, mRepeat, mRectangles, mTicsPerFrame);
+    return Animation(sprite,
+                     mNumRect,
+                     mXOffset,
+                     mYOffset,
+                     mWidth,
+                     mHeight,
+                     mBorderSize,
+                     mRepeat,
+                     mRectangles,
+                     mTicsPerFrame);
 }

@@ -27,7 +27,6 @@ Animation::Animation(sf::Sprite& activeSprite,
     mActionRectangles(std::move(actionRectangles)),
     mActiveSprite(&activeSprite)
 {
-
     if (mActionRectangles.empty())
     {
         mActionRectangles = generateActionRectangles();
@@ -69,19 +68,21 @@ size_t Animation::getSpriteIndex() const
 
 std::vector<sf::IntRect> Animation::generateActionRectangles() const
 {
-        std::vector<sf::IntRect> rectangles;
-        rectangles.reserve(mNumRect);
-        for (size_t ii = 0; ii < mNumRect; ++ii)
-        {
-            rectangles.emplace_back(mXOffset + ((mWidth + mBorderSize) * ii),
-                                           mYOffset,
-                                           mWidth,
-                                           mHeight);
-        }
-        return rectangles;
+    std::vector<sf::IntRect> rectangles;
+    rectangles.reserve(mNumRect);
+    for (size_t ii = 0; ii < mNumRect; ++ii)
+    {
+        rectangles.emplace_back(mXOffset + ((mWidth + mBorderSize) * ii),
+                                mYOffset,
+                                mWidth,
+                                mHeight);
+    }
+    return rectangles;
 }
 
-void Animation::switchPalette(const sf::Vector2f& offset, const sf::Vector2f& size) {
+void Animation::switchPalette(const sf::Vector2f& offset,
+                              const sf::Vector2f& size)
+{
     mXOffset = offset.x;
     mYOffset = offset.y;
     mWidth = size.x;
