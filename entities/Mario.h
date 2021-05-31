@@ -45,6 +45,8 @@ public:
 
     bool isGrowing() const;
 
+    bool isTransitioningToFire() const;
+
     const Hitbox& getHitbox(EntityType type) const override;
 
 private:
@@ -61,6 +63,7 @@ private:
     Animation deathAnimation;
 
     Animation growingAnimation;
+    Animation changeToFireMarioAnimation;
 
     bool mJumping;
     bool mIsDead;

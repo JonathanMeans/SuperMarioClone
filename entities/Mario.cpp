@@ -58,6 +58,8 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
                     .withNonContiguousRect(growingAnimationRectangles)
                     .build(mActiveSprite);
 
+    changeToFireMarioAnimation = AnimationBuilder().build(mActiveSprite);
+
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
 }
@@ -80,9 +82,14 @@ bool Mario::isGrowing() const
     return mActiveAnimation == &growingAnimation;
 }
 
+bool Mario::isTransitioningToFire() const
+{
+    return mActiveAnimation == &changeToFireMarioAnimation;
+}
+
 void Mario::setAnimationFromState()
 {
-    if (isGrowing() && !mActiveAnimation->finished())
+    if ((isGrowing() || isTransitioningToFire()) && !mActiveAnimation->finished())
         return;
 
     if (mIsDead)
@@ -165,7 +172,26 @@ void Mario::setForm(MarioForm form)
 
         case MarioForm::FIRE_MARIO:
         {
-            mActiveAnimation = &standingAnimation;
+            // Frame 0
+            auto startingRectangle = mActiveAnimation->getCurrentFrame();
+
+            auto frameTwoRectangle(startingRectangle);
+            frameTwoRectangle.top += 129;
+            std::vector<sf::IntRect> changeToFireRectangles = {
+                    startingRectangle,
+                    frameTwoRectangle,
+                    startingRectangle,
+                    frameTwoRectangle,
+                    startingRectangle,
+                    frameTwoRectangle,
+                    startingRectangle,
+                    frameTwoRectangle};
+
+            changeToFireMarioAnimation.setActionRectangles(
+                    changeToFireRectangles);
+
+            mActiveAnimation = &changeToFireMarioAnimation;
+
             standingAnimation.switchPalette(sf::Vector2f(80, 129),
                                             sf::Vector2f(16, 32));
             walkingAnimation.switchPalette(sf::Vector2f(80, 129),

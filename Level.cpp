@@ -12,7 +12,7 @@ Level::Level(std::unique_ptr<Mario> mario,
 
 bool Level::physicsAreOn() const
 {
-    return !mMario->isGrowing();
+    return !mMario->isGrowing() && !mMario->isTransitioningToFire();
 }
 
 void Level::executeFrame(const KeyboardInput& input)

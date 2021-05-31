@@ -66,13 +66,30 @@ size_t Animation::getSpriteIndex() const
     return mSpriteIndex;
 }
 
+size_t Animation::xOffsetForCurrentFrame(size_t frameIndex) const
+{
+    return mXOffset + ((mWidth + mBorderSize) * frameIndex);
+}
+
+void Animation::setActionRectangles(
+        const std::vector<sf::IntRect>& actionRectangles)
+{
+    mActionRectangles = actionRectangles;
+    mSpriteIndex = 0;
+}
+
+sf::IntRect Animation::getCurrentFrame() const
+{
+    return mActionRectangles[mSpriteIndex];
+}
+
 std::vector<sf::IntRect> Animation::generateActionRectangles() const
 {
     std::vector<sf::IntRect> rectangles;
     rectangles.reserve(mNumRect);
     for (size_t ii = 0; ii < mNumRect; ++ii)
     {
-        rectangles.emplace_back(mXOffset + ((mWidth + mBorderSize) * ii),
+        rectangles.emplace_back(xOffsetForCurrentFrame(ii),
                                 mYOffset,
                                 mWidth,
                                 mHeight);

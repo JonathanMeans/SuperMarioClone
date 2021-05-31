@@ -25,6 +25,10 @@ public:
               size_t ticsPerFrame);
     void processAction();
 
+    void setActionRectangles(const std::vector<sf::IntRect>& actionRectangles);
+
+    [[nodiscard]] sf::IntRect getCurrentFrame() const;
+
     [[nodiscard]] size_t getSpriteIndex() const;
 
     [[nodiscard]] bool finished() const;
@@ -44,6 +48,8 @@ private:
     size_t mHeight;
     size_t mBorderSize;
     bool mRepeat;
+
+    [[nodiscard]] size_t xOffsetForCurrentFrame(size_t frameIndex) const;
 
     std::vector<sf::IntRect> mActionRectangles;
     sf::Sprite* mActiveSprite = nullptr;
