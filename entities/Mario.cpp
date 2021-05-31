@@ -38,43 +38,26 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
     deathAnimation =
             AnimationBuilder().withOffset(182, 34).withRectSize(16, 16).build(
                     mActiveSprite);
+    sf::Rect smallRect = sf::IntRect(80, 34, 16, 16);
+    sf::Rect mediumRect = sf::IntRect(335, 1, 16, 32);
+    sf::Rect largeRect = sf::IntRect(80, 1, 16, 32);
+    std::vector<sf::IntRect> growingAnimationRectangles = {smallRect,
+                                                           mediumRect,
+                                                           smallRect,
+                                                           mediumRect,
+                                                           smallRect,
+                                                           mediumRect,
+                                                           largeRect,
+                                                           smallRect,
+                                                           mediumRect,
+                                                           largeRect,
+                                                           smallRect,
+                                                           largeRect};
+    growingAnimation =
+            AnimationBuilder()
+                    .withNonContiguousRect(growingAnimationRectangles)
+                    .build(mActiveSprite);
 
-//    bigWalkingAnimation = AnimationBuilder()
-//                                  .withOffset(80, 1)
-//                                  .withRectSize(16, 32)
-//                                  .withNumRect(4)
-//                                  .withFrameBorder(1)
-//                                  .andRepeat()
-//                                  .build(mActiveSprite);
-//    bigStandingAnimation =
-//            AnimationBuilder().withOffset(80, 1).withRectSize(16, 32).build(
-//                    mActiveSprite);
-//    bigJumpingAnimation = AnimationBuilder()
-//                                  .withOffset(148, 1)
-//                                  .withRectSize(16, 32)
-//                                  .withNumRect(2)
-//                                  .withFrameBorder(1)
-//                                  .build(mActiveSprite);
-//    sf::Rect smallRect = sf::IntRect(80, 34, 16, 16);
-//    sf::Rect mediumRect = sf::IntRect(335, 1, 16, 32);
-//    sf::Rect largeRect = sf::IntRect(80, 1, 16, 32);
-//    std::vector<sf::IntRect> growingAnimationRectangles = {smallRect,
-//                                                           mediumRect,
-//                                                           smallRect,
-//                                                           mediumRect,
-//                                                           smallRect,
-//                                                           mediumRect,
-//                                                           largeRect,
-//                                                           smallRect,
-//                                                           mediumRect,
-//                                                           largeRect,
-//                                                           smallRect,
-//                                                           largeRect};
-//    growingAnimation =
-//            AnimationBuilder()
-//                    .withNonContiguousRect(growingAnimationRectangles)
-//                    .build(mActiveSprite);
-//
 //    fireWalkingAnimation = AnimationBuilder()
 //            .withOffset(80, 129)
 //            .withRectSize(16, 32)
@@ -146,18 +129,7 @@ void Mario::setAnimationFromState()
 
 void Mario::walk()
 {
-    switch (mForm)
-    {
-    case MarioForm::BIG_MARIO:
-        mActiveAnimation = &bigWalkingAnimation;
-        break;
-    case MarioForm::SMALL_MARIO:
-        mActiveAnimation = &walkingAnimation;
-        break;
-    case MarioForm::FIRE_MARIO:
-        mActiveAnimation = &fireWalkingAnimation;
-        break;
-    }
+    mActiveAnimation = &walkingAnimation;
 }
 
 MarioForm Mario::getForm() const
@@ -180,21 +152,9 @@ void Mario::setForm(MarioForm form)
             mMarioCollisionHitbox = largeHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
-//            walkingAnimation = AnimationBuilder()
-//                                  .withOffset(80, 1)
-//                                  .withRectSize(16, 32)
-//                                  .withNumRect(4)
-//                                  .withFrameBorder(1)
-//                                  .andRepeat()
-//                                  .build(mActiveSprite);
-//            standingAnimation = AnimationBuilder().withOffset(80, 1).withRectSize(16, 32).build(
-//                    mActiveSprite);
-//            jumpingAnimation = AnimationBuilder()
-//                                  .withOffset(148, 1)
-//                                  .withRectSize(16, 32)
-//                                  .withNumRect(2)
-//                                  .withFrameBorder(1)
-//                                  .build(mActiveSprite);
+            standingAnimation.switchPalette(sf::Vector2f(80, 1), sf::Vector2f(16, 32));
+            walkingAnimation.switchPalette(sf::Vector2f(80, 1), sf::Vector2f(16, 32));
+            jumpingAnimation.switchPalette(sf::Vector2f(148, 1), sf::Vector2f(16, 32));
         }
         else if (form == MarioForm::SMALL_MARIO)
         {
@@ -206,9 +166,11 @@ void Mario::setForm(MarioForm form)
             mMarioCollisionHitbox = smallHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
+            standingAnimation.switchPalette(sf::Vector2f(80, 34), sf::Vector2f(16, 16));
+            walkingAnimation.switchPalette(sf::Vector2f(80, 34), sf::Vector2f(16, 16));
+            jumpingAnimation.switchPalette(sf::Vector2f(148, 34), sf::Vector2f(16, 16));
         }
     }
-
     mForm = form;
 }
 
@@ -228,34 +190,12 @@ EntityType Mario::getType() const
 
 void Mario::stopWalking()
 {
-    switch (mForm)
-    {
-    case MarioForm::BIG_MARIO:
-        mActiveAnimation = &bigStandingAnimation;
-        break;
-    case MarioForm::SMALL_MARIO:
-        mActiveAnimation = &standingAnimation;
-        break;
-    case MarioForm::FIRE_MARIO:
-        mActiveAnimation = &fireStandingAnimation;
-        break;
-    }
+    mActiveAnimation = &standingAnimation;
 }
 
 void Mario::jump()
 {
-    switch (mForm)
-    {
-    case MarioForm::BIG_MARIO:
-        mActiveAnimation = &bigJumpingAnimation;
-        break;
-    case MarioForm::SMALL_MARIO:
-        mActiveAnimation = &jumpingAnimation;
-        break;
-    case MarioForm::FIRE_MARIO:
-        mActiveAnimation = &fireJumpingAnimation;
-        break;
-    }
+    mActiveAnimation = &jumpingAnimation;
 }
 
 std::string formToString(MarioForm form)

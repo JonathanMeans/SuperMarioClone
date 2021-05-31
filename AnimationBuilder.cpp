@@ -59,18 +59,5 @@ AnimationBuilder AnimationBuilder::withNonContiguousRect(
 
 Animation AnimationBuilder::build(sf::Sprite& sprite)
 {
-    if (mRectangles.empty())
-    {
-        mRectangles.reserve(mNumRect);
-        for (size_t ii = 0; ii < mNumRect; ++ii)
-        {
-            mRectangles.emplace_back(mXOffset + ((mWidth + mBorderSize) * ii),
-                                     mYOffset,
-                                     mWidth,
-                                     mHeight);
-        }
-    }
-
-    sprite.setTextureRect(mRectangles[0]);
-    return Animation(sprite, mRectangles, mRepeat, mTicsPerFrame, std::make_shared<AnimationBuilder>(*this));
+    return Animation(sprite, mNumRect, mXOffset, mYOffset, mWidth, mHeight, mBorderSize, mRepeat, mRectangles, mTicsPerFrame);
 }
