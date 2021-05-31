@@ -58,25 +58,6 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
                     .withNonContiguousRect(growingAnimationRectangles)
                     .build(mActiveSprite);
 
-    //    fireWalkingAnimation = AnimationBuilder()
-    //            .withOffset(80, 129)
-    //            .withRectSize(16, 32)
-    //            .withNumRect(4)
-    //            .withFrameBorder(1)
-    //            .andRepeat()
-    //            .build(mActiveSprite);
-    //
-    //    fireStandingAnimation = AnimationBuilder().withOffset(80,
-    //    129).withRectSize(16, 32).build(
-    //            mActiveSprite);
-    //
-    //    fireJumpingAnimation = AnimationBuilder()
-    //            .withOffset(148, 129)
-    //            .withRectSize(16, 32)
-    //            .withNumRect(2)
-    //            .withFrameBorder(1)
-    //            .build(mActiveSprite);
-
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
 }
@@ -143,7 +124,9 @@ void Mario::setForm(MarioForm form)
     const bool formIsChanging = form != mForm;
     if (formIsChanging)
     {
-        if (form == MarioForm::BIG_MARIO)
+        switch (form)
+        {
+        case MarioForm::BIG_MARIO:
         {
             const auto currentY = mActiveSprite.getPosition().y;
             const auto newY = currentY - GRIDBOX_SIZE;
@@ -160,7 +143,8 @@ void Mario::setForm(MarioForm form)
             jumpingAnimation.switchPalette(sf::Vector2f(148, 1),
                                            sf::Vector2f(16, 32));
         }
-        else if (form == MarioForm::SMALL_MARIO)
+        break;
+        case MarioForm::SMALL_MARIO:
         {
             const auto currentY = mActiveSprite.getPosition().y;
             const auto newY = currentY + GRIDBOX_SIZE;
@@ -177,8 +161,23 @@ void Mario::setForm(MarioForm form)
             jumpingAnimation.switchPalette(sf::Vector2f(148, 34),
                                            sf::Vector2f(16, 16));
         }
+        break;
+
+        case MarioForm::FIRE_MARIO:
+        {
+            mActiveAnimation = &standingAnimation;
+            standingAnimation.switchPalette(sf::Vector2f(80, 129),
+                                            sf::Vector2f(16, 32));
+            walkingAnimation.switchPalette(sf::Vector2f(80, 129),
+                                           sf::Vector2f(16, 32));
+            jumpingAnimation.switchPalette(sf::Vector2f(148, 129),
+                                           sf::Vector2f(16, 32));
+        }
+        break;
+        }
+
+        mForm = form;
     }
-    mForm = form;
 }
 
 EntityType Mario::getType() const
@@ -255,7 +254,8 @@ void Mario::onCollision(const Collision& collision)
     }
     else
     {
-        // We're not colliding with an enemy, so we want the sprite hitbox
+        // We're not colliding with an enemy, so we want the sprite
+        // hitbox
         const auto& hitbox = getHitbox(collision.entity->getType());
         const auto currentVelocity = getVelocity();
         switch (collision.side)
