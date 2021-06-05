@@ -1,4 +1,5 @@
 #include "Level.h"
+#include "Text.h"
 
 #include <cmath>
 
@@ -8,6 +9,15 @@ Level::Level(std::unique_ptr<Mario> mario,
 {
     for (auto& entity : entities)
         addEntity(std::move(entity));
+
+    addHUDOverlay();
+}
+
+void Level::addHUDOverlay()
+{
+    mTextElements.push_back(
+            std::make_unique<Text>("Mario", sf::Vector2f{10, 10}));
+    mTextElements.push_back(std::make_unique<Points>(0, sf::Vector2f{10, 18}));
 }
 
 bool Level::physicsAreOn() const
@@ -68,6 +78,8 @@ void Level::drawFrame(sf::RenderWindow& window)
     {
         entity->draw(window);
     }
+    for (auto& text : mTextElements)
+        text->draw(window);
 }
 
 void Level::setMarioMovementFromController(const KeyboardInput& currentInput)

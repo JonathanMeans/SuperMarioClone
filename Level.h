@@ -2,6 +2,7 @@
 #define SUPERMARIOBROS_LEVEL_H
 
 #include "Input.h"
+#include "Text.h"
 #include "entities/Mario.h"
 
 /*
@@ -26,6 +27,10 @@ public:
     [[nodiscard]] const Mario& getMario() const;
 
 private:
+    void addHUDOverlay();
+
+    std::vector<std::unique_ptr<Text>> mTextElements;
+
     std::unique_ptr<Mario> mMario;
 
     [[nodiscard]] bool physicsAreOn() const;

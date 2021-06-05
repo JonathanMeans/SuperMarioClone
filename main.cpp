@@ -12,6 +12,7 @@
 #include "entities/Ground.h"
 #include "entities/Mario.h"
 #include "entities/Pipe.h"
+#include "Text.h"
 
 int main(int argc, char* argv[])
 {
@@ -24,6 +25,8 @@ int main(int argc, char* argv[])
     window.clear();
 
     initializeSpriteMaker(resourceDir);
+    initializeFonts(resourceDir);
+
     auto& spriteMaker = getSpriteMaker();
 
     std::vector<std::unique_ptr<Entity>> entities;
