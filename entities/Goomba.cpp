@@ -1,6 +1,7 @@
 #include "Goomba.h"
 #include "AnimationBuilder.h"
 #include "Timer.h"
+#include "Text.h"
 
 Goomba::Goomba(const sf::Texture& texture, const sf::Vector2f& position) :
     Entity(texture,
@@ -32,8 +33,10 @@ void Goomba::onCollision(const Collision& collision)
     const auto hitbox = getHitbox(collision.entity->getType());
 
     if (isMario(collision.entity->getType()) &&
-        collision.side == EntitySide::TOP)
+        collision.side == EntitySide::TOP) {
+        getPoints()->addPoints(100);
         terminate();
+    }
     else
     {
         if (collision.side == EntitySide::BOTTOM)

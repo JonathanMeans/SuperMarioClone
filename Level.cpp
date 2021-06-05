@@ -16,8 +16,8 @@ Level::Level(std::unique_ptr<Mario> mario,
 void Level::addHUDOverlay()
 {
     mTextElements.push_back(
-            std::make_unique<Text>("Mario", sf::Vector2f{10, 10}));
-    mTextElements.push_back(std::make_unique<Points>(0, sf::Vector2f{10, 18}));
+            std::make_shared<Text>("Mario", sf::Vector2f{10, 10}));
+    mTextElements.push_back(getPoints());
 }
 
 bool Level::physicsAreOn() const

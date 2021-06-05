@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     window.clear();
 
     initializeSpriteMaker(resourceDir);
-    initializeFonts(resourceDir);
+    initializeHUDOverlay(resourceDir);
 
     auto& spriteMaker = getSpriteMaker();
 

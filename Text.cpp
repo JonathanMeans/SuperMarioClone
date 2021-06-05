@@ -1,8 +1,8 @@
 
 #include "Text.h"
 #include <cassert>
-#include <cassert>
 #include <iomanip>
+#include <sstream>
 
 namespace
 {
@@ -10,7 +10,9 @@ sf::Font font;
 bool fontIsInitialized = false;
 }
 
-void initializeFonts(const std::string& resourceDir)
+std::shared_ptr<Points> gPoints;
+
+void initializeHUDOverlay(const std::string& resourceDir)
 {
     const auto fontFile = resourceDir + "/fonts/emulogic.ttf";
     if (!font.loadFromFile(fontFile))
@@ -18,6 +20,11 @@ void initializeFonts(const std::string& resourceDir)
         throw std::runtime_error("Unable to load font from " + fontFile);
     }
     fontIsInitialized = true;
+    gPoints = std::make_shared<Points>(0, sf::Vector2f{10, 18});
+}
+
+std::shared_ptr<Points> getPoints() {
+    return gPoints;
 }
 
 Text::Text(const std::string& content, const sf::Vector2f& position)
@@ -28,6 +35,10 @@ Text::Text(const std::string& content, const sf::Vector2f& position)
     mSfText.setPosition(position);
     mSfText.setFillColor(sf::Color::White);
     mSfText.setCharacterSize(8);
+}
+
+void Text::updateString(const std::string& newString) {
+    mSfText.setString(newString);
 }
 
 void Text::draw(sf::RenderWindow& window) const
@@ -41,11 +52,16 @@ Points::Points(size_t numPoints, const sf::Vector2f& position) :
 {
 }
 
+void Points::addPoints(size_t newPoints) {
+     mNumPoints += newPoints;
+     updateString(formatPoints(mNumPoints));
+}
+
 std::string Points::formatPoints(size_t numPoints)
 {
     auto stringValue = std::to_string(numPoints);
     assert(stringValue.size() <= 6 && "Too many points to handle");
     std::ostringstream str;
-    str << std::left << std::setw(6) << std::setfill('0') << stringValue;
+    str << std::right << std::setw(6) << std::setfill('0') << stringValue;
     return str.str();
 }

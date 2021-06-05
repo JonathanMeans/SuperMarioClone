@@ -5,7 +5,7 @@
 #include <SFML/System.hpp>
 #include <string>
 
-void initializeFonts(const std::string& resourceDir);
+void initializeHUDOverlay(const std::string& resourceDir);
 
 class Text
 {
@@ -14,6 +14,8 @@ public:
     virtual ~Text()
     {
     }
+
+    void updateString(const std::string& newString);
 
     void draw(sf::RenderWindow& window) const;
 
@@ -26,10 +28,14 @@ class Points : public Text
 public:
     Points(size_t numPoints, const sf::Vector2f& position);
 
+    void addPoints(size_t newPoints);
+
 private:
     static std::string formatPoints(size_t numPoints);
 
     size_t mNumPoints;
 };
+
+std::shared_ptr<Points> getPoints();
 
 #endif  // SUPERMARIOBROS_TEXT_H
