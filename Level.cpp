@@ -9,13 +9,16 @@
 
 Level::Level(std::unique_ptr<Mario> mario,
              std::vector<std::unique_ptr<Entity>>&& entities) :
-    mMario(std::move(mario))
+    mMario(std::move(mario)),
+    mEntities(std::move(entities))
 {
     mPoints = std::make_shared<Points>(0, sf::Vector2f{10, 18});
-    for (auto& entity : entities)
-        addEntity(std::move(entity));
-
     addHUDOverlay();
+}
+
+std::vector<std::unique_ptr<Entity>>& Level::getEntities()
+{
+    return mEntities;
 }
 
 void Level::addHUDOverlay()
@@ -89,6 +92,11 @@ void Level::executeFrame(const KeyboardInput& input)
         }
     }
     getEventQueue().clear();
+}
+
+void Level::addEntity(std::unique_ptr<Entity> entity)
+{
+    getEntities().push_back(std::move(entity));
 }
 
 void Level::onBlockShattered(const Event::BlockShattered& event)
