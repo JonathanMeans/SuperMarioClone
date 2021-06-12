@@ -29,9 +29,6 @@ public:
 
 private:
     void addEntityToFront(std::unique_ptr<Entity> entity);
-    void addEntity(std::unique_ptr<Entity> entity);
-    std::vector<std::unique_ptr<Entity>>& getEntities();
-
 
     void addHUDOverlay();
 

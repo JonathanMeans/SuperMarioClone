@@ -16,11 +16,6 @@ Level::Level(std::unique_ptr<Mario> mario,
     addHUDOverlay();
 }
 
-std::vector<std::unique_ptr<Entity>>& Level::getEntities()
-{
-    return mEntities;
-}
-
 void Level::addHUDOverlay()
 {
     mTextElements.push_back(
@@ -41,8 +36,7 @@ void Level::executeFrame(const KeyboardInput& input)
 
     if (physicsAreOn())
     {
-        auto& entities = getEntities();
-        for (auto& entity : entities)
+        for (auto& entity : mEntities)
         {
             entity->mDeltaP.x = 0;
             entity->mDeltaP.y = 0;
@@ -51,28 +45,28 @@ void Level::executeFrame(const KeyboardInput& input)
         setMarioMovementFromController(input);
         mMario->updatePosition();
 
-        for (auto& entity : entities)
+        for (auto& entity : mEntities)
         {
             entity->updatePosition();
             entity->doInternalCalculations();
         }
 
-        mMario->collideWithEntity(entities);
-        for (size_t ii = 0; ii < entities.size(); ++ii)
-            for (size_t jj = ii + 1; jj < entities.size(); ++jj)
-                entities[ii]->collideWithEntity(entities[jj]);
+        mMario->collideWithEntity(mEntities);
+        for (size_t ii = 0; ii < mEntities.size(); ++ii)
+            for (size_t jj = ii + 1; jj < mEntities.size(); ++jj)
+                mEntities[ii]->collideWithEntity(mEntities[jj]);
 
-        for (auto& entity : entities)
+        for (auto& entity : mEntities)
         {
             entity->updateAnimation();
         }
 
-        entities.erase(std::remove_if(entities.begin(),
-                                      entities.end(),
-                                      [](std::unique_ptr<Entity>& entity) {
-                                          return entity->needsCleanup();
-                                      }),
-                       entities.end());
+        mEntities.erase(std::remove_if(mEntities.begin(),
+                                       mEntities.end(),
+                                       [](std::unique_ptr<Entity>& entity) {
+                                           return entity->needsCleanup();
+                                       }),
+                        mEntities.end());
     }
 
     mMario->updateAnimation();
@@ -94,47 +88,45 @@ void Level::executeFrame(const KeyboardInput& input)
     getEventQueue().clear();
 }
 
-void Level::addEntity(std::unique_ptr<Entity> entity)
-{
-    getEntities().push_back(std::move(entity));
-}
-
 void Level::onBlockShattered(const Event::BlockShattered& event)
 {
     const auto left = event.position.x;
     const auto top = event.position.y;
     // Spawn block shards after destruction
     // Upper left
-    addEntity(std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
-                                           sf::Vector2f{left, top},
-                                           sf::Vector2f(0, 0),
-                                           sf::Vector2f(-1, -5)));
+    mEntities.push_back(
+            std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
+                                         sf::Vector2f{left, top},
+                                         sf::Vector2f(0, 0),
+                                         sf::Vector2f(-1, -5)));
 
     // Upper right
-    addEntity(std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
-                                           sf::Vector2f{left + 8, top},
-                                           sf::Vector2f(8, 0),
-                                           sf::Vector2f(1, -5)));
+    mEntities.push_back(
+            std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
+                                         sf::Vector2f{left + 8, top},
+                                         sf::Vector2f(8, 0),
+                                         sf::Vector2f(1, -5)));
 
     // Lower right
-    addEntity(std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
-                                           sf::Vector2f{left + 8, top + 8},
-                                           sf::Vector2f(8, 8),
-                                           sf::Vector2f(1, -5)));
+    mEntities.push_back(
+            std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
+                                         sf::Vector2f{left + 8, top + 8},
+                                         sf::Vector2f(8, 8),
+                                         sf::Vector2f(1, -5)));
 
     // Lower left
-    addEntity(std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
-                                           sf::Vector2f{left, top + 8},
-                                           sf::Vector2f(0, 8),
-                                           sf::Vector2f(-1, -5)));
+    mEntities.push_back(
+            std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
+                                         sf::Vector2f{left, top + 8},
+                                         sf::Vector2f(0, 8),
+                                         sf::Vector2f(-1, -5)));
 
     mPoints->addPoints(50);
 }
 
 void Level::addEntityToFront(std::unique_ptr<Entity> entity)
 {
-    auto& entities = getEntities();
-    entities.insert(entities.begin(), std::move(entity));
+    mEntities.insert(mEntities.begin(), std::move(entity));
 }
 
 void Level::onEnemyKilled(const Event::EnemyKilled& event)
@@ -169,10 +161,8 @@ void Level::drawFrame(sf::RenderWindow& window)
 {
     window.clear(sf::Color(0, 0, 255, 255));
     mMario->draw(window);
-    for (auto& entity : getEntities())
-    {
+    for (auto& entity : mEntities)
         entity->draw(window);
-    }
     for (auto& text : mTextElements)
         text->draw(window);
 }
