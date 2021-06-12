@@ -8,6 +8,8 @@
 #include "Hitbox.h"
 #include "SFML/Graphics.hpp"
 
+class Event;
+
 enum class EntityType
 {
     GOOMBA,
@@ -106,6 +108,8 @@ protected:
     Hitbox createSpriteBoundsHitbox() const;
 
     void updateHitboxPositions();
+
+    void dispatchEvent(const Event& event);
 
     sf::Sprite mActiveSprite;
     sf::Vector2f mVelocity;

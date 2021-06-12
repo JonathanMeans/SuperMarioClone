@@ -1,6 +1,7 @@
 #ifndef SUPERMARIOBROS_LEVEL_H
 #define SUPERMARIOBROS_LEVEL_H
 
+#include "Event.h"
 #include "Input.h"
 #include "Text.h"
 #include "entities/Mario.h"
@@ -40,5 +41,8 @@ private:
     float calculateVerticalAcceleration(const KeyboardInput& currentInput,
                                         float xVelocity) const;
 };
+
+std::vector<Event>& getEventQueue();
+void addEvent(Event event);
 
 #endif  // SUPERMARIOBROS_LEVEL_H

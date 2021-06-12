@@ -2,6 +2,7 @@
 #include "AnimationBuilder.h"
 #include "Timer.h"
 #include "Text.h"
+#include "Event.h"
 
 Goomba::Goomba(const sf::Texture& texture, const sf::Vector2f& position) :
     Entity(texture,
@@ -34,7 +35,8 @@ void Goomba::onCollision(const Collision& collision)
 
     if (isMario(collision.entity->getType()) &&
         collision.side == EntitySide::TOP) {
-        getPoints()->addPoints(100);
+       // getPoints()->addPoints(100);
+        dispatchEvent( Event::constructEnemyKilled({getTop(), getLeft()}, 100));
         terminate();
     }
     else

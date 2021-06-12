@@ -179,3 +179,13 @@ const Mario& Level::getMario() const
 {
     return *mMario;
 }
+
+std::vector<Event> gEventQueue;
+
+std::vector<Event>& getEventQueue() {
+    return gEventQueue;
+}
+
+void addEvent(Event event) {
+    gEventQueue.push_back(event);
+}

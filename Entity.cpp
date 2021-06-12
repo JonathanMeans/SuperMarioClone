@@ -1,7 +1,9 @@
 #include "Entity.h"
+
 #include <iostream>
 #include <utility>
 
+#include "Level.h"
 #include "SFML/Graphics.hpp"
 
 namespace
@@ -410,6 +412,10 @@ bool Entity::needsCleanup()
 {
     return mCleanupFlag;
 }
+
+void Entity::dispatchEvent(const Event& event) {
+    addEvent(event);
+};
 
 std::vector<std::unique_ptr<Entity>> gEntities;
 
