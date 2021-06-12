@@ -10,8 +10,6 @@ sf::Font font;
 bool fontIsInitialized = false;
 }
 
-std::shared_ptr<Points> gPoints;
-
 void initializeHUDOverlay(const std::string& resourceDir)
 {
     const auto fontFile = resourceDir + "/fonts/emulogic.ttf";
@@ -20,11 +18,6 @@ void initializeHUDOverlay(const std::string& resourceDir)
         throw std::runtime_error("Unable to load font from " + fontFile);
     }
     fontIsInitialized = true;
-    gPoints = std::make_shared<Points>(0, sf::Vector2f{10, 18});
-}
-
-std::shared_ptr<Points> getPoints() {
-    return gPoints;
 }
 
 Text::Text(const std::string& content, const sf::Vector2f& position)

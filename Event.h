@@ -4,19 +4,20 @@
 #include <Entity.h>
 #include <variant>
 
+enum class EventType
+{
+    ENEMY_KILLED,
+    ITEM_SPAWNED
+};
+
 class Event
 {
 public:
-    enum class EventType
-    {
-        ENEMY_KILLED,
-        ITEM_SPAWNED
-    };
     EventType type;
 
     static Event constructEnemyKilled(const sf::Vector2f& position, int points);
 
-private:
+
     struct EnemyKilled
     {
         sf::Vector2f position;
@@ -29,8 +30,11 @@ private:
         EntityType type;
     };
 
-    std::variant<EnemyKilled, ItemSpawned> eventData;
+    [[nodiscard]] EnemyKilled asEnemyKilled() const;
+    [[nodiscard]] ItemSpawned asItemSpawned() const;
 
+private:
+    std::variant<EnemyKilled, ItemSpawned> eventData;
 };
 
 #endif  // SUPERMARIOBROS_EVENT_H

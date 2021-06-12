@@ -34,12 +34,17 @@ private:
 
     std::unique_ptr<Mario> mMario;
 
+    std::shared_ptr<Points> mPoints;
+
     [[nodiscard]] bool physicsAreOn() const;
 
     float setVerticalVelocityDueToJumpStart(const KeyboardInput& currentInput,
                                             const sf::Vector2f& velocity) const;
     float calculateVerticalAcceleration(const KeyboardInput& currentInput,
                                         float xVelocity) const;
+
+    void onEnemyKilled(const Event::EnemyKilled&);
+    void onItemSpawned(const Event::ItemSpawned&);
 };
 
 std::vector<Event>& getEventQueue();

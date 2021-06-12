@@ -1,5 +1,6 @@
 #include "Level.h"
 #include "Text.h"
+#include "Event.h"
 
 #include <cmath>
 
@@ -7,6 +8,7 @@ Level::Level(std::unique_ptr<Mario> mario,
              std::vector<std::unique_ptr<Entity>>&& entities) :
     mMario(std::move(mario))
 {
+    mPoints = std::make_shared<Points>(0, sf::Vector2f{10, 18});
     for (auto& entity : entities)
         addEntity(std::move(entity));
 
@@ -17,7 +19,7 @@ void Level::addHUDOverlay()
 {
     mTextElements.push_back(
             std::make_shared<Text>("Mario", sf::Vector2f{10, 10}));
-    mTextElements.push_back(getPoints());
+    mTextElements.push_back(mPoints);
 }
 
 bool Level::physicsAreOn() const
@@ -68,6 +70,29 @@ void Level::executeFrame(const KeyboardInput& input)
     }
 
     mMario->updateAnimation();
+
+    for (const auto& event: getEventQueue())
+    {
+        switch (event.type)
+        {
+        case EventType::ENEMY_KILLED:
+            onEnemyKilled(event.asEnemyKilled());
+            break;
+        case EventType::ITEM_SPAWNED:
+            onItemSpawned(event.asItemSpawned());
+            break;
+        }
+    }
+    getEventQueue().clear();
+}
+
+void Level::onEnemyKilled(const Event::EnemyKilled& event)
+{
+    mPoints->addPoints(event.points);
+}
+
+void Level::onItemSpawned(const Event::ItemSpawned&)
+{
 }
 
 void Level::drawFrame(sf::RenderWindow& window)

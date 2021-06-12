@@ -37,6 +37,4 @@ private:
     size_t mNumPoints;
 };
 
-std::shared_ptr<Points> getPoints();
-
 #endif  // SUPERMARIOBROS_TEXT_H
