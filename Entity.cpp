@@ -429,8 +429,3 @@ void addEntity(std::unique_ptr<Entity> entity)
 {
     gEntities.push_back(std::move(entity));
 }
-
-void addEntityToFront(std::unique_ptr<Entity> entity)
-{
-    gEntities.insert(gEntities.begin(), std::move(entity));
-}

@@ -28,6 +28,8 @@ public:
     [[nodiscard]] const Mario& getMario() const;
 
 private:
+    void addEntityToFront(std::unique_ptr<Entity> entity);
+
     void addHUDOverlay();
 
     std::vector<std::shared_ptr<Text>> mTextElements;

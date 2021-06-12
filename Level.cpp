@@ -88,6 +88,12 @@ void Level::executeFrame(const KeyboardInput& input)
     getEventQueue().clear();
 }
 
+void Level::addEntityToFront(std::unique_ptr<Entity> entity)
+{
+    auto& entities = getEntities();
+    entities.insert(entities.begin(), std::move(entity));
+}
+
 void Level::onEnemyKilled(const Event::EnemyKilled& event)
 {
     mPoints->addPoints(event.points);
