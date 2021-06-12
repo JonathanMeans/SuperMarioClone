@@ -6,13 +6,13 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "SpriteMaker.h"
+#include "Text.h"
 #include "Timer.h"
 #include "entities/Block.h"
 #include "entities/Goomba.h"
 #include "entities/Ground.h"
 #include "entities/Mario.h"
 #include "entities/Pipe.h"
-#include "Text.h"
 
 int main(int argc, char* argv[])
 {

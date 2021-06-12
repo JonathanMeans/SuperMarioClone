@@ -413,7 +413,8 @@ bool Entity::needsCleanup()
     return mCleanupFlag;
 }
 
-void Entity::dispatchEvent(const Event& event) {
+void Entity::dispatchEvent(const Event& event)
+{
     addEvent(event);
 };
 

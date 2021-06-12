@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include <memory>
 #include <string>
 
 void initializeHUDOverlay(const std::string& resourceDir);

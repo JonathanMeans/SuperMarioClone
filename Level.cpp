@@ -182,10 +182,12 @@ const Mario& Level::getMario() const
 
 std::vector<Event> gEventQueue;
 
-std::vector<Event>& getEventQueue() {
+std::vector<Event>& getEventQueue()
+{
     return gEventQueue;
 }
 
-void addEvent(Event event) {
+void addEvent(Event event)
+{
     gEventQueue.push_back(event);
 }

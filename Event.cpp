@@ -1,6 +1,7 @@
 #include "Event.h"
 
-Event Event::constructEnemyKilled(const sf::Vector2f& position, int points) {
+Event Event::constructEnemyKilled(const sf::Vector2f& position, int points)
+{
     Event event;
     event.type = EventType::ENEMY_KILLED;
     EnemyKilled enemyKilled;
