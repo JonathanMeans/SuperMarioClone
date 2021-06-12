@@ -3,6 +3,7 @@
 #include <SpriteMaker.h>
 #include <Timer.h>
 #include <cassert>
+#include "Event.h"
 #include "Items.h"
 #include "Mario.h"
 
@@ -113,22 +114,19 @@ void ItemBlock::onCollision(const Collision& collision)
 
     bumpUp();
 
-    // Adding to front to ensure that mushroom is drawn before the block
-    // i.e. the block obscures the mushroom from view
     auto* mario = reinterpret_cast<Mario*>(collision.entity);
     assert(mario != nullptr);
 
     if (mario->getForm() == MarioForm::SMALL_MARIO)
-        addEntityToFront(std::make_unique<Mushroom>(
-                getSpriteMaker()->itemAndObjectTexture,
-                sf::Vector2f(getLeft(), getTop() - 5),
-                getTop()));
+        dispatchEvent(Event::constructItemSpawned(EntityType::MUSHROOM,
+                                                  sf::Vector2f(getLeft(),
+                                                               getTop() - 5),
+                                                  getTop()));
     else
-        addEntityToFront(std::make_unique<Fireflower>(
-                getSpriteMaker()->itemAndObjectTexture,
-                sf::Vector2f(getLeft(), getTop() - 5),
-                getTop()));
-
+        dispatchEvent(Event::constructItemSpawned(EntityType::FIREFLOWER,
+                                                  sf::Vector2f(getLeft(),
+                                                               getTop() - 5),
+                                                  getTop()));
     mActiveAnimation = &noItemAnimation;
 }
 

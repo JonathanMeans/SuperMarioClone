@@ -1,7 +1,9 @@
 #include "Level.h"
-#include "Text.h"
 #include "Event.h"
+#include "SpriteMaker.h"
+#include "Text.h"
 
+#include <entities/Items.h>
 #include <cmath>
 
 Level::Level(std::unique_ptr<Mario> mario,
@@ -71,7 +73,7 @@ void Level::executeFrame(const KeyboardInput& input)
 
     mMario->updateAnimation();
 
-    for (const auto& event: getEventQueue())
+    for (const auto& event : getEventQueue())
     {
         switch (event.type)
         {
@@ -91,8 +93,27 @@ void Level::onEnemyKilled(const Event::EnemyKilled& event)
     mPoints->addPoints(event.points);
 }
 
-void Level::onItemSpawned(const Event::ItemSpawned&)
+void Level::onItemSpawned(const Event::ItemSpawned& event)
 {
+    // Adding to front to ensure that mushroom is drawn before the block
+    // i.e. the block obscures the mushroom from view
+    switch (event.type)
+    {
+    case EntityType::MUSHROOM:
+        addEntityToFront(std::make_unique<Mushroom>(
+                getSpriteMaker()->itemAndObjectTexture,
+                event.position,
+                event.blockTop));
+        break;
+    case EntityType::FIREFLOWER:
+        addEntityToFront(std::make_unique<Fireflower>(
+                getSpriteMaker()->itemAndObjectTexture,
+                event.position,
+                event.blockTop));
+        break;
+    default:
+        throw std::runtime_error("Unhandled entity type");
+    }
 }
 
 void Level::drawFrame(sf::RenderWindow& window)

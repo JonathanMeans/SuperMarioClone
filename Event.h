@@ -16,7 +16,9 @@ public:
     EventType type;
 
     static Event constructEnemyKilled(const sf::Vector2f& position, int points);
-
+    static Event constructItemSpawned(EntityType type,
+                                      const sf::Vector2f& position,
+                                      float blockTop);
 
     struct EnemyKilled
     {
@@ -28,6 +30,7 @@ public:
     {
         sf::Vector2f position;
         EntityType type;
+        float blockTop;
     };
 
     [[nodiscard]] EnemyKilled asEnemyKilled() const;
