@@ -7,7 +7,8 @@
 enum class EventType
 {
     ENEMY_KILLED,
-    ITEM_SPAWNED
+    ITEM_SPAWNED,
+    BLOCK_SHATTERED
 };
 
 class Event
@@ -19,6 +20,7 @@ public:
     static Event constructItemSpawned(EntityType type,
                                       const sf::Vector2f& position,
                                       float blockTop);
+    static Event constructBlockShattered(const sf::Vector2f& position);
 
     struct EnemyKilled
     {
@@ -33,11 +35,17 @@ public:
         float blockTop;
     };
 
+    struct BlockShattered
+    {
+        sf::Vector2f position;
+    };
+
     [[nodiscard]] EnemyKilled asEnemyKilled() const;
     [[nodiscard]] ItemSpawned asItemSpawned() const;
+    [[nodiscard]] BlockShattered asBlockShattered() const;
 
 private:
-    std::variant<EnemyKilled, ItemSpawned> eventData;
+    std::variant<EnemyKilled, ItemSpawned, BlockShattered> eventData;
 };
 
 #endif  // SUPERMARIOBROS_EVENT_H

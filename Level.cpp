@@ -3,6 +3,7 @@
 #include "SpriteMaker.h"
 #include "Text.h"
 
+#include <entities/Block.h>
 #include <entities/Items.h>
 #include <cmath>
 
@@ -83,9 +84,43 @@ void Level::executeFrame(const KeyboardInput& input)
         case EventType::ITEM_SPAWNED:
             onItemSpawned(event.asItemSpawned());
             break;
+        case EventType::BLOCK_SHATTERED:
+            onBlockShattered(event.asBlockShattered());
         }
     }
     getEventQueue().clear();
+}
+
+void Level::onBlockShattered(const Event::BlockShattered& event)
+{
+    const auto left = event.position.x;
+    const auto top = event.position.y;
+    // Spawn block shards after destruction
+    // Upper left
+    addEntity(std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
+                                           sf::Vector2f{left, top},
+                                           sf::Vector2f(0, 0),
+                                           sf::Vector2f(-1, -5)));
+
+    // Upper right
+    addEntity(std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
+                                           sf::Vector2f{left + 8, top},
+                                           sf::Vector2f(8, 0),
+                                           sf::Vector2f(1, -5)));
+
+    // Lower right
+    addEntity(std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
+                                           sf::Vector2f{left + 8, top + 8},
+                                           sf::Vector2f(8, 8),
+                                           sf::Vector2f(1, -5)));
+
+    // Lower left
+    addEntity(std::make_unique<BlockShard>(getSpriteMaker()->blockTexture,
+                                           sf::Vector2f{left, top + 8},
+                                           sf::Vector2f(0, 8),
+                                           sf::Vector2f(-1, -5)));
+
+    mPoints->addPoints(50);
 }
 
 void Level::addEntityToFront(std::unique_ptr<Entity> entity)

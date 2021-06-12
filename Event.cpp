@@ -25,6 +25,16 @@ Event Event::constructItemSpawned(EntityType type,
     return event;
 }
 
+Event Event::constructBlockShattered(const sf::Vector2f& position)
+{
+    Event event;
+    event.type = EventType::BLOCK_SHATTERED;
+    BlockShattered blockShattered;
+    blockShattered.position = position;
+    event.eventData = blockShattered;
+    return event;
+}
+
 Event::EnemyKilled Event::asEnemyKilled() const
 {
     return std::get<Event::EnemyKilled>(eventData);
@@ -33,4 +43,9 @@ Event::EnemyKilled Event::asEnemyKilled() const
 Event::ItemSpawned Event::asItemSpawned() const
 {
     return std::get<Event::ItemSpawned>(eventData);
+}
+
+Event::BlockShattered Event::asBlockShattered() const
+{
+    return std::get<Event::BlockShattered>(eventData);
 }
