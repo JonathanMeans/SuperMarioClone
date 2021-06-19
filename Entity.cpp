@@ -315,8 +315,16 @@ sf::Vector2f Entity::getVelocity() const
 
 void Entity::setVelocity(const sf::Vector2f& newVelocity)
 {
-    if (mInputEnabled)
+    if (mInputEnabled) {
         mVelocity = newVelocity;
+        if (mVelocity.x != 0
+            && (sign(mVelocity.x) != sign(static_cast<float>(mLookDirection))))
+        {
+            mChangingDirection = true;
+            mLookDirection *= -1;
+        }
+    }
+
 }
 
 sf::Vector2f Entity::getAcceleration() const
@@ -334,14 +342,6 @@ void Entity::setAcceleration(const sf::Vector2f& acceleration)
     {
         if (acceleration == this->mAcceleration)
             return;
-
-        if (acceleration.x != 0 &&
-            (sign(acceleration.x) != sign(static_cast<float>(mLookDirection))))
-        {
-            mChangingDirection = true;
-            mLookDirection *= -1;
-        }
-
         mAcceleration = acceleration;
     }
 }
@@ -359,7 +359,7 @@ void Entity::doInternalCalculations()
 
 void Entity::updatePosition()
 {
-    // const auto originalVelocity = mVelocity;
+    const auto originalVelocity = mVelocity;
 
     mVelocity.x += mAcceleration.x;
     mVelocity.y += mAcceleration.y;
@@ -374,14 +374,12 @@ void Entity::updatePosition()
     }
 
     // If we've slowed down to 0 (or past), set x acceleration to 0
-    /*
     if ((originalVelocity.x > 0 && mVelocity.x <= 0) ||
         (originalVelocity.x < 0 && mVelocity.x >= 0))
     {
         mVelocity.x = 0;
         mAcceleration.x = 0;
     }
-     */
 
     if (mVelocity.y > MAX_FALLING_VELOCITY)
         mVelocity.y = MAX_FALLING_VELOCITY;
