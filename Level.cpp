@@ -6,6 +6,7 @@
 #include <entities/Block.h>
 #include <entities/Items.h>
 #include <cmath>
+#include <iostream>
 
 Level::Level(std::unique_ptr<Mario> mario,
              std::vector<std::unique_ptr<Entity>>&& entities) :
@@ -195,6 +196,7 @@ void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
         (currentInput.right.releasedThisFrame() &&
          !currentInput.left.keyIsDown))
     {
+        // acceleration.x *= -1;
         // TODO: Should we decelerate to 0?
         velocity.x = 0;
         acceleration.x = 0;

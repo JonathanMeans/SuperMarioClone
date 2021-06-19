@@ -1,6 +1,7 @@
 #include "Input.h"
 
 #include <SFML/Window/Keyboard.hpp>
+#include <iostream>
 #include <vector>
 
 const std::vector<sf::Keyboard::Key> ALL_KEYS = {sf::Keyboard::Left,

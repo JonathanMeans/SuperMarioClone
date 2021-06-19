@@ -359,6 +359,8 @@ void Entity::doInternalCalculations()
 
 void Entity::updatePosition()
 {
+    // const auto originalVelocity = mVelocity;
+
     mVelocity.x += mAcceleration.x;
     mVelocity.y += mAcceleration.y;
 
@@ -370,6 +372,16 @@ void Entity::updatePosition()
         if (mVelocity.x < 0 && mVelocity.x < -mMaxVelocity)
             mVelocity.x = -mMaxVelocity;
     }
+
+    // If we've slowed down to 0 (or past), set x acceleration to 0
+    /*
+    if ((originalVelocity.x > 0 && mVelocity.x <= 0) ||
+        (originalVelocity.x < 0 && mVelocity.x >= 0))
+    {
+        mVelocity.x = 0;
+        mAcceleration.x = 0;
+    }
+     */
 
     if (mVelocity.y > MAX_FALLING_VELOCITY)
         mVelocity.y = MAX_FALLING_VELOCITY;

@@ -1,4 +1,5 @@
 #include <file_util.h>
+#include <iostream>
 
 #include "ControllerOverlay.h"
 #include "Input.h"
@@ -74,6 +75,7 @@ int main(int argc, char* argv[])
         currentInput = nextInput(keyboardInputs, idx);
         ++idx;
 #endif
+        std::vector<sf::Keyboard::Key> keycodes;
         while (window.pollEvent(event))
         {
             switch (event.type)
@@ -83,22 +85,47 @@ int main(int argc, char* argv[])
                 break;
 #ifndef MANUAL_INPUT
             case sf::Event::KeyPressed:
+                keycodes.push_back(event.key.code);
+                /*
                 updateKeyboardInputs(currentInput,
                                      previousInput,
                                      event.key.code,
                                      true);
+                                     */
                 break;
             case sf::Event::KeyReleased:
+            {
+                auto it = std::find(keycodes.begin(),
+                                    keycodes.end(),
+                                    event.key.code);
+                if (it != std::end(keycodes))
+                    keycodes.erase(it);
+                /*
                 updateKeyboardInputs(currentInput,
                                      previousInput,
                                      event.key.code,
                                      false);
+                                     */
                 break;
+            }
 #endif
             default:
                 break;
             }
         }
+        for (const auto& key : ALL_KEYS)
+        {
+            if (!keycodes.empty())
+            {
+                int debug = 0;
+            }
+            const auto isPressed =
+                    std::find(keycodes.begin(), keycodes.end(), key) !=
+                    keycodes.end();
+            updateKeyboardInputs(currentInput, previousInput, key, isPressed);
+            previousInput = currentInput;
+        }
+        // keycodes.clear();
 
         level.executeFrame(currentInput);
         level.drawFrame(window);
