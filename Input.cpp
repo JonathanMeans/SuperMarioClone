@@ -1,7 +1,6 @@
 #include "Input.h"
 
 #include <SFML/Window/Keyboard.hpp>
-#include <iostream>
 #include <vector>
 
 const std::vector<sf::Keyboard::Key> ALL_KEYS = {sf::Keyboard::Left,
@@ -10,6 +9,33 @@ const std::vector<sf::Keyboard::Key> ALL_KEYS = {sf::Keyboard::Left,
                                                  sf::Keyboard::Down,
                                                  sf::Keyboard::A,
                                                  sf::Keyboard::S};
+
+void KeyboardInput::setKey(sf::Keyboard::Key keycode, bool pressed) {
+    switch (keycode)
+    {
+    case sf::Keyboard::A:
+        A.keyIsDown = pressed;
+        break;
+    case sf::Keyboard::S:
+        B.keyIsDown = pressed;
+        break;
+    case sf::Keyboard::Right:
+        right.keyIsDown = pressed;
+        break;
+    case sf::Keyboard::Left:
+        left.keyIsDown = pressed;
+        break;
+    default:
+        break;
+    }
+}
+
+void KeyboardInput::updateWasDown(const KeyboardInput &previousInput) {
+    A.keyWasDown = previousInput.A.keyIsDown;
+    B.keyWasDown = previousInput.B.keyIsDown;
+    right.keyWasDown = previousInput.right.keyIsDown;
+    left.keyWasDown = previousInput.left.keyIsDown;
+}
 
 void updateInputState(KeyboardInputState& currentState,
                       const KeyboardInputState& previousState,

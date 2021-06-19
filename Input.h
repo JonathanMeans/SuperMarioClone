@@ -31,6 +31,10 @@ struct KeyboardInput
 
     KeyboardInputState select;
     KeyboardInputState start;
+
+    void setKey(sf::Keyboard::Key keycode, bool pressed);
+
+    void updateWasDown(const KeyboardInput &previousInput);
 };
 
 extern const std::vector<sf::Keyboard::Key> ALL_KEYS;
