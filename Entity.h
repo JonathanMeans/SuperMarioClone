@@ -92,6 +92,8 @@ public:
 
     virtual void setPosition(float x, float y);
 
+    void setMaxVelocity(float maxVelocity);
+
 protected:
     bool detectCollision(Entity& other);
 

@@ -427,3 +427,8 @@ void Entity::dispatchEvent(const Event& event)
 {
     addEvent(event);
 }
+
+void Entity::setMaxVelocity(float maxVelocity)
+{
+    mMaxVelocity = maxVelocity;
+}
