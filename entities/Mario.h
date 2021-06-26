@@ -20,6 +20,9 @@ std::string formToString(MarioForm form);
 class Mario : public Entity
 {
 public:
+    static const float MAX_RUNNING_VELOCITY;
+    static const float MAX_WALKING_VELOCITY;
+
     Mario(const sf::Texture& texture, const sf::Vector2f& initialPosition);
 
     void walk();

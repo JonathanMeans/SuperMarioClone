@@ -181,27 +181,35 @@ void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
 
     acceleration.y = calculateVerticalAcceleration(currentInput, velocity.x);
 
-    if (currentInput.right.keyIsDown)
-    {
-        if (!currentInput.left.keyIsDown)
-            acceleration.x = 1;
-    }
-    if (currentInput.left.keyIsDown)
-    {
-        if (!currentInput.right.keyIsDown)
-            acceleration.x = -1;
-    }
-    if ((currentInput.left.releasedThisFrame() &&
-         !currentInput.right.keyIsDown) ||
-        (currentInput.right.releasedThisFrame() &&
-         !currentInput.left.keyIsDown))
-    {
-        acceleration.x *= -0.1;
-    }
-    if (currentInput.B.keyIsDown)
-    {
-        mMario->setMaxVelocity(5.f);
-    }
+        if (currentInput.right.keyIsDown)
+        {
+            if (!currentInput.left.keyIsDown)
+                acceleration.x = 1;
+        }
+        if (currentInput.left.keyIsDown)
+        {
+            if (!currentInput.right.keyIsDown)
+                acceleration.x = -1;
+        }
+        if ((currentInput.left.releasedThisFrame() &&
+             !currentInput.right.keyIsDown) ||
+            (currentInput.right.releasedThisFrame() &&
+             !currentInput.left.keyIsDown))
+        {
+            acceleration.x *= -0.1;
+        }
+
+        if (!mMario->isJumping())
+        {
+            if (currentInput.B.keyIsDown)
+            {
+                mMario->setMaxVelocity(Mario::MAX_RUNNING_VELOCITY);
+            }
+            else
+            {
+                mMario->setMaxVelocity(Mario::MAX_WALKING_VELOCITY);
+            }
+        }
 
     mMario->setAcceleration(acceleration);
     mMario->setVelocity(velocity);

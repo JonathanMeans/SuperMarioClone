@@ -5,6 +5,9 @@
 #include "Hitbox.h"
 #include "Timer.h"
 
+const float Mario::MAX_RUNNING_VELOCITY = 4.0f;
+const float Mario::MAX_WALKING_VELOCITY = 1.5f;
+
 Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
     Entity(texture,
            16,
@@ -89,7 +92,8 @@ bool Mario::isTransitioningToFire() const
 
 void Mario::setAnimationFromState()
 {
-    if ((isGrowing() || isTransitioningToFire()) && !mActiveAnimation->finished())
+    if ((isGrowing() || isTransitioningToFire()) &&
+        !mActiveAnimation->finished())
         return;
 
     if (mIsDead)
