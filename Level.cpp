@@ -2,6 +2,7 @@
 #include "Event.h"
 #include "SpriteMaker.h"
 #include "Text.h"
+#include "Timer.h"
 
 #include <entities/Block.h>
 #include <entities/Items.h>
@@ -15,6 +16,8 @@ Level::Level(std::unique_ptr<Mario> mario,
 {
     mPoints = std::make_shared<Points>(0, sf::Vector2f{10, 18});
     addHUDOverlay();
+
+    getTimer().scheduleEveryNSeconds(1., [&]() { scroll(); });
 }
 
 void Level::addHUDOverlay()
@@ -87,6 +90,15 @@ void Level::executeFrame(const KeyboardInput& input)
         }
     }
     getEventQueue().clear();
+}
+
+void Level::scroll()
+{
+    for (auto& entity: mEntities)
+    {
+        entity->scroll(.001);
+    }
+    mMario->scroll(.001);
 }
 
 void Level::onBlockShattered(const Event::BlockShattered& event)

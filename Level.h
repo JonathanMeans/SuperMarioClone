@@ -32,6 +32,8 @@ private:
 
     void addHUDOverlay();
 
+    void scroll();
+
     std::vector<std::shared_ptr<Text>> mTextElements;
 
     std::unique_ptr<Mario> mMario;
