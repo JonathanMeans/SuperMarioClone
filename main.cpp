@@ -1,3 +1,4 @@
+#include <entities/InvisibleWall.h>
 #include <file_util.h>
 
 #include "ControllerOverlay.h"
@@ -36,15 +37,18 @@ int main(int argc, char* argv[])
             new Mario(spriteMaker->playerTexture, {60, 100}));
     std::unique_ptr<Goomba> goomba(
             new Goomba(spriteMaker->enemyTexture, {150, 50}));
-    std::unique_ptr<Pipe> leftPipe(
-            new Pipe(spriteMaker->inanimateObjectTexture, {110, 100}));
     std::unique_ptr<Pipe> rightPipe(
+            new Pipe(spriteMaker->inanimateObjectTexture, {110, 100}));
+    std::unique_ptr<Pipe> leftPipe(
             new Pipe(spriteMaker->inanimateObjectTexture, {-10, 100}));
 
     entities.push_back(std::move(leftPipe));
     entities.push_back(std::move(rightPipe));
     entities.push_back(std::move(goomba));
 
+    entities.push_back(
+            std::make_unique<InvisibleWall>(spriteMaker->inanimateObjectTexture,
+                                            sf::Vector2f(-16, -500)));
     for (int i = 0; i < 20; i++)
     {
         entities.push_back(

@@ -22,6 +22,7 @@ enum class EntityType
     BLOCK_SHARD,
     MUSHROOM,
     FIREFLOWER,
+    INVISIBLE_WALL,
 };
 
 std::string convertSideToString(EntitySide side);
@@ -73,7 +74,7 @@ public:
     void addPositionDelta(float deltaX, float deltaY);
 
     void updateAnimation();
-    void draw(sf::RenderWindow& window) const;
+    virtual void draw(sf::RenderWindow& window) const;
 
     virtual void terminate();
 

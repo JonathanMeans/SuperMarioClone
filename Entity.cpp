@@ -270,7 +270,8 @@ bool Entity::collideWithEntity(std::unique_ptr<Entity>& entity)
 void Entity::updateAnimation()
 {
     setAnimationFromState();
-    mActiveAnimation->processAction();
+    if (mActiveAnimation)
+        mActiveAnimation->processAction();
 }
 
 void Entity::setAnimationFromState()
@@ -315,16 +316,16 @@ sf::Vector2f Entity::getVelocity() const
 
 void Entity::setVelocity(const sf::Vector2f& newVelocity)
 {
-    if (mInputEnabled) {
+    if (mInputEnabled)
+    {
         mVelocity = newVelocity;
-        if (mVelocity.x != 0
-            && (sign(mVelocity.x) != sign(static_cast<float>(mLookDirection))))
+        if (mVelocity.x != 0 &&
+            (sign(mVelocity.x) != sign(static_cast<float>(mLookDirection))))
         {
             mChangingDirection = true;
             mLookDirection *= -1;
         }
     }
-
 }
 
 sf::Vector2f Entity::getAcceleration() const

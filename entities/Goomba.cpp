@@ -1,7 +1,6 @@
 #include "Goomba.h"
 #include "AnimationBuilder.h"
 #include "Timer.h"
-#include "Text.h"
 #include "Event.h"
 
 Goomba::Goomba(const sf::Texture& texture, const sf::Vector2f& position) :
