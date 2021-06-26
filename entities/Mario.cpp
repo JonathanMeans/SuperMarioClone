@@ -315,6 +315,7 @@ void Mario::terminate()
 {
     mIsDead = true;
     mMarioCollisionHitbox.invalidate();
+    mSpriteBoundsHitbox.invalidate();
     mAcceleration = {};
     mVelocity = {};
     mInputEnabled = false;

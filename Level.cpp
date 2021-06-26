@@ -161,9 +161,9 @@ void Level::onItemSpawned(const Event::ItemSpawned& event)
 void Level::drawFrame(sf::RenderWindow& window)
 {
     window.clear(sf::Color(0, 0, 255, 255));
-    mMario->draw(window);
     for (auto& entity : mEntities)
         entity->draw(window);
+    mMario->draw(window);
     for (auto& text : mTextElements)
         text->draw(window);
 }
