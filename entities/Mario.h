@@ -49,6 +49,8 @@ public:
 
     const Hitbox& getHitbox(EntityType type) const override;
 
+    void setRunning();
+
 private:
     void onCollision(const Collision& collision) override;
 

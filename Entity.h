@@ -118,6 +118,7 @@ protected:
     Animation* mActiveAnimation;
     size_t mSpriteWidth;
     size_t mSpriteHeight;
+    float mMaxVelocity;
 
     // Current theory is that there are two hitboxes
     // mMarioCollisionHitbox is used to detect collision for Mario against
@@ -142,7 +143,6 @@ private:
             const sf::Vector2f& originalPosition) const;
 
     int mLookDirection;
-    float mMaxVelocity;
     EntityType mType;
 };
 

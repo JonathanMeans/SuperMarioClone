@@ -328,3 +328,8 @@ bool Mario::isJumping() const
 {
     return mJumping;
 }
+
+void Mario::setRunning()
+{
+    mMaxVelocity = 5.f;
+}

@@ -116,11 +116,11 @@ Entity::Entity(const sf::Texture& texture,
     mActiveAnimation(nullptr),
     mSpriteWidth(spriteWidth),
     mSpriteHeight(spriteHeight),
+    mMaxVelocity(maxVelocity),
     mMarioCollisionHitbox(hitbox),
     mSpriteBoundsHitbox(createSpriteBoundsHitbox()),
     mInputEnabled(true),
     mLookDirection(1),
-    mMaxVelocity(maxVelocity),
     mType(type)
 {
     mActiveSprite.setPosition(upperCenterToUpperLeft(position));

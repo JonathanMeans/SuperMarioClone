@@ -198,6 +198,10 @@ void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
     {
         acceleration.x *= -0.1;
     }
+    if (currentInput.B.keyIsDown)
+    {
+        mMario->setRunning();
+    }
 
     mMario->setAcceleration(acceleration);
     mMario->setVelocity(velocity);
