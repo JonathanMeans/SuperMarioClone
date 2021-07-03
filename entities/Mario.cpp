@@ -180,7 +180,7 @@ void Mario::setForm(MarioForm form)
             auto startingRectangle = mActiveAnimation->getCurrentFrame();
 
             auto frameTwoRectangle(startingRectangle);
-            frameTwoRectangle.top += 129;
+            frameTwoRectangle.top += 128;
             std::vector<sf::IntRect> changeToFireRectangles = {
                     startingRectangle,
                     frameTwoRectangle,
