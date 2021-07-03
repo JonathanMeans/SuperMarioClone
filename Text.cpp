@@ -39,6 +39,12 @@ void Text::draw(sf::RenderWindow& window) const
     window.draw(mSfText);
 }
 
+void Text::updatePosition(float deltaX, float deltaY)
+{
+    sf::Vector2f originalPosition = mSfText.getPosition();
+    mSfText.setPosition(originalPosition.x + deltaX, originalPosition.y + deltaY);
+}
+
 Points::Points(size_t numPoints, const sf::Vector2f& position) :
     Text(formatPoints(numPoints), position),
     mNumPoints(numPoints)

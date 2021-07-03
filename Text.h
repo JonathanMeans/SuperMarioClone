@@ -20,6 +20,8 @@ public:
 
     void draw(sf::RenderWindow& window) const;
 
+    void updatePosition(float deltaX, float deltaY);
+
 private:
     sf::Text mSfText;
 };

@@ -8,7 +8,6 @@
 #include <entities/Items.h>
 #include <entities/InvisibleWall.h>
 #include <cmath>
-#include <iostream>
 
 Level::Level(std::unique_ptr<Mario> mario,
              std::vector<std::unique_ptr<Entity>>&& entities,
@@ -106,6 +105,11 @@ void Level::scroll()
         view.move(scrollDistance, 0);
         mWindow.setView(view);
         mWall.addPositionDelta(scrollDistance, 0);
+
+        for (auto& text: mTextElements)
+        {
+            text->updatePosition(scrollDistance, 0);
+        }
     }
 }
 
