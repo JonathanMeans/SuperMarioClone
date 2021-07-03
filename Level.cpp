@@ -31,7 +31,7 @@ void Level::addHUDOverlay()
 
 bool Level::physicsAreOn() const
 {
-    return !mMario->isGrowing() && !mMario->isTransitioningToFire();
+    return !mMario->isTransitioning();
 }
 
 void Level::executeFrame(const KeyboardInput& input)

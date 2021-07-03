@@ -61,6 +61,9 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
                     .withNonContiguousRect(growingAnimationRectangles)
                     .build(mActiveSprite);
 
+    std::vector<sf::IntRect> shrinkingAnimationRectangles(growingAnimationRectangles.rbegin(), growingAnimationRectangles.rend());
+    shrinkingAnimation = AnimationBuilder().withNonContiguousRect(shrinkingAnimationRectangles).build(mActiveSprite);
+
     changeToFireMarioAnimation = AnimationBuilder().build(mActiveSprite);
 
     mActiveAnimation = &standingAnimation;
@@ -80,9 +83,18 @@ const Hitbox& Mario::getHitbox(EntityType type) const
     }
 }
 
+bool Mario::isTransitioning() const {
+    return isGrowing() || isShrinking() || isTransitioningToFire();
+}
+
 bool Mario::isGrowing() const
 {
     return mActiveAnimation == &growingAnimation;
+}
+
+bool Mario::isShrinking() const
+{
+    return mActiveAnimation == &shrinkingAnimation;
 }
 
 bool Mario::isTransitioningToFire() const
@@ -92,8 +104,7 @@ bool Mario::isTransitioningToFire() const
 
 void Mario::setAnimationFromState()
 {
-    if ((isGrowing() || isTransitioningToFire()) &&
-        !mActiveAnimation->finished())
+    if (isTransitioning() && !mActiveAnimation->finished())
         return;
 
     if (mIsDead)
@@ -157,10 +168,10 @@ void Mario::setForm(MarioForm form)
         break;
         case MarioForm::SMALL_MARIO:
         {
-            const auto currentY = mActiveSprite.getPosition().y;
-            const auto newY = currentY + GRIDBOX_SIZE;
-            mActiveSprite.setPosition(mActiveSprite.getPosition().x, newY);
-            mActiveAnimation = &standingAnimation;
+//            const auto currentY = mActiveSprite.getPosition().y;
+//            const auto newY = currentY + GRIDBOX_SIZE;
+//            mActiveSprite.setPosition(mActiveSprite.getPosition().x, newY);
+            mActiveAnimation = &shrinkingAnimation;
             mSpriteHeight /= 2;
             mMarioCollisionHitbox = smallHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
@@ -255,7 +266,15 @@ void Mario::onCollision(const Collision& collision)
     {
         if (collision.side != EntitySide::BOTTOM)
         {
-            terminate();
+            switch (mForm) {
+                case MarioForm::SMALL_MARIO:
+                    terminate();
+                    break;
+                case MarioForm::BIG_MARIO:
+                case MarioForm::FIRE_MARIO:
+                    setForm(MarioForm::SMALL_MARIO);
+                    break;
+            }
         }
         else
         {

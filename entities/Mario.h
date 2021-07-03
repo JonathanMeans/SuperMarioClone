@@ -44,9 +44,13 @@ public:
 
     void terminate() override;
 
+    bool isTransitioning() const;
+
     bool isJumping() const;
 
     bool isGrowing() const;
+
+    bool isShrinking() const;
 
     bool isTransitioningToFire() const;
 
@@ -66,6 +70,7 @@ private:
     Animation deathAnimation;
 
     Animation growingAnimation;
+    Animation shrinkingAnimation;
     Animation changeToFireMarioAnimation;
 
     bool mJumping;
