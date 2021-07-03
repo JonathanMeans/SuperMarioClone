@@ -6,8 +6,11 @@
 #include "Text.h"
 #include "entities/Mario.h"
 
+class InvisibleWall;
+
 /*
- * Encapsulates the game logic and entities for a single level.
+ * Encapsulates the game logic and entities for a single
+ * level.
  */
 class Level
 {
@@ -17,7 +20,9 @@ public:
      * Current, the Level has ownership of Mario and the entities
      */
     Level(std::unique_ptr<Mario> mario,
-          std::vector<std::unique_ptr<Entity>>&& entities);
+          std::vector<std::unique_ptr<Entity>>&& entities,
+          sf::RenderWindow& window,
+          InvisibleWall& wall);
 
     void setMarioMovementFromController(const KeyboardInput& currentInput);
 
@@ -41,6 +46,10 @@ private:
     std::shared_ptr<Points> mPoints;
 
     std::vector<std::unique_ptr<Entity>> mEntities;
+
+    sf::RenderWindow& mWindow;
+
+    InvisibleWall& mWall;
 
     [[nodiscard]] bool physicsAreOn() const;
 

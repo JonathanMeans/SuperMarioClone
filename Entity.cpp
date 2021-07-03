@@ -279,11 +279,6 @@ void Entity::setAnimationFromState()
     // Do nothing
 }
 
-void Entity::scroll(float numPixels)
-{
-    setPosition(getLeft() - numPixels, getTop());
-}
-
 void Entity::draw(sf::RenderWindow& window) const
 {
     window.draw(mActiveSprite);

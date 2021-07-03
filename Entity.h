@@ -76,8 +76,6 @@ public:
     void updateAnimation();
     virtual void draw(sf::RenderWindow& window) const;
 
-    void scroll(float numPixels);
-
     virtual void terminate();
 
     void setCleanupFlag();

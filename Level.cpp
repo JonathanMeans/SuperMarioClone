@@ -6,18 +6,21 @@
 
 #include <entities/Block.h>
 #include <entities/Items.h>
+#include <entities/InvisibleWall.h>
 #include <cmath>
 #include <iostream>
 
 Level::Level(std::unique_ptr<Mario> mario,
-             std::vector<std::unique_ptr<Entity>>&& entities) :
+             std::vector<std::unique_ptr<Entity>>&& entities,
+             sf::RenderWindow& window,
+             InvisibleWall& wall) :
     mMario(std::move(mario)),
-    mEntities(std::move(entities))
+    mEntities(std::move(entities)),
+    mWindow(window),
+    mWall(wall)
 {
     mPoints = std::make_shared<Points>(0, sf::Vector2f{10, 18});
     addHUDOverlay();
-
-    getTimer().scheduleEveryNSeconds(1., [&]() { scroll(); });
 }
 
 void Level::addHUDOverlay()
@@ -34,6 +37,8 @@ bool Level::physicsAreOn() const
 
 void Level::executeFrame(const KeyboardInput& input)
 {
+    scroll();
+
     // Reset mDeltaP
     mMario->mDeltaP.x = 0;
     mMario->mDeltaP.y = 0;
@@ -94,11 +99,14 @@ void Level::executeFrame(const KeyboardInput& input)
 
 void Level::scroll()
 {
-    for (auto& entity: mEntities)
+    auto view = mWindow.getView();
+    if (mMario->getLeft() >= view.getCenter().x)
     {
-        entity->scroll(.001);
+        const auto scrollDistance = mMario->getLeft() - view.getCenter().x;
+        view.move(scrollDistance, 0);
+        mWindow.setView(view);
+        mWall.addPositionDelta(scrollDistance, 0);
     }
-    mMario->scroll(.001);
 }
 
 void Level::onBlockShattered(const Event::BlockShattered& event)
@@ -193,35 +201,35 @@ void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
 
     acceleration.y = calculateVerticalAcceleration(currentInput, velocity.x);
 
-        if (currentInput.right.keyIsDown)
-        {
-            if (!currentInput.left.keyIsDown)
-                acceleration.x = 1;
-        }
-        if (currentInput.left.keyIsDown)
-        {
-            if (!currentInput.right.keyIsDown)
-                acceleration.x = -1;
-        }
-        if ((currentInput.left.releasedThisFrame() &&
-             !currentInput.right.keyIsDown) ||
-            (currentInput.right.releasedThisFrame() &&
-             !currentInput.left.keyIsDown))
-        {
-            acceleration.x *= -0.1;
-        }
+    if (currentInput.right.keyIsDown)
+    {
+        if (!currentInput.left.keyIsDown)
+            acceleration.x = 1;
+    }
+    if (currentInput.left.keyIsDown)
+    {
+        if (!currentInput.right.keyIsDown)
+            acceleration.x = -1;
+    }
+    if ((currentInput.left.releasedThisFrame() &&
+         !currentInput.right.keyIsDown) ||
+        (currentInput.right.releasedThisFrame() &&
+         !currentInput.left.keyIsDown))
+    {
+        acceleration.x *= -0.1;
+    }
 
-        if (!mMario->isJumping())
+    if (!mMario->isJumping())
+    {
+        if (currentInput.B.keyIsDown)
         {
-            if (currentInput.B.keyIsDown)
-            {
-                mMario->setMaxVelocity(Mario::MAX_RUNNING_VELOCITY);
-            }
-            else
-            {
-                mMario->setMaxVelocity(Mario::MAX_WALKING_VELOCITY);
-            }
+            mMario->setMaxVelocity(Mario::MAX_RUNNING_VELOCITY);
         }
+        else
+        {
+            mMario->setMaxVelocity(Mario::MAX_WALKING_VELOCITY);
+        }
+    }
 
     mMario->setAcceleration(acceleration);
     mMario->setVelocity(velocity);

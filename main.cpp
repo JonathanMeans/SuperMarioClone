@@ -49,6 +49,9 @@ int main(int argc, char* argv[])
     entities.push_back(
             std::make_unique<InvisibleWall>(spriteMaker->inanimateObjectTexture,
                                             sf::Vector2f(-16, -500)));
+    auto& wall = *(
+            dynamic_cast<InvisibleWall*>(entities[entities.size() - 1].get()));
+
     for (int i = 0; i < 20; i++)
     {
         entities.push_back(
@@ -65,7 +68,7 @@ int main(int argc, char* argv[])
             std::make_unique<ItemBlock>(spriteMaker->inanimateObjectTexture,
                                         sf::Vector2f(72, 70)));
 
-    Level level(std::move(mario), std::move(entities));
+    Level level(std::move(mario), std::move(entities), window, wall);
 
     KeyboardInput currentInput = {};
     KeyboardInput previousInput = {};
