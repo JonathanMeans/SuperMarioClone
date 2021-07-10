@@ -56,6 +56,8 @@ public:
 
     const Hitbox& getHitbox(EntityType type) const override;
 
+    void changeToSmallDimensions();
+
 private:
     void onCollision(const Collision& collision) override;
 

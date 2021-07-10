@@ -62,7 +62,7 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
                     .build(mActiveSprite);
 
     std::vector<sf::IntRect> shrinkingAnimationRectangles(growingAnimationRectangles.rbegin(), growingAnimationRectangles.rend());
-    shrinkingAnimation = AnimationBuilder().withNonContiguousRect(shrinkingAnimationRectangles).build(mActiveSprite);
+    shrinkingAnimation = AnimationBuilder().withName("shrinkingAnimation").withNonContiguousRect(shrinkingAnimationRectangles).build(mActiveSprite);
 
     changeToFireMarioAnimation = AnimationBuilder().build(mActiveSprite);
 
@@ -172,7 +172,7 @@ void Mario::setForm(MarioForm form)
 //            const auto newY = currentY + GRIDBOX_SIZE;
 //            mActiveSprite.setPosition(mActiveSprite.getPosition().x, newY);
             mActiveAnimation = &shrinkingAnimation;
-            mSpriteHeight /= 2;
+//            mSpriteHeight /= 2;
             mMarioCollisionHitbox = smallHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
@@ -351,4 +351,12 @@ void Mario::terminate()
 bool Mario::isJumping() const
 {
     return mJumping;
+}
+
+void Mario::changeToSmallDimensions()
+{
+    const auto currentY = mActiveSprite.getPosition().y;
+    const auto newY = currentY + GRIDBOX_SIZE;
+    mActiveSprite.setPosition(mActiveSprite.getPosition().x, newY);
+    mSpriteHeight /= 2;
 }

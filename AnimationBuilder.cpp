@@ -57,6 +57,12 @@ AnimationBuilder AnimationBuilder::withNonContiguousRect(
     return *this;
 }
 
+AnimationBuilder AnimationBuilder::withName(const std::string& name)
+{
+    mName = name;
+    return *this;
+}
+
 Animation AnimationBuilder::build(sf::Sprite& sprite)
 {
     return Animation(sprite,
@@ -68,5 +74,6 @@ Animation AnimationBuilder::build(sf::Sprite& sprite)
                      mBorderSize,
                      mRepeat,
                      mRectangles,
-                     mTicsPerFrame);
+                     mTicsPerFrame,
+                     mName);
 }

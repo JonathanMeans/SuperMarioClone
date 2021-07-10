@@ -1,4 +1,6 @@
 #include "Animation.h"
+#include "Event.h"
+#include "Level.h"
 
 #include <utility>
 
@@ -13,7 +15,8 @@ Animation::Animation(sf::Sprite& activeSprite,
                      size_t borderSize,
                      bool repeat,
                      std::vector<sf::IntRect> actionRectangles,
-                     size_t ticsPerFrame) :
+                     size_t ticsPerFrame,
+                     const std::string& name) :
     mRemainingTicsThisFrame(ticsPerFrame),
     mTicsPerFrame(ticsPerFrame),
     mSpriteIndex(0),
@@ -24,6 +27,7 @@ Animation::Animation(sf::Sprite& activeSprite,
     mHeight(height),
     mBorderSize(borderSize),
     mRepeat(repeat),
+    mName(name),
     mActionRectangles(std::move(actionRectangles)),
     mActiveSprite(&activeSprite)
 {
@@ -45,6 +49,10 @@ void Animation::processAction()
             if (mRepeat)
             {
                 mSpriteIndex = 0;
+            }
+            else
+            {
+                addEvent(Event::constructAnimationCompleted(mName));
             }
         }
         else

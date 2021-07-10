@@ -129,6 +129,7 @@ Entity::Entity(const sf::Texture& texture,
     // So that scaling by -1 works properly
     const auto horizontalMidpoint = spriteWidth / 2;
     mActiveSprite.setOrigin(horizontalMidpoint, 0);
+//    mActiveSprite.setOrigin(horizontalMidpoint, mSpriteHeight);
 
     updateHitboxPositions();
 }

@@ -91,6 +91,8 @@ void Level::executeFrame(const KeyboardInput& input)
             break;
         case EventType::BLOCK_SHATTERED:
             onBlockShattered(event.asBlockShattered());
+        case EventType::ANIMATION_COMPLETED:
+            onAnimationCompleted(event.asAnimationCompleted());
         }
     }
     getEventQueue().clear();
@@ -179,6 +181,14 @@ void Level::onItemSpawned(const Event::ItemSpawned& event)
         break;
     default:
         throw std::runtime_error("Unhandled entity type");
+    }
+}
+
+void Level::onAnimationCompleted(const Event::AnimationCompleted& event)
+{
+    if (event.animationType == "shrinkingAnimation")
+    {
+        mMario->changeToSmallDimensions();
     }
 }
 

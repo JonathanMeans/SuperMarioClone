@@ -35,6 +35,16 @@ Event Event::constructBlockShattered(const sf::Vector2f& position)
     return event;
 }
 
+Event Event::constructAnimationCompleted(const std::string& animationType)
+{
+    Event event;
+    event.type = EventType::ANIMATION_COMPLETED;
+    AnimationCompleted animationCompleted;
+    animationCompleted.animationType = animationType;
+    event.eventData = animationCompleted;
+    return event;
+}
+
 Event::EnemyKilled Event::asEnemyKilled() const
 {
     return std::get<Event::EnemyKilled>(eventData);
@@ -48,4 +58,9 @@ Event::ItemSpawned Event::asItemSpawned() const
 Event::BlockShattered Event::asBlockShattered() const
 {
     return std::get<Event::BlockShattered>(eventData);
+}
+
+Event::AnimationCompleted Event::asAnimationCompleted() const
+{
+    return std::get<Event::AnimationCompleted>(eventData);
 }
