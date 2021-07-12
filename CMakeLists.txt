@@ -11,6 +11,8 @@ if (MANUAL_INPUT)
     add_definitions(-DMANUAL_INPUT)
 endif ()
 
+add_definitions(-DCMAKE_EXPORT_COMPILE_COMMANDS=ON)
+
 include(FetchContent)
 set(SFML_VERSION "2.5.1")
 FetchContent_Declare(
