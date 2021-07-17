@@ -32,7 +32,7 @@ public:
 
     [[nodiscard]] size_t getSpriteIndex() const;
 
-    [[nodiscard]] bool finished() const;
+    [[nodiscard]] bool fireEventAndReturnTrueIfFinished() const;
 
     [[nodiscard]] std::vector<sf::IntRect> generateActionRectangles() const;
 

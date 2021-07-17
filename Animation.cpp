@@ -1,8 +1,10 @@
 #include "Animation.h"
+
+#include <iostream>
+#include <utility>
+
 #include "Event.h"
 #include "Level.h"
-
-#include <utility>
 
 Animation::Animation() = default;
 
@@ -44,15 +46,11 @@ void Animation::processAction()
     --mRemainingTicsThisFrame;
     if (mRemainingTicsThisFrame == 0)
     {
-        if (finished())
+        if (fireEventAndReturnTrueIfFinished())
         {
             if (mRepeat)
             {
                 mSpriteIndex = 0;
-            }
-            else
-            {
-                addEvent(Event::constructAnimationCompleted(mName));
             }
         }
         else
@@ -64,9 +62,14 @@ void Animation::processAction()
     mActiveSprite->setTextureRect(mActionRectangles[mSpriteIndex]);
 }
 
-bool Animation::finished() const
+bool Animation::fireEventAndReturnTrueIfFinished() const
 {
-    return mSpriteIndex == mActionRectangles.size() - 1;
+    const auto result = mSpriteIndex == mActionRectangles.size() - 1;
+    if (result && !mName.empty() && !mRepeat)
+    {
+        addEvent(Event::constructAnimationCompleted(mName));
+    }
+    return result;
 }
 
 size_t Animation::getSpriteIndex() const

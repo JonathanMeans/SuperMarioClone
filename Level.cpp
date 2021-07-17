@@ -1,13 +1,17 @@
 #include "Level.h"
+
+#include <entities/Block.h>
+#include <entities/InvisibleWall.h>
+#include <entities/Items.h>
+
+#include <cmath>
+
 #include "Event.h"
 #include "SpriteMaker.h"
 #include "Text.h"
 #include "Timer.h"
 
-#include <entities/Block.h>
-#include <entities/Items.h>
-#include <entities/InvisibleWall.h>
-#include <cmath>
+bool debug = false;
 
 Level::Level(std::unique_ptr<Mario> mario,
              std::vector<std::unique_ptr<Entity>>&& entities,
@@ -71,9 +75,8 @@ void Level::executeFrame(const KeyboardInput& input)
 
         mEntities.erase(std::remove_if(mEntities.begin(),
                                        mEntities.end(),
-                                       [](std::unique_ptr<Entity>& entity) {
-                                           return entity->needsCleanup();
-                                       }),
+                                       [](std::unique_ptr<Entity>& entity)
+                                       { return entity->needsCleanup(); }),
                         mEntities.end());
     }
 
@@ -91,8 +94,10 @@ void Level::executeFrame(const KeyboardInput& input)
             break;
         case EventType::BLOCK_SHATTERED:
             onBlockShattered(event.asBlockShattered());
+            break;
         case EventType::ANIMATION_COMPLETED:
             onAnimationCompleted(event.asAnimationCompleted());
+            break;
         }
     }
     getEventQueue().clear();
@@ -108,7 +113,7 @@ void Level::scroll()
         mWindow.setView(view);
         mWall.addPositionDelta(scrollDistance, 0);
 
-        for (auto& text: mTextElements)
+        for (auto& text : mTextElements)
         {
             text->updatePosition(scrollDistance, 0);
         }
