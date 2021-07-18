@@ -4,7 +4,8 @@
 Hitbox::Hitbox(sf::Vector2f size, sf::Vector2f upperLeftOffset) :
     mSize(size),
     mUpperLeftOffset(upperLeftOffset),
-    mEntityPosition({-1000, -1000})
+    mEntityPosition({-1000, -1000}),
+    mIsValid(true)
 {
 }
 
@@ -24,6 +25,10 @@ Hitbox& Hitbox::operator=(const Hitbox& other)
 
 bool Hitbox::collidesWith(const Hitbox& other) const
 {
+    if (!mIsValid || !other.mIsValid) {
+        return false;
+    }
+
     const auto thisLeft = this->getLeft();
     const auto thisRight = this->getRight();
     const auto thisTop = this->getTop();
@@ -42,9 +47,14 @@ Hitbox::Hitbox(const Hitbox& copy) = default;
 
 void Hitbox::invalidate()
 {
-    mSize = {};
-    mUpperLeftOffset = {-10000.f, -10000.f};
+    mIsValid = false;
 }
+
+void Hitbox::makeValid()
+{
+    mIsValid = true;
+}
+
 
 float Hitbox::getBottom() const
 {

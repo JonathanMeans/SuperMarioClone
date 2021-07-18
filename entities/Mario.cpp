@@ -168,14 +168,14 @@ void Mario::setForm(MarioForm form)
         break;
         case MarioForm::SMALL_MARIO:
         {
-//            const auto currentY = mActiveSprite.getPosition().y;
-//            const auto newY = currentY + GRIDBOX_SIZE;
-//            mActiveSprite.setPosition(mActiveSprite.getPosition().x, newY);
             mActiveAnimation = &shrinkingAnimation;
             mSpriteHeight /= 2;
             mMarioCollisionHitbox = smallHitbox;
             mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
+            mMarioCollisionHitbox.invalidate();
+            getTimer().scheduleSeconds(2, [&]() {
+                mMarioCollisionHitbox.makeValid(); });
             standingAnimation.switchPalette(sf::Vector2f(80, 34),
                                             sf::Vector2f(16, 16));
             walkingAnimation.switchPalette(sf::Vector2f(80, 34),
