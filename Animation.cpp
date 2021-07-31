@@ -1,6 +1,10 @@
 #include "Animation.h"
 
+#include <iostream>
 #include <utility>
+
+#include "Event.h"
+#include "Level.h"
 
 Animation::Animation() = default;
 
@@ -13,7 +17,8 @@ Animation::Animation(sf::Sprite& activeSprite,
                      size_t borderSize,
                      bool repeat,
                      std::vector<sf::IntRect> actionRectangles,
-                     size_t ticsPerFrame) :
+                     size_t ticsPerFrame,
+                     const std::string& name) :
     mRemainingTicsThisFrame(ticsPerFrame),
     mTicsPerFrame(ticsPerFrame),
     mSpriteIndex(0),
@@ -24,6 +29,7 @@ Animation::Animation(sf::Sprite& activeSprite,
     mHeight(height),
     mBorderSize(borderSize),
     mRepeat(repeat),
+    mName(name),
     mActionRectangles(std::move(actionRectangles)),
     mActiveSprite(&activeSprite)
 {
@@ -40,7 +46,7 @@ void Animation::processAction()
     --mRemainingTicsThisFrame;
     if (mRemainingTicsThisFrame == 0)
     {
-        if (finished())
+        if (fireEventAndReturnTrueIfFinished())
         {
             if (mRepeat)
             {
@@ -56,9 +62,14 @@ void Animation::processAction()
     mActiveSprite->setTextureRect(mActionRectangles[mSpriteIndex]);
 }
 
-bool Animation::finished() const
+bool Animation::fireEventAndReturnTrueIfFinished() const
 {
-    return mSpriteIndex == mActionRectangles.size() - 1;
+    const auto result = mSpriteIndex == mActionRectangles.size() - 1;
+    if (result && !mName.empty() && !mRepeat)
+    {
+        addEvent(Event::constructAnimationCompleted(mName));
+    }
+    return result;
 }
 
 size_t Animation::getSpriteIndex() const

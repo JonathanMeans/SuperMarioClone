@@ -61,6 +61,7 @@ private:
     void onEnemyKilled(const Event::EnemyKilled&);
     void onItemSpawned(const Event::ItemSpawned&);
     void onBlockShattered(const Event::BlockShattered&);
+    void onAnimationCompleted(const Event::AnimationCompleted&);
 };
 
 std::vector<Event>& getEventQueue();

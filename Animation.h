@@ -22,7 +22,8 @@ public:
               size_t borderSize,
               bool repeat,
               std::vector<sf::IntRect> actionRectangles,
-              size_t ticsPerFrame);
+              size_t ticsPerFrame,
+              const std::string& name);
     void processAction();
 
     void setActionRectangles(const std::vector<sf::IntRect>& actionRectangles);
@@ -31,7 +32,7 @@ public:
 
     [[nodiscard]] size_t getSpriteIndex() const;
 
-    [[nodiscard]] bool finished() const;
+    [[nodiscard]] bool fireEventAndReturnTrueIfFinished() const;
 
     [[nodiscard]] std::vector<sf::IntRect> generateActionRectangles() const;
 
@@ -48,6 +49,7 @@ private:
     size_t mHeight;
     size_t mBorderSize;
     bool mRepeat;
+    std::string mName;
 
     [[nodiscard]] size_t xOffsetForCurrentFrame(size_t frameIndex) const;
 

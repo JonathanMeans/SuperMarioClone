@@ -16,6 +16,7 @@ public:
     AnimationBuilder withTicsPerFrame(size_t ticsPerFrame);
     AnimationBuilder withNonContiguousRect(
             const std::vector<sf::IntRect>& rectangles);
+    AnimationBuilder withName(const std::string& name);
 
 private:
     size_t mXOffset;
@@ -27,6 +28,7 @@ private:
     bool mRepeat;
     size_t mTicsPerFrame;
     std::vector<sf::IntRect> mRectangles;
+    std::string mName;
 };
 
 #endif  // SUPERMARIOBROS_ANIMATIONBUILDER_H

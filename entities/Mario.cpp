@@ -1,8 +1,12 @@
 #include "Mario.h"
+
 #include <AnimationBuilder.h>
+
 #include <cassert>
+
 #include "Animation.h"
 #include "Hitbox.h"
+#include "Level.h"
 #include "Timer.h"
 
 const float Mario::MAX_RUNNING_VELOCITY = 4.0f;
@@ -35,9 +39,11 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
                                .withNumRect(2)
                                .withFrameBorder(1)
                                .build(mActiveSprite);
-    standingAnimation =
-            AnimationBuilder().withOffset(80, 34).withRectSize(16, 16).build(
-                    mActiveSprite);
+    standingAnimation = AnimationBuilder()
+                                .withOffset(80, 34)
+                                .withRectSize(16, 16)
+                                .andRepeat()
+                                .build(mActiveSprite);
     deathAnimation =
             AnimationBuilder().withOffset(182, 34).withRectSize(16, 16).build(
                     mActiveSprite);
@@ -61,8 +67,14 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
                     .withNonContiguousRect(growingAnimationRectangles)
                     .build(mActiveSprite);
 
-    std::vector<sf::IntRect> shrinkingAnimationRectangles(growingAnimationRectangles.rbegin(), growingAnimationRectangles.rend());
-    shrinkingAnimation = AnimationBuilder().withNonContiguousRect(shrinkingAnimationRectangles).build(mActiveSprite);
+    std::vector<sf::IntRect> shrinkingAnimationRectangles(
+            growingAnimationRectangles.rbegin(),
+            growingAnimationRectangles.rend());
+    shrinkingAnimation =
+            AnimationBuilder()
+                    .withName("shrinkingAnimation")
+                    .withNonContiguousRect(shrinkingAnimationRectangles)
+                    .build(mActiveSprite);
 
     changeToFireMarioAnimation = AnimationBuilder().build(mActiveSprite);
 
@@ -83,7 +95,8 @@ const Hitbox& Mario::getHitbox(EntityType type) const
     }
 }
 
-bool Mario::isTransitioning() const {
+bool Mario::isTransitioning() const
+{
     return isGrowing() || isShrinking() || isTransitioningToFire();
 }
 
@@ -104,7 +117,8 @@ bool Mario::isTransitioningToFire() const
 
 void Mario::setAnimationFromState()
 {
-    if (isTransitioning() && !mActiveAnimation->finished())
+    if (isTransitioning() &&
+        !mActiveAnimation->fireEventAndReturnTrueIfFinished())
         return;
 
     if (mIsDead)
@@ -152,7 +166,7 @@ void Mario::setForm(MarioForm form)
         {
             const auto currentY = mActiveSprite.getPosition().y;
             const auto newY = currentY - GRIDBOX_SIZE;
-            mActiveSprite.setPosition(mActiveSprite.getPosition().x, newY);
+            setPosition(mActiveSprite.getPosition().x, newY);
             mActiveAnimation = &growingAnimation;
             mSpriteHeight *= 2;
             mMarioCollisionHitbox = largeHitbox;
@@ -168,13 +182,14 @@ void Mario::setForm(MarioForm form)
         break;
         case MarioForm::SMALL_MARIO:
         {
-//            const auto currentY = mActiveSprite.getPosition().y;
-//            const auto newY = currentY + GRIDBOX_SIZE;
-//            mActiveSprite.setPosition(mActiveSprite.getPosition().x, newY);
+            //            const auto currentY = mActiveSprite.getPosition().y;
+            //            const auto newY = currentY + GRIDBOX_SIZE;
+            //            mActiveSprite.setPosition(mActiveSprite.getPosition().x,
+            //            newY);
             mActiveAnimation = &shrinkingAnimation;
-            mSpriteHeight /= 2;
+            //            mSpriteHeight /= 2;
             mMarioCollisionHitbox = smallHitbox;
-            mSpriteBoundsHitbox = createSpriteBoundsHitbox();
+            // mSpriteBoundsHitbox = createSpriteBoundsHitbox();
             updateHitboxPositions();
             standingAnimation.switchPalette(sf::Vector2f(80, 34),
                                             sf::Vector2f(16, 16));
@@ -266,14 +281,15 @@ void Mario::onCollision(const Collision& collision)
     {
         if (collision.side != EntitySide::BOTTOM)
         {
-            switch (mForm) {
-                case MarioForm::SMALL_MARIO:
-                    terminate();
-                    break;
-                case MarioForm::BIG_MARIO:
-                case MarioForm::FIRE_MARIO:
-                    setForm(MarioForm::SMALL_MARIO);
-                    break;
+            switch (mForm)
+            {
+            case MarioForm::SMALL_MARIO:
+                terminate();
+                break;
+            case MarioForm::BIG_MARIO:
+            case MarioForm::FIRE_MARIO:
+                setForm(MarioForm::SMALL_MARIO);
+                break;
             }
         }
         else
@@ -342,13 +358,25 @@ void Mario::terminate()
     mAcceleration = {};
     mVelocity = {};
     mInputEnabled = false;
-    getTimer().scheduleSeconds(0.5, [&]() {
-        mVelocity.y = -10;
-        mAcceleration.y = GRAVITY_ACCELERATION;
-    });
+    getTimer().scheduleSeconds(0.5,
+                               [&]()
+                               {
+                                   mVelocity.y = -10;
+                                   mAcceleration.y = GRAVITY_ACCELERATION;
+                               });
 }
 
 bool Mario::isJumping() const
 {
     return mJumping;
+}
+
+void Mario::changeToSmallDimensions()
+{
+    const auto currentY = mActiveSprite.getPosition().y;
+    const auto newY = currentY + GRIDBOX_SIZE;
+    setPosition(mActiveSprite.getPosition().x, newY);
+    mSpriteHeight = GRIDBOX_SIZE;
+    mSpriteBoundsHitbox = createSpriteBoundsHitbox();
+    updateHitboxPositions();
 }
