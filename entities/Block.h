@@ -13,7 +13,8 @@ protected:
 
     void bumpUp();
 
-    const float mOriginalTop;  // Record initial position so we can detect when
+    const float
+            mOriginalBottom;  // Record initial position so we can detect when
     // "bump" is over
 };
 

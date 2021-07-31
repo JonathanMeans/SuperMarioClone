@@ -1,8 +1,11 @@
 #include "Block.h"
+
 #include <AnimationBuilder.h>
 #include <SpriteMaker.h>
 #include <Timer.h>
+
 #include <cassert>
+
 #include "Event.h"
 #include "Items.h"
 #include "Mario.h"
@@ -14,13 +17,13 @@ Block::Block(const sf::Texture& texture, const sf::Vector2f& position) :
            Hitbox({16, 16}, {0, 0}),
            EntityType::BLOCK,
            position),
-    mOriginalTop(position.y)
+    mOriginalBottom(position.y)
 {
 }
 
 void Block::doInternalCalculations()
 {
-    if (this->getTop() == mOriginalTop)
+    if (this->getBottom() == mOriginalBottom)
     {
         mAcceleration.y = 0;
         mVelocity.y = 0;
@@ -92,12 +95,12 @@ void ItemBlock::onCollision(const Collision& collision)
     if (mario->getForm() == MarioForm::SMALL_MARIO)
         dispatchEvent(Event::constructItemSpawned(EntityType::MUSHROOM,
                                                   sf::Vector2f(getLeft(),
-                                                               getTop() - 5),
+                                                               getBottom() - 5),
                                                   getTop()));
     else
         dispatchEvent(Event::constructItemSpawned(EntityType::FIREFLOWER,
                                                   sf::Vector2f(getLeft(),
-                                                               getTop() - 5),
+                                                               getBottom() - 5),
                                                   getTop()));
     mActiveAnimation = &noItemAnimation;
 }

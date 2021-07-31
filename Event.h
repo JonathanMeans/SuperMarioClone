@@ -2,6 +2,7 @@
 #define SUPERMARIOBROS_EVENT_H
 
 #include <Entity.h>
+
 #include <variant>
 
 enum class EventType
@@ -20,7 +21,7 @@ public:
     static Event constructEnemyKilled(const sf::Vector2f& position, int points);
     static Event constructItemSpawned(EntityType type,
                                       const sf::Vector2f& position,
-                                      float blockTop);
+                                      float blockBottom);
     static Event constructBlockShattered(const sf::Vector2f& position);
     static Event constructAnimationCompleted(const std::string& animationType);
 
@@ -53,7 +54,8 @@ public:
     [[nodiscard]] AnimationCompleted asAnimationCompleted() const;
 
 private:
-    std::variant<EnemyKilled, ItemSpawned, BlockShattered, AnimationCompleted> eventData;
+    std::variant<EnemyKilled, ItemSpawned, BlockShattered, AnimationCompleted>
+            eventData;
 };
 
 #endif  // SUPERMARIOBROS_EVENT_H

@@ -129,7 +129,7 @@ Entity::Entity(const sf::Texture& texture,
     // So that scaling by -1 works properly
     const auto horizontalMidpoint = spriteWidth / 2;
     mActiveSprite.setOrigin(horizontalMidpoint, 0);
-//    mActiveSprite.setOrigin(horizontalMidpoint, mSpriteHeight);
+    //    mActiveSprite.setOrigin(horizontalMidpoint, mSpriteHeight);
 
     updateHitboxPositions();
 }
@@ -143,8 +143,8 @@ Hitbox Entity::createSpriteBoundsHitbox() const
 
 void Entity::updateHitboxPositions()
 {
-    mMarioCollisionHitbox.setEntityPosition({getLeft(), getTop()});
-    mSpriteBoundsHitbox.setEntityPosition({getLeft(), getTop()});
+    mMarioCollisionHitbox.setEntityPosition({getLeft(), getBottom()});
+    mSpriteBoundsHitbox.setEntityPosition({getLeft(), getBottom()});
 }
 
 sf::Vector2f Entity::upperCenterToUpperLeft(
@@ -180,7 +180,7 @@ bool Entity::detectCollision(Entity& other)
     {
         return other.detectCollision(*this);
     }
-    const auto currentPosition = sf::Vector2f(getLeft(), getTop());
+    const auto currentPosition = sf::Vector2f(getLeft(), getBottom());
     const auto originalPosition = currentPosition - this->mDeltaP;
     const auto newXPosition =
             originalPosition + sf::Vector2f{this->mDeltaP.x, 0};
@@ -290,12 +290,12 @@ void Entity::draw(sf::RenderWindow& window) const
 
 float Entity::getBottom() const
 {
-    return getY() + getHeight();
+    return getY();
 }
 
 float Entity::getTop() const
 {
-    return getY();
+    return getY() - getHeight();
 }
 
 float Entity::getLeft() const
