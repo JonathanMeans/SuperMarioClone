@@ -40,21 +40,23 @@ void Goomba::onCollision(const Collision& collision)
     }
     else
     {
-        if (collision.side == EntitySide::BOTTOM)
-        {
-            clampY(hitbox.getBottom(), collision.yIntersection);
-            const auto currentVelocity = getVelocity();
-            setVelocity(sf::Vector2f(currentVelocity.x, 0));
-        }
-        else if (collision.side == EntitySide::RIGHT)
-        {
-            clampX(hitbox.getRight(), collision.xIntersection);
-            setVelocity(sf::Vector2f(0, getVelocity().y));
-        }
-        else if (collision.side == EntitySide::LEFT)
-        {
-            clampX(hitbox.getLeft(), collision.xIntersection);
-            setVelocity(sf::Vector2f(0, getVelocity().y));
+        if (isObject(collision.entity->getType())) {
+            if (collision.side == EntitySide::BOTTOM)
+            {
+                clampY(hitbox.getBottom(), collision.yIntersection);
+                const auto currentVelocity = getVelocity();
+                setVelocity(sf::Vector2f(currentVelocity.x, 0));
+            }
+            else if (collision.side == EntitySide::RIGHT)
+            {
+                clampX(hitbox.getRight(), collision.xIntersection);
+                setVelocity(sf::Vector2f(0, getVelocity().y));
+            }
+            else if (collision.side == EntitySide::LEFT)
+            {
+                clampX(hitbox.getLeft(), collision.xIntersection);
+                setVelocity(sf::Vector2f(0, getVelocity().y));
+            }
         }
     }
 }
