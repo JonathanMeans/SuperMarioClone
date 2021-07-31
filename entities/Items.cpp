@@ -84,6 +84,8 @@ void Mushroom::doInternalCalculations()
             mVelocity.x = 2;
             mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0});
             mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0});
+            mSpriteBoundsHitbox.makeValid();
+            mMarioCollisionHitbox.makeValid();
         }
     }
 }

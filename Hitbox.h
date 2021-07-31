@@ -32,6 +32,7 @@ public:
     void setEntityPosition(const sf::Vector2f& newEntityPosition);
 
     void invalidate();
+    void makeValid();
 
     [[nodiscard]] float getBottom() const;
     [[nodiscard]] float getTop() const;
@@ -45,6 +46,8 @@ public:
     sf::Vector2f mSize;
     sf::Vector2f mUpperLeftOffset;
     sf::Vector2f mEntityPosition;
+
+    bool mIsValid;
 };
 
 #endif  // SUPERMARIOBROS_HITBOX_H
