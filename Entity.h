@@ -4,6 +4,7 @@
 #include <SFML/System.hpp>
 #include <cstdlib>
 #include <memory>
+
 #include "Animation.h"
 #include "Hitbox.h"
 #include "SFML/Graphics.hpp"
@@ -74,7 +75,7 @@ public:
     void addPositionDelta(float deltaX, float deltaY);
 
     void updateAnimation();
-    virtual void draw(sf::RenderWindow& window) const;
+    virtual void draw(sf::RenderWindow& window);
 
     virtual void terminate();
 

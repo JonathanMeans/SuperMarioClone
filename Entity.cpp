@@ -129,7 +129,6 @@ Entity::Entity(const sf::Texture& texture,
     // So that scaling by -1 works properly
     const auto horizontalMidpoint = spriteWidth / 2;
     mActiveSprite.setOrigin(horizontalMidpoint, 0);
-    //    mActiveSprite.setOrigin(horizontalMidpoint, mSpriteHeight);
 
     updateHitboxPositions();
 }
@@ -294,11 +293,14 @@ void Entity::setAnimationFromState()
     // Do nothing
 }
 
-void Entity::draw(sf::RenderWindow& window) const
+void Entity::draw(sf::RenderWindow& window)
 {
+    setPosition(getX(), getY() - getHeight());
     window.draw(mActiveSprite);
+    setPosition(getX(), getY() + getHeight());
 #ifdef DRAW_HITBOX
-    mMarioCollisionHitbox.draw(window);
+    // mMarioCollisionHitbox.draw(window);
+    mSpriteBoundsHitbox.draw(window);
 #endif
 }
 

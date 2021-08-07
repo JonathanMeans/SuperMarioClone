@@ -162,9 +162,6 @@ void Mario::setForm(MarioForm form)
         {
         case MarioForm::BIG_MARIO:
         {
-            const auto currentY = mActiveSprite.getPosition().y;
-            const auto newY = currentY - GRIDBOX_SIZE;
-            setPosition(mActiveSprite.getPosition().x, newY);
             mActiveAnimation = &growingAnimation;
             mSpriteHeight *= 2;
             mMarioCollisionHitbox = largeHitbox;
@@ -369,9 +366,6 @@ bool Mario::isJumping() const
 
 void Mario::changeToSmallDimensions()
 {
-    const auto currentY = mActiveSprite.getPosition().y;
-    const auto newY = currentY + GRIDBOX_SIZE;
-    setPosition(mActiveSprite.getPosition().x, newY);
     mSpriteHeight = GRIDBOX_SIZE;
     mSpriteBoundsHitbox = createSpriteBoundsHitbox();
     updateHitboxPositions();

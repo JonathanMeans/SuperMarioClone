@@ -8,7 +8,7 @@ class InvisibleWall : public Entity
 public:
     InvisibleWall(const sf::Texture& texture, const sf::Vector2f& position);
 
-    void draw(sf::RenderWindow& window) const override;
+    void draw(sf::RenderWindow& window) override;
 
 private:
     // Needed to make parent ctor happy

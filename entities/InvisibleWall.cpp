@@ -12,6 +12,6 @@ InvisibleWall::InvisibleWall(const sf::Texture& texture,
     mAcceleration = {0, 0};
 }
 
-void InvisibleWall::draw(sf::RenderWindow&) const
+void InvisibleWall::draw(sf::RenderWindow&)
 {
 }
