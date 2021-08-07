@@ -107,6 +107,8 @@ protected:
     void handleCollision(Collision collision, Entity& entity);
 
     virtual const Hitbox& getHitbox(EntityType type) const;
+    Hitbox getProjectedYHitbox(EntityType type) const;
+    Hitbox getProjectedXHitbox(EntityType type) const;
 
     Hitbox createSpriteBoundsHitbox() const;
 

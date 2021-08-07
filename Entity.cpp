@@ -161,6 +161,28 @@ EntityType Entity::getType() const
     return mType;
 }
 
+Hitbox Entity::getProjectedYHitbox(EntityType type) const
+{
+    const auto currentPosition = sf::Vector2f(getLeft(), getBottom());
+    const auto originalPosition = currentPosition - this->mDeltaP;
+    const auto newYPosition =
+            originalPosition + sf::Vector2f{0, this->mDeltaP.y};
+    Hitbox yHitbox(getHitbox(type));
+    yHitbox.setEntityPosition(newYPosition);
+    return yHitbox;
+}
+
+Hitbox Entity::getProjectedXHitbox(EntityType type) const
+{
+    const auto currentPosition = sf::Vector2f(getLeft(), getBottom());
+    const auto originalPosition = currentPosition - this->mDeltaP;
+    const auto newXPosition =
+            originalPosition + sf::Vector2f{this->mDeltaP.x, 0};
+    Hitbox xHitbox(getHitbox(type));
+    xHitbox.setEntityPosition(newXPosition);
+    return xHitbox;
+}
+
 const Hitbox& Entity::getHitbox(EntityType type) const
 {
     switch (type)
@@ -180,16 +202,9 @@ bool Entity::detectCollision(Entity& other)
     {
         return other.detectCollision(*this);
     }
-    const auto currentPosition = sf::Vector2f(getLeft(), getBottom());
-    const auto originalPosition = currentPosition - this->mDeltaP;
-    const auto newXPosition =
-            originalPosition + sf::Vector2f{this->mDeltaP.x, 0};
-    const auto newYPosition =
-            originalPosition + sf::Vector2f{0, this->mDeltaP.y};
 
-    Hitbox yHitbox(getHitbox(other.getType()));
-    yHitbox.setEntityPosition(newYPosition);
-    if (yHitbox.collidesWith(other.getHitbox(mType)))
+    const auto yHitbox = getProjectedYHitbox(other.getType());
+    if (yHitbox.collidesWith(other.getProjectedYHitbox(mType)))
     {
         handleCollision(
                 Collision{
@@ -203,8 +218,7 @@ bool Entity::detectCollision(Entity& other)
         return true;
     }
 
-    Hitbox xHitbox(getHitbox(other.getType()));
-    xHitbox.setEntityPosition(newXPosition);
+    const auto xHitbox = getProjectedXHitbox(other.getType());
     if (xHitbox.collidesWith(other.getHitbox(mType)))
 
     {

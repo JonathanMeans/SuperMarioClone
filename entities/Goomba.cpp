@@ -1,7 +1,8 @@
 #include "Goomba.h"
+
 #include "AnimationBuilder.h"
-#include "Timer.h"
 #include "Event.h"
+#include "Timer.h"
 
 Goomba::Goomba(const sf::Texture& texture, const sf::Vector2f& position) :
     Entity(texture,
@@ -33,28 +34,28 @@ void Goomba::onCollision(const Collision& collision)
     const auto hitbox = getHitbox(collision.entity->getType());
 
     if (isMario(collision.entity->getType()) &&
-        collision.side == EntitySide::TOP) {
-       // getPoints()->addPoints(100);
-        dispatchEvent( Event::constructEnemyKilled({getTop(), getLeft()}, 100));
+        collision.side == EntitySide::TOP)
+    {
+        // getPoints()->addPoints(100);
+        dispatchEvent(Event::constructEnemyKilled({getTop(), getLeft()}, 100));
         terminate();
     }
     else
     {
-        if (collision.side == EntitySide::BOTTOM)
+        if (isObject(collision.entity->getType()))
         {
-            clampY(hitbox.getBottom(), collision.yIntersection);
-            const auto currentVelocity = getVelocity();
-            setVelocity(sf::Vector2f(currentVelocity.x, 0));
-        }
-        else if (collision.side == EntitySide::RIGHT)
-        {
-            clampX(hitbox.getRight(), collision.xIntersection);
-            setVelocity(sf::Vector2f(0, getVelocity().y));
-        }
-        else if (collision.side == EntitySide::LEFT)
-        {
-            clampX(hitbox.getLeft(), collision.xIntersection);
-            setVelocity(sf::Vector2f(0, getVelocity().y));
+            if (collision.side == EntitySide::BOTTOM)
+            {
+                clampY(hitbox.getBottom(), collision.yIntersection);
+            }
+            else if (collision.side == EntitySide::RIGHT)
+            {
+                clampX(hitbox.getRight(), collision.xIntersection);
+            }
+            else if (collision.side == EntitySide::LEFT)
+            {
+                clampX(hitbox.getLeft(), collision.xIntersection);
+            }
         }
     }
 }
