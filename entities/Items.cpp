@@ -37,6 +37,8 @@ void Fireflower::doInternalCalculations()
             mVelocity = {0, 0};
             mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0});
             mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0});
+            mSpriteBoundsHitbox.makeValid();
+            mMarioCollisionHitbox.makeValid();
         }
     }
 }
