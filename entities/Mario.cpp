@@ -86,9 +86,7 @@ const Hitbox& Mario::getHitbox(EntityType type) const
 {
     switch (type)
     {
-    case EntityType ::GOOMBA:
-        return mMarioCollisionHitbox;
-    case EntityType ::PIPE:
+    case EntityType::GOOMBA:
         return mMarioCollisionHitbox;
     default:
         return mSpriteBoundsHitbox;
