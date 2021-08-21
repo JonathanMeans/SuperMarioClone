@@ -9,6 +9,8 @@
 #include "Hitbox.h"
 #include "SFML/Graphics.hpp"
 
+#define GRIDBOX_SIZE 16
+
 class Event;
 
 enum class EntityType
@@ -82,7 +84,6 @@ public:
     void setCleanupFlag();
     bool needsCleanup();
 
-    const size_t GRIDBOX_SIZE = 16;
     const float GRAVITY_ACCELERATION = 1;
 
     sf::Vector2f mDeltaP;

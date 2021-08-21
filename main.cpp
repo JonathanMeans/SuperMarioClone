@@ -34,13 +34,13 @@ int main(int argc, char* argv[])
     entities.reserve(100);
 
     std::unique_ptr<Mario> mario(
-            new Mario(spriteMaker->playerTexture, {60, 100}));
+            new Mario(spriteMaker->playerTexture, {60, 90}));
     std::unique_ptr<Goomba> goomba(
             new Goomba(spriteMaker->enemyTexture, {150, 50}));
     std::unique_ptr<Pipe> rightPipe(
-            new Pipe(spriteMaker->inanimateObjectTexture, {130, 100}));
+            new Pipe(spriteMaker->inanimateObjectTexture, {130, 116}));
     std::unique_ptr<Pipe> leftPipe(
-            new Pipe(spriteMaker->inanimateObjectTexture, {-10, 100}));
+            new Pipe(spriteMaker->inanimateObjectTexture, {-10, 116}));
 
     entities.push_back(std::move(leftPipe));
     entities.push_back(std::move(rightPipe));

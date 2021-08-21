@@ -1,4 +1,5 @@
 #include "Items.h"
+
 #include <AnimationBuilder.h>
 
 Fireflower::Fireflower(const sf::Texture& texture,
@@ -7,7 +8,7 @@ Fireflower::Fireflower(const sf::Texture& texture,
     Entity(texture,
            16,
            16,
-           Hitbox({16, 16}, {0, 0}),
+           Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE),
            EntityType::FIREFLOWER,
            position),
     mBlockTop(blockTop)
@@ -35,8 +36,8 @@ void Fireflower::doInternalCalculations()
         {
             mAcceleration = {0, 0};
             mVelocity = {0, 0};
-            mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0});
-            mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0});
+            mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE);
+            mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE);
             mSpriteBoundsHitbox.makeValid();
             mMarioCollisionHitbox.makeValid();
         }
@@ -60,7 +61,7 @@ Mushroom::Mushroom(const sf::Texture& texture,
     Entity(texture,
            16,
            16,
-           Hitbox({16, 16}, {0, 0}),
+           Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE),
            EntityType::MUSHROOM,
            position),
     mBlockTop(blockTop)
@@ -84,8 +85,8 @@ void Mushroom::doInternalCalculations()
         {
             mAcceleration = {0, GRAVITY_ACCELERATION};
             mVelocity.x = 2;
-            mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0});
-            mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0});
+            mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE);
+            mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE);
             mSpriteBoundsHitbox.makeValid();
             mMarioCollisionHitbox.makeValid();
         }
@@ -99,24 +100,25 @@ void Mushroom::onCollision(const Collision& collision)
     if (isObject(collision.entity->getType()))
     {
         const auto currentVelocity = getVelocity();
-        switch (collision.side) {
-            case EntitySide::BOTTOM:
-                clampY(hitbox.getBottom(), collision.yIntersection);
-                setVelocity(sf::Vector2f(currentVelocity.x, 0));
-                break;
-            case EntitySide::LEFT:
-                clampX(hitbox.getLeft(), collision.xIntersection);
-                setVelocity(
-                        sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
-                break;
-            case EntitySide::RIGHT:
-                clampX(hitbox.getRight(), collision.xIntersection);
+        switch (collision.side)
+        {
+        case EntitySide::BOTTOM:
+            clampY(hitbox.getBottom(), collision.yIntersection);
+            setVelocity(sf::Vector2f(currentVelocity.x, 0));
+            break;
+        case EntitySide::LEFT:
+            clampX(hitbox.getLeft(), collision.xIntersection);
             setVelocity(
                     sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
-                break;
-            case EntitySide::TOP:
-                // do nothing
-                break;
+            break;
+        case EntitySide::RIGHT:
+            clampX(hitbox.getRight(), collision.xIntersection);
+            setVelocity(
+                    sf::Vector2f(currentVelocity.x * -1, currentVelocity.y));
+            break;
+        case EntitySide::TOP:
+            // do nothing
+            break;
         }
     }
 

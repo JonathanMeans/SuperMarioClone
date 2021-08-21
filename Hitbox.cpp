@@ -2,11 +2,14 @@
 
 #include "SFML/Graphics.hpp"
 
-Hitbox::Hitbox(sf::Vector2f size, sf::Vector2f upperLeftOffset) :
+Hitbox::Hitbox(sf::Vector2f size,
+               sf::Vector2f upperLeftOffset,
+               size_t entityHeight) :
     mSize(size),
     mUpperLeftOffset(upperLeftOffset),
     mEntityPosition({-1000, -1000}),
-    mIsValid(true)
+    mIsValid(true),
+    mEntityHeight(entityHeight)
 {
 }
 
@@ -21,12 +24,14 @@ Hitbox& Hitbox::operator=(const Hitbox& other)
         return *this;
     mUpperLeftOffset = other.mUpperLeftOffset;
     mSize = other.mSize;
+    mEntityHeight = other.mEntityHeight;
     return *this;
 }
 
 bool Hitbox::collidesWith(const Hitbox& other) const
 {
-    if (!mIsValid || !other.mIsValid) {
+    if (!mIsValid || !other.mIsValid)
+    {
         return false;
     }
 
@@ -44,8 +49,6 @@ bool Hitbox::collidesWith(const Hitbox& other) const
             thisTop < otherBottom && thisBottom > otherTop);
 }
 
-Hitbox::Hitbox(const Hitbox& copy) = default;
-
 void Hitbox::invalidate()
 {
     mIsValid = false;
@@ -56,7 +59,6 @@ void Hitbox::makeValid()
     mIsValid = true;
 }
 
-
 float Hitbox::getBottom() const
 {
     return getTop() + mSize.y;
@@ -64,7 +66,7 @@ float Hitbox::getBottom() const
 
 float Hitbox::getTop() const
 {
-    return mEntityPosition.y + mUpperLeftOffset.y;
+    return mEntityPosition.y + mUpperLeftOffset.y - mEntityHeight;
 }
 
 float Hitbox::getLeft() const

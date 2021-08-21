@@ -137,7 +137,8 @@ Hitbox Entity::createSpriteBoundsHitbox() const
 {
     return {{static_cast<float>(mSpriteWidth),
              static_cast<float>(mSpriteHeight)},
-            {0, 0}};
+            {0, 0},
+            mSpriteHeight};
 }
 
 void Entity::updateHitboxPositions()
@@ -299,8 +300,8 @@ void Entity::draw(sf::RenderWindow& window)
     window.draw(mActiveSprite);
     setPosition(getX(), getY() + getHeight());
 #ifdef DRAW_HITBOX
-    // mMarioCollisionHitbox.draw(window);
-    mSpriteBoundsHitbox.draw(window);
+    mMarioCollisionHitbox.draw(window);
+    // mSpriteBoundsHitbox.draw(window);
 #endif
 }
 

@@ -14,7 +14,7 @@ Block::Block(const sf::Texture& texture, const sf::Vector2f& position) :
     Entity(texture,
            16,
            16,
-           Hitbox({16, 16}, {0, 0}),
+           Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE),
            EntityType::BLOCK,
            position),
     mOriginalBottom(position.y)
@@ -118,7 +118,7 @@ BlockShard::BlockShard(const sf::Texture& texture,
     Entity(texture,
            8,
            8,
-           Hitbox({0, 0}, {-1000, -1000}),
+           Hitbox({0, 0}, {-1000, -1000}, GRIDBOX_SIZE),
            EntityType::BLOCK_SHARD,
            position)
 
