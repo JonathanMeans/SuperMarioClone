@@ -15,15 +15,6 @@ void Hitbox::setEntityPosition(const sf::Vector2f& newEntityPosition)
     mEntityPosition = newEntityPosition;
 }
 
-Hitbox& Hitbox::operator=(const Hitbox& other)
-{
-    if (this == &other)
-        return *this;
-    mUpperLeftOffset = other.mUpperLeftOffset;
-    mSize = other.mSize;
-    return *this;
-}
-
 bool Hitbox::collidesWith(const Hitbox& other) const
 {
     if (!mIsValid || !other.mIsValid)
