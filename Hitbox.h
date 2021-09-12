@@ -28,8 +28,6 @@ public:
 
     Hitbox(const Hitbox& copy) = default;
 
-    Hitbox& operator=(const Hitbox& other);
-
     void setEntityPosition(const sf::Vector2f& newEntityPosition);
 
     void invalidate();
