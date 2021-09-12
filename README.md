@@ -12,6 +12,10 @@ on another Goomba, one Goomba falls through the ground
 * After bumping into an enemy with Big Mario and shrinking to 
   Small Mario, staying inside the enemy will result in Mario stomping and 
   terminating it instead of Mario being terminated
+* When walking left into a Goomba as Big Mario, small Mario maintains
+  his momentum, even when right is not being pressed
+* Big Mario doesn't do the proper shrinking animation when colliding with a Goomba
+  from the right.
 
 # CMake Flags
 -DDRAW_HITBOX: Set to 1 to enable debug hitboxes, 0 to turn off
