@@ -17,7 +17,7 @@ Block::Block(const sf::Texture& texture, const sf::Vector2f& position) :
            Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE),
            EntityType::BLOCK,
            position),
-    mOriginalBottom(position.y)
+    mOriginalBottom(getBottom())
 {
 }
 

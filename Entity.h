@@ -149,6 +149,9 @@ private:
     [[nodiscard]] sf::Vector2f upperCenterToUpperLeft(
             const sf::Vector2f& originalPosition) const;
 
+    float sfmlYToScreenY(float y) const;
+    float screenYToSfmlY(float y) const;
+
     int mLookDirection;
     EntityType mType;
 };

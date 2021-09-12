@@ -66,7 +66,7 @@ float Hitbox::getBottom() const
 
 float Hitbox::getTop() const
 {
-    return mEntityPosition.y + mUpperLeftOffset.y - mEntityHeight;
+    return mEntityPosition.y + mUpperLeftOffset.y;
 }
 
 float Hitbox::getLeft() const

@@ -107,7 +107,7 @@ Entity::Entity(const sf::Texture& texture,
                size_t spriteHeight,
                const Hitbox& hitbox,
                EntityType type,
-               const sf::Vector2f& position,
+               const sf::Vector2f& lowerLeftCorner,
                float maxVelocity) :
     mActiveSprite(texture),
     mVelocity(0, 0),
@@ -123,7 +123,9 @@ Entity::Entity(const sf::Texture& texture,
     mLookDirection(1),
     mType(type)
 {
-    mActiveSprite.setPosition(upperCenterToUpperLeft(position));
+    const sf::Vector2f upperLeftCorner(lowerLeftCorner.x,
+                                       lowerLeftCorner.y + mSpriteHeight);
+    mActiveSprite.setPosition(upperCenterToUpperLeft(upperLeftCorner));
 
     // sets origin of sprite to be midpoint of top edge
     // So that scaling by -1 works properly
@@ -296,23 +298,35 @@ void Entity::setAnimationFromState()
 
 void Entity::draw(sf::RenderWindow& window)
 {
-    setPosition(getX(), getY() - getHeight());
+    setPosition(getX(), sfmlYToScreenY(getY()));
     window.draw(mActiveSprite);
-    setPosition(getX(), getY() + getHeight());
+    setPosition(getX(), screenYToSfmlY(getY()));
 #ifdef DRAW_HITBOX
     mMarioCollisionHitbox.draw(window);
     // mSpriteBoundsHitbox.draw(window);
 #endif
 }
 
+float Entity::sfmlYToScreenY(float y) const
+{
+    // We want to think of drawing from the lower-left corner
+    // but SFML draws from the upper-left
+    return y - getHeight();
+}
+
+float Entity::screenYToSfmlY(float y) const
+{
+    return y + getHeight();
+}
+
 float Entity::getBottom() const
 {
-    return getY();
+    return sfmlYToScreenY(getY());
 }
 
 float Entity::getTop() const
 {
-    return getY() - getHeight();
+    return getBottom() - getHeight();
 }
 
 float Entity::getLeft() const
