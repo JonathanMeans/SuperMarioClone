@@ -8,7 +8,7 @@ Fireflower::Fireflower(const sf::Texture& texture,
     Entity(texture,
            16,
            16,
-           Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE),
+           Hitbox({16, 16}, {0, 0}),
            EntityType::FIREFLOWER,
            position),
     mBlockTop(blockTop)
@@ -36,8 +36,8 @@ void Fireflower::doInternalCalculations()
         {
             mAcceleration = {0, 0};
             mVelocity = {0, 0};
-            mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE);
-            mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE);
+            mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0});
+            mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0});
             mSpriteBoundsHitbox.makeValid();
             mMarioCollisionHitbox.makeValid();
         }
@@ -61,7 +61,7 @@ Mushroom::Mushroom(const sf::Texture& texture,
     Entity(texture,
            16,
            16,
-           Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE),
+           Hitbox({16, 16}, {0, 0}),
            EntityType::MUSHROOM,
            position),
     mBlockTop(blockTop)
@@ -85,8 +85,8 @@ void Mushroom::doInternalCalculations()
         {
             mAcceleration = {0, GRAVITY_ACCELERATION};
             mVelocity.x = 2;
-            mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE);
-            mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0}, GRIDBOX_SIZE);
+            mSpriteBoundsHitbox = Hitbox({16, 16}, {0, 0});
+            mMarioCollisionHitbox = Hitbox({16, 16}, {0, 0});
             mSpriteBoundsHitbox.makeValid();
             mMarioCollisionHitbox.makeValid();
         }

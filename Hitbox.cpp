@@ -2,14 +2,11 @@
 
 #include "SFML/Graphics.hpp"
 
-Hitbox::Hitbox(sf::Vector2f size,
-               sf::Vector2f upperLeftOffset,
-               size_t entityHeight) :
+Hitbox::Hitbox(sf::Vector2f size, sf::Vector2f upperLeftOffset) :
     mSize(size),
     mUpperLeftOffset(upperLeftOffset),
     mEntityPosition({-1000, -1000}),
-    mIsValid(true),
-    mEntityHeight(entityHeight)
+    mIsValid(true)
 {
 }
 
@@ -24,7 +21,6 @@ Hitbox& Hitbox::operator=(const Hitbox& other)
         return *this;
     mUpperLeftOffset = other.mUpperLeftOffset;
     mSize = other.mSize;
-    mEntityHeight = other.mEntityHeight;
     return *this;
 }
 

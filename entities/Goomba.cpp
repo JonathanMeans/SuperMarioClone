@@ -8,7 +8,7 @@ Goomba::Goomba(const sf::Texture& texture, const sf::Vector2f& position) :
     Entity(texture,
            16,
            16,
-           Hitbox(sf::Vector2f(8, 5), sf::Vector2f(4, 7), GRIDBOX_SIZE),
+           Hitbox(sf::Vector2f(8, 5), sf::Vector2f(4, 7)),
            EntityType::GOOMBA,
            position)
 {

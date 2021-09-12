@@ -139,8 +139,7 @@ Hitbox Entity::createSpriteBoundsHitbox() const
 {
     return {{static_cast<float>(mSpriteWidth),
              static_cast<float>(mSpriteHeight)},
-            {0, 0},
-            mSpriteHeight};
+            {0, 0}};
 }
 
 void Entity::updateHitboxPositions()

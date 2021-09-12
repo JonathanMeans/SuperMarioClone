@@ -5,7 +5,7 @@ InvisibleWall::InvisibleWall(const sf::Texture& texture,
     Entity(texture,
            16,
            9999,
-           Hitbox({16, 9999}, {0, 0}, GRIDBOX_SIZE),
+           Hitbox({16, 9999}, {0, 0}),
            EntityType::INVISIBLE_WALL,
            position)
 {
