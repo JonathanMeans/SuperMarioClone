@@ -58,6 +58,8 @@ public:
 
     void changeToSmallDimensions();
 
+    void shootFireball();
+
 private:
     void onCollision(const Collision& collision) override;
 
@@ -70,6 +72,7 @@ private:
     Animation jumpingAnimation;
     Animation standingAnimation;
     Animation deathAnimation;
+    Animation shootingAnimation;
 
     Animation growingAnimation;
     Animation shrinkingAnimation;
@@ -77,6 +80,7 @@ private:
 
     bool mJumping;
     bool mIsDead;
+    bool mShooting;
 };
 
 #endif  // SUPERMARIOBROS_MARIO_H

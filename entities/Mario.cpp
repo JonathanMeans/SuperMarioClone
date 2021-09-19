@@ -24,7 +24,8 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
     largeHitbox({12, 23}, {2, 9}),
     mForm(MarioForm::SMALL_MARIO),
     mJumping(false),
-    mIsDead(false)
+    mIsDead(false),
+    mShooting(false)
 {
     walkingAnimation = AnimationBuilder()
                                .withOffset(80, 34)
@@ -78,6 +79,12 @@ Mario::Mario(const sf::Texture& texture, const sf::Vector2f& position) :
 
     changeToFireMarioAnimation = AnimationBuilder().build(mActiveSprite);
 
+    shootingAnimation = AnimationBuilder()
+            .withOffset(97, 129)
+            .withRectSize(16, 32)
+            .withNumRect(1)
+            .build(mActiveSprite);
+
     mActiveAnimation = &standingAnimation;
     mActiveAnimation->processAction();
 }
@@ -130,6 +137,10 @@ void Mario::setAnimationFromState()
     else if (mAcceleration.x != 0)
     {
         walk();
+    }
+    else if (mShooting)
+    {
+        mActiveAnimation = &shootingAnimation;
     }
     else
     {
@@ -369,4 +380,9 @@ void Mario::changeToSmallDimensions()
     mSpriteHeight = GRIDBOX_SIZE;
     mSpriteBoundsHitbox = createSpriteBoundsHitbox();
     updateHitboxPositions();
+}
+
+void Mario::shootFireball()
+{
+    mShooting = true;
 }

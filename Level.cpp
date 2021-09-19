@@ -218,6 +218,11 @@ void Level::setMarioMovementFromController(const KeyboardInput& currentInput)
         mMario->setJumping(true);
     }
 
+    if (currentInput.B.pressedThisFrame() && mMario->getForm() == MarioForm::FIRE_MARIO)
+    {
+        mMario->shootFireball();
+    }
+
     acceleration.y = calculateVerticalAcceleration(currentInput, velocity.x);
 
     if (currentInput.right.keyIsDown)
