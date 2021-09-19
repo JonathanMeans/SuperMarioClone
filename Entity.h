@@ -26,6 +26,7 @@ enum class EntityType
     MUSHROOM,
     FIREFLOWER,
     INVISIBLE_WALL,
+    FIREBALL,
 };
 
 std::string convertSideToString(EntitySide side);

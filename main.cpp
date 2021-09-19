@@ -1,3 +1,4 @@
+#include <entities/Fireball.h>
 #include <entities/InvisibleWall.h>
 #include <file_util.h>
 
@@ -41,10 +42,13 @@ int main(int argc, char* argv[])
             new Pipe(spriteMaker->inanimateObjectTexture, {130, 100}));
     std::unique_ptr<Pipe> leftPipe(
             new Pipe(spriteMaker->inanimateObjectTexture, {-10, 100}));
+    std::unique_ptr<Fireball> fireball(
+            new Fireball(spriteMaker->itemAndObjectTexture, {170, 60}));
 
     entities.push_back(std::move(leftPipe));
     entities.push_back(std::move(rightPipe));
     entities.push_back(std::move(goomba));
+    entities.push_back(std::move(fireball));
 
     entities.push_back(
             std::make_unique<InvisibleWall>(spriteMaker->inanimateObjectTexture,
