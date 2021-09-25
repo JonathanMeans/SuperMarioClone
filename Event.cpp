@@ -45,6 +45,18 @@ Event Event::constructAnimationCompleted(const std::string& animationType)
     return event;
 }
 
+Event Event::constructFireball(const sf::Vector2f& position, int direction)
+{
+    Event event;
+    event.type = EventType::FIREBALL_SPAWNED;
+    FireballSpawned fireballSpawned;
+    fireballSpawned.position = position;
+    fireballSpawned.direction = direction;
+    event.eventData = fireballSpawned;
+    return event;
+}
+
+
 Event::EnemyKilled Event::asEnemyKilled() const
 {
     return std::get<Event::EnemyKilled>(eventData);
@@ -63,4 +75,9 @@ Event::BlockShattered Event::asBlockShattered() const
 Event::AnimationCompleted Event::asAnimationCompleted() const
 {
     return std::get<Event::AnimationCompleted>(eventData);
+}
+
+Event::FireballSpawned Event::asFireballSpawned() const
+{
+    return std::get<Event::FireballSpawned>(eventData);
 }

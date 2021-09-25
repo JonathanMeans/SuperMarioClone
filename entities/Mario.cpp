@@ -3,8 +3,10 @@
 #include <AnimationBuilder.h>
 
 #include <cassert>
+#include <iostream>
 
 #include "Animation.h"
+#include "Fireball.h"
 #include "Hitbox.h"
 #include "Level.h"
 #include "Timer.h"
@@ -140,15 +142,16 @@ void Mario::setAnimationFromState()
     }
     else if (mShooting)
     {
-	if (mActiveAnimation != &shootingAnimation)
-	{
-	    mActiveAnimation = &shootingAnimation;
-	    getTimer().scheduleSeconds(0.1,
-       	                           [&]()
-       	                           {
-       	                               mShooting = false;
-       	                           });
-	}
+    if (mActiveAnimation != &shootingAnimation)
+    {
+        mActiveAnimation = &shootingAnimation;
+        emitFireball();
+        getTimer().scheduleSeconds(0.1,
+                                      [&]()
+                                      {
+                                          mShooting = false;
+                                      });
+    }
 
     }
     else
@@ -161,6 +164,15 @@ void Mario::setAnimationFromState()
         mActiveSprite.scale(-1.f, 1.f);
         mChangingDirection = false;
     }
+}
+
+void Mario::emitFireball()
+{
+    const auto fireballX = getLeft() - Fireball::width();
+    const auto fireballY = screenYToSfmlY((getTop() + getBottom()) / 2);
+    dispatchEvent(Event::constructFireball(
+        sf::Vector2f(fireballX, fireballY),
+        mLookDirection));
 }
 
 void Mario::walk()

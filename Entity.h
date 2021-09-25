@@ -140,6 +140,10 @@ protected:
     // TODO: This only applies to Mario subclass, but
     // we check it up here???
     bool mInputEnabled;
+    int mLookDirection;
+
+    float sfmlYToScreenY(float y) const;
+    float screenYToSfmlY(float y) const;
 
 private:
     // These functions give the midpoint of the top edge
@@ -150,10 +154,7 @@ private:
     [[nodiscard]] sf::Vector2f upperCenterToUpperLeft(
             const sf::Vector2f& originalPosition) const;
 
-    float sfmlYToScreenY(float y) const;
-    float screenYToSfmlY(float y) const;
 
-    int mLookDirection;
     EntityType mType;
 };
 

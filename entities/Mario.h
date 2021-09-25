@@ -63,6 +63,8 @@ public:
 private:
     void onCollision(const Collision& collision) override;
 
+    void emitFireball();
+
     Hitbox smallHitbox;
     Hitbox largeHitbox;
 

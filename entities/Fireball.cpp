@@ -2,7 +2,7 @@
 
 #include <AnimationBuilder.h>
 
-Fireball::Fireball(const sf::Texture& texture, const sf::Vector2f& position) :
+Fireball::Fireball(const sf::Texture& texture, const sf::Vector2f& position, int direction) :
     Entity(texture,
            8,
            8,
@@ -11,6 +11,8 @@ Fireball::Fireball(const sf::Texture& texture, const sf::Vector2f& position) :
            position)
 {
     mAcceleration = {};
+    mVelocity.x = direction * 2.f;
+
     sf::Rect topLeftRect = sf::IntRect(96, 144, 8, 8);
     sf::Rect topRightRect = sf::IntRect(104, 144, 8, 8);
     sf::Rect bottomLeftRect = sf::IntRect(96, 152, 8, 8);

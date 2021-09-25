@@ -3,6 +3,7 @@
 #include <entities/Block.h>
 #include <entities/InvisibleWall.h>
 #include <entities/Items.h>
+#include <entities/Fireball.h>
 
 #include <cmath>
 
@@ -98,6 +99,9 @@ void Level::executeFrame(const KeyboardInput& input)
         case EventType::ANIMATION_COMPLETED:
             onAnimationCompleted(event.asAnimationCompleted());
             break;
+        case EventType::FIREBALL_SPAWNED:
+            onFireballSpawned(event.asFireballSpawned());
+            break;
         }
     }
     getEventQueue().clear();
@@ -187,6 +191,14 @@ void Level::onItemSpawned(const Event::ItemSpawned& event)
     default:
         throw std::runtime_error("Unhandled entity type");
     }
+}
+
+void Level::onFireballSpawned(const Event::FireballSpawned& event)
+{
+    addEntityToFront(std::make_unique<Fireball>(
+        getSpriteMaker()->itemAndObjectTexture,
+        event.position,
+        event.direction));
 }
 
 void Level::onAnimationCompleted(const Event::AnimationCompleted& event)
