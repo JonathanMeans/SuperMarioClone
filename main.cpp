@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
     std::unique_ptr<Mario> mario(
             new Mario(spriteMaker->playerTexture, {60, 90}));
     std::unique_ptr<Goomba> goomba(
-            new Goomba(spriteMaker->enemyTexture, {150, 50}));
+            new Goomba(spriteMaker->enemyTexture, {200, 50}));
     std::unique_ptr<Pipe> rightPipe(
             new Pipe(spriteMaker->inanimateObjectTexture, {130, 100}));
     std::unique_ptr<Pipe> leftPipe(
