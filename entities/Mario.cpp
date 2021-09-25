@@ -140,7 +140,16 @@ void Mario::setAnimationFromState()
     }
     else if (mShooting)
     {
-        mActiveAnimation = &shootingAnimation;
+	if (mActiveAnimation != &shootingAnimation)
+	{
+	    mActiveAnimation = &shootingAnimation;
+	    getTimer().scheduleSeconds(0.1,
+       	                           [&]()
+       	                           {
+       	                               mShooting = false;
+       	                           });
+	}
+
     }
     else
     {

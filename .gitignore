@@ -3,3 +3,6 @@ cmake-build*
 *.DS_Store
 .vscode
 build/
+build.sh
+run.sh
+compile_commands.json
