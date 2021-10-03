@@ -195,7 +195,7 @@ void Level::onItemSpawned(const Event::ItemSpawned& event)
 
 void Level::onFireballSpawned(const Event::FireballSpawned& event)
 {
-    addEntityToFront(std::make_unique<Fireball>(
+    mEntities.push_back(std::make_unique<Fireball>(
         getSpriteMaker()->itemAndObjectTexture,
         event.position,
         event.direction));

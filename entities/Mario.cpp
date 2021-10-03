@@ -3,7 +3,6 @@
 #include <AnimationBuilder.h>
 
 #include <cassert>
-#include <iostream>
 
 #include "Animation.h"
 #include "Fireball.h"

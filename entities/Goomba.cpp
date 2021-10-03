@@ -64,6 +64,7 @@ void Goomba::terminate()
 {
     mActiveAnimation = &deathAnimation;
     mActiveAnimation->processAction();
+
     mVelocity = {};
     mAcceleration = {};
 
