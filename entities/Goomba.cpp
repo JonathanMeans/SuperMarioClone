@@ -33,8 +33,9 @@ void Goomba::onCollision(const Collision& collision)
 {
     const auto hitbox = getHitbox(collision.entity->getType());
 
-    if (isMario(collision.entity->getType()) &&
-        collision.side == EntitySide::TOP)
+    EntityType entityType = collision.entity->getType();
+    if ((isMario(entityType) &&
+        collision.side == EntitySide::TOP) || entityType == EntityType::FIREBALL)
     {
         // getPoints()->addPoints(100);
         dispatchEvent(Event::constructEnemyKilled({getTop(), getLeft()}, 100));
