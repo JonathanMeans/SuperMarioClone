@@ -168,7 +168,7 @@ void Mario::setAnimationFromState()
 
 void Mario::emitFireball()
 {
-    const auto fireballX = getLeft() - Fireball::width();
+    const auto fireballX = mLookDirection < 0 ? getLeft() - Fireball::width() : getRight();
     const auto fireballY = screenYToSfmlY((getTop() + getBottom()) / 2);
     dispatchEvent(Event::constructFireball(
         sf::Vector2f(fireballX, fireballY),
