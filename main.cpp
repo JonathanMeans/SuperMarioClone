@@ -61,13 +61,13 @@ int main(int argc, char* argv[])
     }
 
     entities.push_back(std::make_unique<BreakableBlock>(
-            spriteMaker->inanimateObjectTexture, sf::Vector2f(40, 70)));
+            spriteMaker->inanimateObjectTexture, sf::Vector2f(40, 75)));
     entities.push_back(
             std::make_unique<ItemBlock>(spriteMaker->inanimateObjectTexture,
-                                        sf::Vector2f(56, 70)));
+                                        sf::Vector2f(56, 75)));
     entities.push_back(
             std::make_unique<ItemBlock>(spriteMaker->inanimateObjectTexture,
-                                        sf::Vector2f(72, 70)));
+                                        sf::Vector2f(72, 75)));
 
     Level level(std::move(mario), std::move(entities), window, wall);
 
