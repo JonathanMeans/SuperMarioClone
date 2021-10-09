@@ -141,17 +141,16 @@ void Mario::setAnimationFromState()
     }
     else if (mShooting)
     {
-    if (mActiveAnimation != &shootingAnimation)
-    {
-        mActiveAnimation = &shootingAnimation;
-        emitFireball();
-        getTimer().scheduleSeconds(0.1,
-                                      [&]()
-                                      {
-                                          mShooting = false;
-                                      });
-    }
-
+        if (mActiveAnimation != &shootingAnimation)
+        {
+            mActiveAnimation = &shootingAnimation;
+            emitFireball();
+            getTimer().scheduleSeconds(0.1,
+                                          [&]()
+                                          {
+                                              mShooting = false;
+                                          });
+        }
     }
     else
     {
@@ -167,7 +166,7 @@ void Mario::setAnimationFromState()
 
 void Mario::emitFireball()
 {
-    const auto fireballX = mLookDirection < 0 ? getLeft() - Fireball::width() : getRight();
+    const auto fireballX = mLookDirection < 0 ? getLeft() : getRight() - Fireball::width();
     const auto fireballY = screenYToSfmlY((getTop() + getBottom()) / 2);
     dispatchEvent(Event::constructFireball(
         sf::Vector2f(fireballX, fireballY),
