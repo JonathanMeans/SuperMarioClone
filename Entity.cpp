@@ -1,6 +1,5 @@
 #include "Entity.h"
 
-#include <iostream>
 #include <utility>
 
 #include "Level.h"
@@ -127,8 +126,6 @@ Entity::Entity(const sf::Texture& texture,
                                        lowerLeftCorner.y + mSpriteHeight);
     mActiveSprite.setPosition(upperCenterToUpperLeft(upperLeftCorner));
 
-
-    std::cout << upperLeftCorner.x << "\n";
 
     // sets origin of sprite to be midpoint of top edge
     // So that scaling by -1 works properly

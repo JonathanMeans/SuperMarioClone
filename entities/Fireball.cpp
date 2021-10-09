@@ -52,7 +52,6 @@ void Fireball::onCollision(const Collision& collision)
         }
     }
 
-
 }
 
 void Fireball::terminate()

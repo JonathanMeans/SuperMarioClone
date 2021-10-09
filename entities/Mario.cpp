@@ -145,9 +145,10 @@ void Mario::setAnimationFromState()
         {
             mActiveAnimation = &shootingAnimation;
             emitFireball();
-            getTimer().scheduleSeconds(0.1,
+            getTimer().scheduleSeconds(0.2,
                                           [&]()
                                           {
+                                              stopWalking();
                                               mShooting = false;
                                           });
         }
