@@ -303,10 +303,8 @@ void Entity::draw(sf::RenderWindow& window)
     setPosition(getX(), sfmlYToScreenY(getY()));
     window.draw(mActiveSprite);
     setPosition(getX(), screenYToSfmlY(getY()));
-#ifdef DRAW_HITBOX
-    mMarioCollisionHitbox.draw(window);
-    // mSpriteBoundsHitbox.draw(window);
-#endif
+    if (std::getenv("DRAW_HITBOX") != nullptr)
+        mMarioCollisionHitbox.draw(window);
 }
 
 float Entity::sfmlYToScreenY(float y) const
