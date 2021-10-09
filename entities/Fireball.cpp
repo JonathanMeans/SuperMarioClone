@@ -2,6 +2,7 @@
 
 #include <AnimationBuilder.h>
 #include <Timer.h>
+#include <iostream>
 
 Fireball::Fireball(const sf::Texture& texture, const sf::Vector2f& position, int direction) :
     Entity(texture,
@@ -11,7 +12,6 @@ Fireball::Fireball(const sf::Texture& texture, const sf::Vector2f& position, int
            EntityType::FIREBALL,
            position)
 {
-    mAcceleration = {};
     mVelocity.x = direction * 2.f;
 
     deathAnimation = AnimationBuilder().withOffset(114, 160).withRectSize(12,16).build(mActiveSprite);
@@ -28,10 +28,31 @@ Fireball::Fireball(const sf::Texture& texture, const sf::Vector2f& position, int
 void Fireball::onCollision(const Collision& collision)
 {
     EntityType entityType = collision.entity->getType();
-    if (isEnemy(entityType) || (isObject(entityType) && (collision.side == EntitySide::LEFT || collision.side == EntitySide::RIGHT)))
+    if (isEnemy(entityType))
     {
         terminate();
     }
+    else if (isObject(entityType))
+    {
+        const auto hitbox = getHitbox(collision.entity->getType());
+        const float yVelocityOnBounce = 5.f;
+        if (collision.side == EntitySide::LEFT || collision.side == EntitySide::RIGHT)
+        {
+            terminate();
+        }
+        else if (collision.side == EntitySide::BOTTOM)
+        {
+            clampY(hitbox.getBottom(), collision.yIntersection);
+            mVelocity.y = -yVelocityOnBounce;
+        }
+        else if (collision.side == EntitySide::TOP)
+        {
+            clampY(hitbox.getTop(), collision.yIntersection);
+            mVelocity.y = yVelocityOnBounce;
+        }
+    }
+
+
 }
 
 void Fireball::terminate()
