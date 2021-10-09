@@ -341,7 +341,7 @@ void Mario::onCollision(const Collision& collision)
             break;
         }
     }
-    else
+    else if (isObject(collision.entity->getType()))
     {
         // We're not colliding with an enemy, so we want the sprite
         // hitbox
