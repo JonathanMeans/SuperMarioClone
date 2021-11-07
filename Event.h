@@ -7,7 +7,7 @@
 
 enum class EventType
 {
-    ENEMY_KILLED,
+    POINTS_EARNED,
     ITEM_SPAWNED,
     BLOCK_SHATTERED,
     ANIMATION_COMPLETED,
@@ -19,7 +19,7 @@ class Event
 public:
     EventType type;
 
-    static Event constructEnemyKilled(const sf::Vector2f& position, int points);
+    static Event constructPointsEarned(const sf::Vector2f& position, int points);
     static Event constructItemSpawned(EntityType type,
                                       const sf::Vector2f& position,
                                       float blockBottom);
@@ -27,7 +27,7 @@ public:
     static Event constructAnimationCompleted(const std::string& animationType);
     static Event constructFireball(const sf::Vector2f& position, int direction);
 
-    struct EnemyKilled
+    struct PointsEarned
     {
         sf::Vector2f position;
         int points;
@@ -56,14 +56,14 @@ public:
 	int direction;
     };
 
-    [[nodiscard]] EnemyKilled asEnemyKilled() const;
+    [[nodiscard]] PointsEarned asPointsEarned() const;
     [[nodiscard]] ItemSpawned asItemSpawned() const;
     [[nodiscard]] BlockShattered asBlockShattered() const;
     [[nodiscard]] AnimationCompleted asAnimationCompleted() const;
     [[nodiscard]] FireballSpawned asFireballSpawned() const;
 
 private:
-    std::variant<EnemyKilled, ItemSpawned, BlockShattered, AnimationCompleted, FireballSpawned>
+    std::variant<PointsEarned, ItemSpawned, BlockShattered, AnimationCompleted, FireballSpawned>
             eventData;
 };
 

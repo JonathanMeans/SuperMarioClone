@@ -46,8 +46,11 @@ void Fireflower::doInternalCalculations()
 
 void Fireflower::onCollision(const Collision& collision)
 {
-    if (isMario(collision.entity->getType()))
+    if (isMario(collision.entity->getType())) {
+        dispatchEvent(Event::constructPointsEarned({getTop(), getLeft()}, 1000));
         terminate();
+    }
+
 }
 
 void Fireflower::terminate()
@@ -124,6 +127,7 @@ void Mushroom::onCollision(const Collision& collision)
 
     if (isMario(collision.entity->getType()))
     {
+        dispatchEvent(Event::constructPointsEarned({getTop(), getLeft()}, 1000));
         terminate();
     }
 }

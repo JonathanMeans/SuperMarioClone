@@ -58,7 +58,7 @@ private:
     float calculateVerticalAcceleration(const KeyboardInput& currentInput,
                                         float xVelocity) const;
 
-    void onEnemyKilled(const Event::EnemyKilled&);
+    void onPointsEarned(const Event::PointsEarned&);
     void onItemSpawned(const Event::ItemSpawned&);
     void onBlockShattered(const Event::BlockShattered&);
     void onAnimationCompleted(const Event::AnimationCompleted&);

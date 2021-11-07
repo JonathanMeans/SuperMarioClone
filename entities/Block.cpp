@@ -56,6 +56,7 @@ void BreakableBlock::onCollision(const Collision& collision)
     {
         this->setCleanupFlag();
         dispatchEvent(Event::constructBlockShattered({getLeft(), getTop()}));
+        dispatchEvent(Event::constructPointsEarned({getTop(), getLeft()}, 50));
     }
 }
 

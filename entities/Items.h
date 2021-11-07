@@ -3,6 +3,7 @@
 
 #include <Animation.h>
 #include <Entity.h>
+#include <Level.h>
 
 class Mushroom : public Entity
 {

@@ -87,8 +87,8 @@ void Level::executeFrame(const KeyboardInput& input)
     {
         switch (event.type)
         {
-        case EventType::ENEMY_KILLED:
-            onEnemyKilled(event.asEnemyKilled());
+        case EventType::POINTS_EARNED:
+            onPointsEarned(event.asPointsEarned());
             break;
         case EventType::ITEM_SPAWNED:
             onItemSpawned(event.asItemSpawned());
@@ -156,8 +156,6 @@ void Level::onBlockShattered(const Event::BlockShattered& event)
                                          sf::Vector2f{left, top + 8},
                                          sf::Vector2f(0, 8),
                                          sf::Vector2f(-1, -5)));
-
-    mPoints->addPoints(50);
 }
 
 void Level::addEntityToFront(std::unique_ptr<Entity> entity)
@@ -165,7 +163,7 @@ void Level::addEntityToFront(std::unique_ptr<Entity> entity)
     mEntities.insert(mEntities.begin(), std::move(entity));
 }
 
-void Level::onEnemyKilled(const Event::EnemyKilled& event)
+void Level::onPointsEarned(const Event::PointsEarned& event)
 {
     mPoints->addPoints(event.points);
 }

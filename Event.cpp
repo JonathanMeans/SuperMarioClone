@@ -1,13 +1,13 @@
 #include "Event.h"
 
-Event Event::constructEnemyKilled(const sf::Vector2f& position, int points)
+Event Event::constructPointsEarned(const sf::Vector2f& position, int points)
 {
     Event event;
-    event.type = EventType::ENEMY_KILLED;
-    EnemyKilled enemyKilled;
-    enemyKilled.position = position;
-    enemyKilled.points = points;
-    event.eventData = enemyKilled;
+    event.type = EventType::POINTS_EARNED;
+    PointsEarned pointsEarned;
+    pointsEarned.position = position;
+    pointsEarned.points = points;
+    event.eventData = pointsEarned;
     return event;
 }
 
@@ -57,9 +57,9 @@ Event Event::constructFireball(const sf::Vector2f& position, int direction)
 }
 
 
-Event::EnemyKilled Event::asEnemyKilled() const
+Event::PointsEarned Event::asPointsEarned() const
 {
-    return std::get<Event::EnemyKilled>(eventData);
+    return std::get<Event::PointsEarned>(eventData);
 }
 
 Event::ItemSpawned Event::asItemSpawned() const
